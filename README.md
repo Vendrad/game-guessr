@@ -1,5 +1,13 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Game-Guesser
+
+This app was made with the intention of learning React. It can be found at [http://gg.raredevil.co.uk](http://gg.raredevil.co.uk).
+
+Choose a decade to test your skills in or pick all if you really think you know your stuff about gaming. Guess what game is being described to earn points. Share you highscore and challenge your friends to see who knows more about gaming.
+
+##
+
 ## Available Scripts
 
 In the project directory, you can run:

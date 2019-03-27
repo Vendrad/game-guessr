@@ -1,0 +1,36 @@
+@import "../../../styles/SassVariables.scss";
+
+.HeaderInner {
+  display: flex;
+  transition: all $transition-duration ease-out;
+  align-items: center;
+}
+
+.open {
+  flex-direction: column;
+}
+
+.closed {
+  flex-direction: row;
+  width: 90%;
+  justify-content: space-between;
+}
+
+.StartButton {
+  margin-top: 20px;
+  padding: 30px;
+  border: 0;
+  box-shadow: none;
+  border-radius: 3px;
+  font-size: 2rem;
+}
+
+.StartButton:hover {
+  background-color: yellow;
+}
+
+.Score {
+  position: relative;
+  font-size: 2em;
+  transition-delay: $transition-duration;
+}

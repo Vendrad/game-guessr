@@ -1,0 +1,22 @@
+@import "../../styles/SassVariables.scss";
+
+.GameBoard {
+  height: 80vh;
+  width: 80vw;
+  margin: auto 0;
+  transition: transform $transition-duration ease-out;
+  display: flex;
+  position: fixed;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.open {
+  transform: translateY(0);
+}
+
+.closed {
+  transform: translateY(100vh);
+}

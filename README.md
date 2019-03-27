@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Game-Guesser
+## Game-Guessr
 
 This app was made with the intention of learning React. It can be found at [http://gg.raredevil.co.uk](http://gg.raredevil.co.uk).
 

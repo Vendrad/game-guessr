@@ -1,0 +1,35 @@
+@import "../../styles/SassVariables.scss";
+
+.App {
+  text-align: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.main {
+  background-color: rgb(240, 240, 240);
+  width: 100vw;
+  height: 89vh;
+  position: fixed;
+  left: 0;
+  //display: flex;
+  //justify-content: center;
+  //flex-direction: column;
+  padding: 10vw;
+  box-sizing: border-box;
+}
+
+.open {
+  bottom: 0vh;
+  transition: bottom $transition-duration ease-out;
+}
+
+.closed {
+  bottom: -90vh;
+  transition: bottom $transition-duration ease-out;
+}
+

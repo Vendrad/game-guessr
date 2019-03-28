@@ -18,3 +18,7 @@
   border: 2px solid orange;
   background-color: $light;
 }
+
+.GameInput input:focus {
+  outline: none;
+}

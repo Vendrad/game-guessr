@@ -9,11 +9,17 @@ import styles from './GameAutoComplete.module.scss';
 const GameAutoComplete = props => {
 
   const [autoCompleteItemsState, autoCompleteItemsStateSetter] = useState([]);
+  const [blockNextInputUpdateState, blockNextInputUpdateStateSetter] = useState(false);
   
   useEffect(() => {
 
     if (props.input.length < 3) {
       autoCompleteItemsStateSetter([]);
+      return undefined;
+    }
+
+    if (blockNextInputUpdateState) {
+      blockNextInputUpdateStateSetter(false);
       return undefined;
     }
 
@@ -30,6 +36,7 @@ const GameAutoComplete = props => {
 
   const autoCompleteItemWasClickedHandler = (id, name) => {
     autoCompleteItemsStateSetter([]);
+    blockNextInputUpdateStateSetter(true);
     props.autoCompleteItemWasClicked(id, name)
   }
 
@@ -37,19 +44,21 @@ const GameAutoComplete = props => {
 
   return (
     <div className={styles.GameAutoComplete}>
-      <ul>
-        {autoCompleteItemsState.map(item => {
+      <div>
+        <ul>
+          {autoCompleteItemsState.map(item => {
 
-          const coverUrl = item.cover && item.cover.url ? item.cover.url : null;
+            const coverUrl = item.cover && item.cover.url ? item.cover.url : null;
 
-          return <GameAutoCompleteItem
-            key={item.id}
-            gameId={item.id}
-            gameName={item.name}
-            gameCover={coverUrl}
-            gameAutoCompleteItemWasClicked={autoCompleteItemWasClickedHandler} />
-        })}
-      </ul>
+            return <GameAutoCompleteItem
+              key={item.id}
+              gameId={item.id}
+              gameName={item.name}
+              gameCover={coverUrl}
+              gameAutoCompleteItemWasClicked={autoCompleteItemWasClickedHandler} />
+          })}
+        </ul>
+      </div>
     </div>
   );
 };

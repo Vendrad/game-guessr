@@ -8,16 +8,24 @@ const GameInput = props => {
 
   useEffect(() => {
     inputValueStateSetter("");
-  }, [props.inputBuster])
+    props.inputWasCleared();
+  }, [props.inputClear])
 
   const [inputValueState, inputValueStateSetter] = useState("");
+  const [inputHasFocusState, inputHasFocusStateSetter] = useState(false);
 
   const autoCompleteItemWasClickedHandler = (id, name) => {
     inputValueStateSetter(name);
+    inputHasFocusStateSetter(false);
     props.gameWasSelected(id);
   };
 
+  const inputGainedFocusHandler = () => {
+    inputHasFocusStateSetter(true);
+  };
+
   const inputValueWasChangedHandler = (event) => {
+    inputHasFocusStateSetter(true);
     if (inputValueState === event.target.value) return;
     
     inputValueStateSetter(event.target.value)
@@ -26,14 +34,17 @@ const GameInput = props => {
   };
 
   return (
-    <div className={styles.GameInput}>
+    <div
+      className={styles.GameInput}>
       <GameAutoComplete
         input={inputValueState}
-        autoCompleteItemWasClicked={autoCompleteItemWasClickedHandler} />
+        autoCompleteItemWasClicked={autoCompleteItemWasClickedHandler}
+        inputHasFocus={inputHasFocusState} />
       <input
         type="text"
         onChange={inputValueWasChangedHandler}
-        placeholder="Choose your answer..."
+        onFocus={inputGainedFocusHandler}
+        placeholder="Find the match..."
         value={inputValueState}
         />
     </div>
@@ -42,7 +53,8 @@ const GameInput = props => {
 
 GameInput.propTypes = {
   gameWasSelected: PropTypes.func.isRequired,
-  inputBuster: PropTypes.number.isRequired
+  inputClear: PropTypes.bool,
+  inputWasCleared: PropTypes.func
 }
 
 export default GameInput;

@@ -15,11 +15,12 @@ import styles from './GameBoard.module.scss';
 const GameBoard = props => {
 
   const [questionNumberState, questionNumberSetter] = useState(1);
+  const [correctCountState, correctCountStateSetter] = useState(0);
   const [mistakeCountState, mistakeCountStateSetter] = useState(0);
   const [gameState, gameStateSetter] = useState(null);
   const [gameWindowInState, gameWindowInSetter] = useState(false);
   const [selectedGameIdState, selectedGameIdStateSetter] = useState(null);
-  const [inputBusterState, inputBusterStateSetter] = useState(0);
+  const [inputClearState, inputClearStateSetter] = useState(false);
 
   useEffect(() => {
     if (props.gameMode === undefined || props.gameMode === null) return undefined;
@@ -47,10 +48,17 @@ const GameBoard = props => {
 
     if (selectedGameIdState !== gameState.id) {
       mistakeCountStateSetter(mistakeCountState + 1);
+    } else {
+      correctCountStateSetter(correctCountState + 1);
     }
 
     gameWindowInSetter(false);
-    inputBusterStateSetter(Math.random());
+    inputClearStateSetter(true);
+    selectedGameIdStateSetter(null);
+  }
+
+  const inputWasClearedHandler = () => {
+    inputClearStateSetter(false);
   }
 
   const feedNewQuestion = () => {
@@ -63,7 +71,7 @@ const GameBoard = props => {
   return (
     <div className={wrappedClasses.join(' ')}>
       <GameHeader
-        questionNumber={questionNumberState}
+        correctCount={correctCountState}
         mistakeCount={mistakeCountState} />
 
       <CSSTransition
@@ -83,7 +91,8 @@ const GameBoard = props => {
 
       <GameInput 
         gameWasSelected={gameWasSelectedHandler}
-        inputBuster={inputBusterState} />
+        inputClear={inputClearState}
+        inputWasCleared={inputWasClearedHandler} />
 
       <GameSubmit
         disabled={selectedGameIdState === null ? true : false}

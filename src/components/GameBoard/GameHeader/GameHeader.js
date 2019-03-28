@@ -15,14 +15,14 @@ const GameHeader = props => {
 
   return (
     <div className={styles.GameHeader}>
-      <div className={styles.QuestionNumber}>{props.questionNumber}</div>
+      <div className={styles.CorrectCount}>{props.correctCount}</div>
       <div className={styles.MistakeCount}>{lives}</div>
     </div>
   )
 };
 
 GameHeader.propTypes = {
-  questionNumber: PropTypes.number.isRequired,
+  correctCount: PropTypes.number.isRequired,
   mistakeCount: PropTypes.number.isRequired
 }
 export default GameHeader;

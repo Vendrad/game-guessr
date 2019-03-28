@@ -32,7 +32,7 @@ const GameAutoComplete = props => {
 
       });
     
-  }, [props.input]);
+  }, [props.input, props.inputHasFocus]);
 
   const autoCompleteItemWasClickedHandler = (id, name) => {
     autoCompleteItemsStateSetter([]);
@@ -66,7 +66,8 @@ const GameAutoComplete = props => {
 GameAutoComplete.propTypes = {
   id: PropTypes.number,
   input: PropTypes.string,
-  autoCompleteItemWasClicked: PropTypes.func.isRequired
+  autoCompleteItemWasClicked: PropTypes.func.isRequired,
+  inputHasFocus: PropTypes.bool.isRequired
 };
 
 export default GameAutoComplete;

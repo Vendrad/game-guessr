@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This app was made with the intention of learning React whilst using the IGDB.com. It can be found hosted online at [http://gg.raredevil.co.uk](http://gg.raredevil.co.uk).
 
-Choose a decade to test your skills in or pick all if you really think you know your stuff about gaming. Guess what game is being described to keep answering questions; you have 10 lives, try to stay alive as long as possible. Share you highscore and challenge your friends to see who knows more about gaming.
+Choose a decade to test your skills in or pick all if you really think you know your stuff! Guess what game is being described to keep answering questions; you have 10 lives, try to stay alive as long as possible. Share you highscore and challenge your friends to see who knows more about gaming.
 
 ##
 

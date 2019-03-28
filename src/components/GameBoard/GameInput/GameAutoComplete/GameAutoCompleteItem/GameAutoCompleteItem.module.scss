@@ -1,0 +1,20 @@
+.GameAutoCompleteItem {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  cursor: pointer;
+  font-size: 1.5rem;
+  height: 18%;
+  padding: 4px;
+}
+
+.GameAutoCompleteItem:hover {
+  background-color: rgb(213, 216, 219)
+}
+
+.GameAutoCompleteItem img {
+  height: 8rem;
+  width: 8rem;
+  margin-right: 10px;
+}

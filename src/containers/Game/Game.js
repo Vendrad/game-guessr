@@ -6,19 +6,11 @@ import GameBoard from '../../components/GameBoard/GameBoard';
 
 const Game = props => {
 
-  const scoreDefaults = {
-    score: 0,
-    questions: 0,
-    mistakes: 0
-  };
-
   const [gameModeState, gameModeStateSetter] = useState(null);
-  const [scoreState, scoreStateSetter] = useState(scoreDefaults);
 
   const gameModeWasSelectedHandler = gameMode => {
-    props.gameModeWasSelected();
     gameModeStateSetter(gameMode);
-    scoreStateSetter(scoreDefaults);
+    props.gameModeWasSelected();
   };
 
   return (
@@ -26,10 +18,10 @@ const Game = props => {
       <GameModeSelector
         gameModeWasSelected={gameModeWasSelectedHandler.bind(this)}
         show={props.started && !props.playing} />
+      
       <GameBoard
-        show={props.started && props.playing}
-        gameMode={gameModeState}
-        score={scoreState} />
+        show={props.playing}
+        gameMode={gameModeState} />
     </>
   );
 };
@@ -37,7 +29,6 @@ const Game = props => {
 Game.propTypes = {
   started: PropTypes.bool.isRequired,
   playing: PropTypes.bool.isRequired,
-  scoreWasUpdated: PropTypes.func.isRequired,
   gameModeWasSelected: PropTypes.func.isRequired
 }
 

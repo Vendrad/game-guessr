@@ -14,7 +14,6 @@ const Header = props => {
   return (
     <header className={headerClasses.join(' ')} style={{backgroundImage: "url(" + backgroundImage +")"}}>
       <HeaderInner
-        score={props.score}
         playing={props.playing}
         startButtonWasClicked={props.startButtonWasClicked}
         restartButtonWasClicked={props.restartButtonWasClicked} />
@@ -24,7 +23,6 @@ const Header = props => {
 };
 
 Header.propTypes = {
-  score: PropTypes.number.isRequired,
   playing: PropTypes.bool.isRequired,
   startButtonWasClicked: PropTypes.func.isRequired,
   restartButtonWasClicked: PropTypes.func.isRequired

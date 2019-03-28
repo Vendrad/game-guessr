@@ -1,16 +1,18 @@
 @import "../../styles/SassVariables.scss";
 
 .GameModeSelector {
-  height: 80vh;
-  width: 80vw;
-  margin: auto 0;
+  height: 89vh;
+  width: 100vw;
+  margin: auto auto;
   position: fixed;
   transition: transform $transition-duration ease-out;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-content: space-between;
+  justify-content: space-around;
+  align-content: space-around;
   box-sizing: border-box;
+  z-index: 200;
+  background-color: $light;
 }
 
 .open {

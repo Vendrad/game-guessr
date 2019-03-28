@@ -1,11 +1,70 @@
+@import "../../../styles/SassVariables.scss";
+
 .GameQuestion {
-  font-size: inherit;
+  position: fixed;
+  margin: auto auto;
+  left: 0;
+  right: 0;
+  top: 20vh;
 }
 
 .Year {
-  padding: 5vw;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 90vw;
+  padding: 1vh;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 5px;
+  font-size: 5vh;
+  font-weight: bold;
+  color: $dark;
+  box-shadow: 0px 0px 3px 1px $medium;
 }
 
 .Storyline {
-  padding: 5vw;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  margin-top: 3vh;
+  width: 90vw;
+  max-height: 43vh;
+  padding: 1vh;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 5px;
+  font-size: 3vh;
+  color: $dark;
+  box-shadow: 0px 0px 3px 1px $medium;
 }
+
+@media (min-width: 500px) {
+  .Storyline {
+    padding: 3rem;
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-aspect-ratio:15/20) {
+  .Storyline {
+    padding: 3vw;
+    font-size: 4vw;
+  }
+}
+
+@media screen and (max-aspect-ratio:12/20) {
+  .Storyline {
+    padding: 3vw;
+    font-size: 4.4vw;
+  }
+}
+@media screen and (max-aspect-ratio:9/20) {
+  .Storyline {
+    padding: 3vw;
+    font-size: 5vw;
+  }
+}
+

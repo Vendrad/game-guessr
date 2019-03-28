@@ -1,27 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
+import { CSSTransition } from 'react-transition-group';
+import { randBetweenInclusive } from '../../helpers';
+import { cleanGameResponse } from '../../igdb';
 
+import GameHeader from './GameHeader/GameHeader';
 import GameQuestion from './GameQuestion/GameQuestion.js';
+import GameInput from './GameInput/GameInput';
+import GameSubmit from './GameSubmit/GameSubmit';
 
 import styles from './GameBoard.module.scss';
 
 const GameBoard = props => {
 
   const [questionNumberState, questionNumberSetter] = useState(1);
-  const [responseState, responseStateSetter] = useState(null);
+  const [mistakeCountState, mistakeCountStateSetter] = useState(0);
   const [gameState, gameStateSetter] = useState(null);
+  const [gameWindowInState, gameWindowInSetter] = useState(false);
+  const [selectedGameIdState, selectedGameIdStateSetter] = useState(null);
+  const [inputBusterState, inputBusterStateSetter] = useState(0);
 
   useEffect(() => {
-
-    if (props.gameMode === null) return undefined;
+    if (props.gameMode === undefined || props.gameMode === null) return undefined;
 
     const [startDate, endDate] = getDates(props.gameMode);
     const offset = randBetweenInclusive(0, 134);
 
     Axios.post('release_dates', 'fields id,game.name,game.alternative_names.name,game.storyline,y;where y >= ' + startDate + ' & y <= ' + endDate + ' & game.storyline != null & game.category = 0;limit 1;offset ' + offset + ';')
       .then(response => {
-        responseStateSetter(response.data[0]);
+        gameStateSetter(cleanGameResponse(response.data[0]));
+        gameWindowInSetter(true);
       });
   }, [questionNumberState, props.gameMode]);
 
@@ -30,58 +39,22 @@ const GameBoard = props => {
     return [rand, rand + 4];
   };
 
-  const randBetweenInclusive = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  const gameWasSelectedHandler = (gameId) => {
+    selectedGameIdStateSetter(gameId);
   };
 
-  const cleanResponse = response => {
-    const game = {
-      id: response.game.id,
-      name: response.game.name,
-      year: response.y,
-      aliases: knownAs(response.game)
-    };
+  const answerWasSubmittedHandler = () => {
 
-    game.storyline = cleanStoryline(response.game.storyline, game.aliases);
-    
-    return game;
-  };
-
-  const cleanStoryline = (storyline, aliases) => {
-    let story = storyline;
-
-    aliases.forEach((name) => {
-      const regex = new RegExp(escapeRegExp(name), 'gmi');
-      story = story.replace(regex, '[ ... ]');
-    })
-    
-    return story;
-  };
-
-  const knownAs = game => {
-    let names = [game.name];
-
-    if (typeof game.alternative_names !== 'undefined') {
-      game.alternative_names.forEach((alternative_name) => {
-        names.push(alternative_name.name);
-      })
+    if (selectedGameIdState !== gameState.id) {
+      mistakeCountStateSetter(mistakeCountState + 1);
     }
 
-    return names;
-  };
+    gameWindowInSetter(false);
+    inputBusterStateSetter(Math.random());
+  }
 
-  const escapeRegExp = string => {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  };
-
-  // const answerWasSubmittedHandler = () => {
-  //   questionNumberSetter(questionNumberState + 1);
-  // }
-
-  if (responseState !== null) {
-    if (gameState === null || responseState.game.id !== gameState.id) {
-      gameStateSetter(cleanResponse(responseState));
-    }
+  const feedNewQuestion = () => {
+    questionNumberSetter(questionNumberState + 1);
   }
 
   let wrappedClasses = [styles.GameBoard, styles.closed];
@@ -89,18 +62,39 @@ const GameBoard = props => {
 
   return (
     <div className={wrappedClasses.join(' ')}>
-      <p>Game Mode Details</p>
-      <p>Current Score Ticking Down</p>
-      <GameQuestion game={gameState} />
-      <p>Input</p>
-      <p>Submit</p>
+      <GameHeader
+        questionNumber={questionNumberState}
+        mistakeCount={mistakeCountState} />
+
+      <CSSTransition
+        in={gameWindowInState}
+        unmountOnExit
+        timeout={50}
+        classNames={{
+          enter: styles.gameWindowEnter,
+          enterDone: styles.gameWindowEnterDone,
+          exit: styles.gameWindowExit,
+          exitDone: styles.gameWindowExitDone
+        }}
+        onExited={feedNewQuestion}
+      >
+        <GameQuestion game={gameState} />
+      </CSSTransition>
+
+      <GameInput 
+        gameWasSelected={gameWasSelectedHandler}
+        inputBuster={inputBusterState} />
+
+      <GameSubmit
+        disabled={selectedGameIdState === null ? true : false}
+        answerWasSubmitted={answerWasSubmittedHandler} />
     </div>
   );
 }
 
 GameBoard.propTypes = {
   show: PropTypes.bool.isRequired,
-  gameMode: PropTypes.object,
+  gameMode: PropTypes.instanceOf(Object),
   questionNumber: PropTypes.number
 }
 

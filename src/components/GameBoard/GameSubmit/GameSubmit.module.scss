@@ -1,0 +1,35 @@
+@import '../../../styles/SassVariables.scss';
+
+.GameSubmit {
+  position: fixed;
+  margin: auto auto;
+  left: 0;
+  right: 0;
+  bottom: 5vh;
+
+}
+.GameSubmit button {
+  width: 80vw;
+  height: 7vh;
+  padding: 1vh;
+  box-sizing: border-box;
+  font-size: 5vh;
+  border: none;
+  border-radius: 5px;
+}
+
+.active {
+  background-color: #6cbe7e;
+  cursor: pointer;
+  color: white;
+}
+
+.active:hover {
+  background-color: #81da95;
+}
+
+.inactive {
+  background-color: $light;
+  color: $medium;
+}
+

@@ -17,16 +17,18 @@
 }
 
 .StartButton {
+  background-color: white;
   margin-top: 20px;
   padding: 30px;
   border: 0;
   box-shadow: none;
   border-radius: 3px;
   font-size: 2rem;
+  cursor: pointer;
 }
 
 .StartButton:hover {
-  background-color: yellow;
+  background-color: $light;
 }
 
 .Score {

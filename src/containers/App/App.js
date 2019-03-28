@@ -7,20 +7,14 @@ import styles from './App.module.scss';
 
 const App = () => {
 
-  const [scoreState, scoreStateSetter] = useState(0);
   const [startedState, startedtateSetter] = useState(false);
   const [playingState, playingStateSetter] = useState(false);
-
-  const scoreWasUpdatedHandler = (score) => {
-    scoreStateSetter(scoreState + score);
-  }
 
   const startButtonWasClickedHandler = () => {
     startedtateSetter(true);
   }
 
   const restartButtonWasClickedHandler = () => {
-    scoreStateSetter(0);
     startedtateSetter(false);
     playingStateSetter(false);
   }
@@ -35,16 +29,16 @@ const App = () => {
   return (
     <div className={styles.App}>
       <Header
-        score={scoreState}
         playing={startedState}
         startButtonWasClicked={startButtonWasClickedHandler}
         restartButtonWasClicked={restartButtonWasClickedHandler} />
       <main className={classesMain.join(' ')}>
+        {startedState ? (
         <Game
           started={startedState}
           playing={playingState}
-          scoreWasUpdated={scoreWasUpdatedHandler}
           gameModeWasSelected={gameModeWasSelectedHandler} />
+          ) : null }
       </main>
     </div>
   );

@@ -4,6 +4,7 @@
   color: white;
   font-size: 1em;
   transition: all $transition-duration ease-out;
+  user-select: none;
 }
 
 .LogoLargeText {
@@ -11,14 +12,17 @@
   font-weight: bold;
   font-size: 2em;
   transition: all $transition-duration ease-out;
+  user-select: none;
 }
 
 .open {
   font-size: 4em;
+  user-select: none;
 }
 
 .closed {
   font-size: 2.5em;
+  cursor: pointer;
 }
 
 .closed .LogoSmallText {

@@ -11,7 +11,6 @@ const HeaderInner = props => {
 
   return (
     <div className={headerInnerClasses.join(' ')}>
-      {props.playing ? <div className={styles.Score}>{props.score}</div> : null }
       <Logo playing={props.playing} restartButtonWasClicked={props.restartButtonWasClicked} />
       {props.playing ? null : <button className={styles.StartButton} onClick={props.startButtonWasClicked}>Start The Challenge</button>}
     </div>
@@ -19,7 +18,6 @@ const HeaderInner = props => {
 };
 
 HeaderInner.propTypes = {
-  score: PropTypes.number.isRequired,
   playing: PropTypes.bool.isRequired,
   startButtonWasClicked: PropTypes.func.isRequired,
   restartButtonWasClicked: PropTypes.func.isRequired

@@ -1,0 +1,29 @@
+.GameHeader {
+  
+  position: fixed;
+  width: 90vw;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 13vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.QuestionNumber {
+  width: 5vw;
+  height: 5vh;
+  color: green;
+  font-size: 4vh;
+}
+
+.MistakeCount img {
+  height: 5vh;
+}
+
+@media screen and (max-aspect-ratio:15/20) {
+  .MistakeCount img {
+    height: 7vw;
+  }
+}

@@ -1,22 +1,43 @@
 @import "../../styles/SassVariables.scss";
 
+
 .GameBoard {
-  height: 80vh;
-  width: 80vw;
+  height: 89vh;
+  width: 100vw;
   margin: auto 0;
-  transition: transform $transition-duration ease-out;
+  transition: opacity $transition-duration ease-out;
   display: flex;
   position: fixed;
   flex-wrap: wrap;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   box-sizing: border-box;
+  opacity: 0;
+  z-index: 100;
 }
 
 .open {
-  transform: translateY(0);
+  opacity: 1;
 }
 
 .closed {
-  transform: translateY(100vh);
+  opacity: 0;
+}
+
+.gameWindowEnter {
+  transform: translateX(100vw);
+}
+
+.gameWindowEnterDone {
+  transform: translateX(0vw);
+  transition: transform $transition-duration-long ease-out;
+}
+
+.gameWindowExit {
+  transform: translateX(0vw);
+}
+
+.gameWindowExitDone {
+  transform: translateX(-100vw);
+  transition: transform 5s ease-out;
 }

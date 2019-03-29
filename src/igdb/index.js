@@ -38,3 +38,9 @@ const knownAs = game => {
 
   return names;
 };
+
+export function igdbEscapeString(string) {
+  return string
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"');
+}

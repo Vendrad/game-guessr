@@ -14,10 +14,10 @@ const GameInput = props => {
   const [inputValueState, inputValueStateSetter] = useState("");
   const [inputHasFocusState, inputHasFocusStateSetter] = useState(false);
 
-  const autoCompleteItemWasClickedHandler = (id, name) => {
-    inputValueStateSetter(name);
+  const autoCompleteItemWasClickedHandler = (game) => {
+    inputValueStateSetter(game.name);
     inputHasFocusStateSetter(false);
-    props.gameWasSelected(id);
+    props.gameWasSelected(game);
   };
 
   const inputGainedFocusHandler = () => {
@@ -25,12 +25,15 @@ const GameInput = props => {
   };
 
   const inputValueWasChangedHandler = (event) => {
+
     inputHasFocusStateSetter(true);
+
     if (inputValueState === event.target.value) return;
     
     inputValueStateSetter(event.target.value)
-
+    
     props.gameWasSelected(null);
+    props.inputWasChanged(event.target.value);
   };
 
   return (
@@ -52,6 +55,7 @@ const GameInput = props => {
 };
 
 GameInput.propTypes = {
+  inputWasChanged: PropTypes.func.isRequired,
   gameWasSelected: PropTypes.func.isRequired,
   inputClear: PropTypes.bool,
   inputWasCleared: PropTypes.func

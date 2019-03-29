@@ -1,0 +1,32 @@
+@import "../../../styles/SassVariables.scss";
+
+.GameAnswer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  margin: auto auto;
+  padding: 1rem;
+  border-radius: 5px;
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.answerEnter {
+  opacity: 0;
+}
+
+.answerEnterDone {
+  opacity: 1;
+  transition: opacity $transition-duration-long ease-out;
+}
+
+.answerExit {
+  opacity: 1;
+}
+
+.answerExitDone {
+  opacity: 0;
+  transition: opacity $transition-duration ease-out;
+}

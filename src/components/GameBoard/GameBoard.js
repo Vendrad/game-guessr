@@ -9,6 +9,7 @@ import GameHeader from './GameHeader/GameHeader';
 import GameQuestion from './GameQuestion/GameQuestion.js';
 import GameInput from './GameInput/GameInput';
 import GameSubmit from './GameSubmit/GameSubmit';
+import GameAnswer from './GameAnswer/GameAnswer';
 
 import styles from './GameBoard.module.scss';
 
@@ -19,8 +20,10 @@ const GameBoard = props => {
   const [mistakeCountState, mistakeCountStateSetter] = useState(0);
   const [gameState, gameStateSetter] = useState(null);
   const [gameWindowInState, gameWindowInSetter] = useState(false);
-  const [selectedGameIdState, selectedGameIdStateSetter] = useState(null);
+  const [inputState, inputStateSetter] = useState("");
+  const [selectedGameState, selectedGameStateSetter] = useState(null);
   const [inputClearState, inputClearStateSetter] = useState(false);
+  const [answerState, answerStateSetter] = useState(null);
 
   useEffect(() => {
     if (props.gameMode === undefined || props.gameMode === null) return undefined;
@@ -40,21 +43,45 @@ const GameBoard = props => {
     return [rand, rand + 4];
   };
 
-  const gameWasSelectedHandler = (gameId) => {
-    selectedGameIdStateSetter(gameId);
+  const inputWasChangedHandler = (input) => {
+    inputStateSetter(input);
+  };
+
+  const gameWasSelectedHandler = (game) => {
+    console.log(game);
+    selectedGameStateSetter(game);
   };
 
   const answerWasSubmittedHandler = () => {
 
-    if (selectedGameIdState !== gameState.id) {
-      mistakeCountStateSetter(mistakeCountState + 1);
-    } else {
+    const answer = {};
+
+    answer.wasCorrect = answerWasCorrect();
+    answer.correctGame = gameState;
+
+    if (answer.wasCorrect) {
       correctCountStateSetter(correctCountState + 1);
+    } else {
+      mistakeCountStateSetter(mistakeCountState + 1);
     }
 
+    answerStateSetter(answer);
     gameWindowInSetter(false);
     inputClearStateSetter(true);
-    selectedGameIdStateSetter(null);
+    selectedGameStateSetter(null);
+  }
+
+  const answerWasCorrect = () => {
+    if (selectedGameState !== null) {
+      if (selectedGameState.id === gameState.id) return true;
+      if (selectedGameState.name.toLowerCase() === gameState.name.toLowerCase()) return true;
+    }
+
+    return inputState.toLowerCase() === gameState.name.toLowerCase();
+  }
+
+  const answerWasDisplayedHandler = () => {
+    answerStateSetter(null);
   }
 
   const inputWasClearedHandler = () => {
@@ -89,14 +116,20 @@ const GameBoard = props => {
         <GameQuestion game={gameState} />
       </CSSTransition>
 
-      <GameInput 
+      <GameInput
+        inputWasChanged={inputWasChangedHandler}
         gameWasSelected={gameWasSelectedHandler}
         inputClear={inputClearState}
         inputWasCleared={inputWasClearedHandler} />
 
       <GameSubmit
-        disabled={selectedGameIdState === null ? true : false}
+        disabled={selectedGameState !== null || inputState.length > 0 ? false : true}
         answerWasSubmitted={answerWasSubmittedHandler} />
+
+      {answerState !== null
+        ? <GameAnswer answer={answerState}
+          answerWasDisplayed={answerWasDisplayedHandler} />
+        : null }
     </div>
   );
 }

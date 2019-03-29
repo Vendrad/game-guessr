@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
+import { igdbEscapeString } from '../../../../igdb'; 
 
 import GameAutoCompleteItem from './GameAutoCompleteItem/GameAutoCompleteItem';
 
@@ -23,7 +24,7 @@ const GameAutoComplete = props => {
       return undefined;
     }
 
-    Axios.post('games', 'fields id,name,cover.url;search "' + props.input + '";limit 5;')
+    Axios.post('games', 'fields id,name,cover.url;search "' + igdbEscapeString(props.input) + '";limit 5;')
       .then(response => {
 
         if (response.data.length === 0) autoCompleteItemsStateSetter([]);
@@ -34,10 +35,10 @@ const GameAutoComplete = props => {
     
   }, [props.input, props.inputHasFocus]);
 
-  const autoCompleteItemWasClickedHandler = (id, name) => {
+  const autoCompleteItemWasClickedHandler = (game) => {
     autoCompleteItemsStateSetter([]);
     blockNextInputUpdateStateSetter(true);
-    props.autoCompleteItemWasClicked(id, name)
+    props.autoCompleteItemWasClicked(game)
   }
 
   if (autoCompleteItemsState.length === 0) return null;

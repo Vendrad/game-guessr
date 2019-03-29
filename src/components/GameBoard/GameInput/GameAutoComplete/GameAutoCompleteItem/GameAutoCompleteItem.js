@@ -6,9 +6,9 @@ import unknownCover from '../../../../../assets/images/icons8-question-mark-64.p
 
 const GameAutoCompleteItem = props => {
   return (
-    <li className={styles.GameAutoCompleteItem} onClick={props.gameAutoCompleteItemWasClicked.bind(this, props.gameId, props.gameName)}>
+    <li className={styles.GameAutoCompleteItem} onClick={() => props.gameAutoCompleteItemWasClicked({id: props.gameId, name: props.gameName})}>
       <img src={props.gameCover === null ? unknownCover : props.gameCover} alt={props.gameName + "cover art"} />
-      <label>{props.gameName}</label>
+      <p>{props.gameName}</p>
     </li>
   )
 };

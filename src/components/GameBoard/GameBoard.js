@@ -48,7 +48,6 @@ const GameBoard = props => {
   };
 
   const gameWasSelectedHandler = (game) => {
-    console.log(game);
     selectedGameStateSetter(game);
   };
 

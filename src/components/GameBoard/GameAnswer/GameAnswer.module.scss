@@ -15,18 +15,23 @@
 
 .answerEnter {
   opacity: 0;
+  transform: scale(0.8);
 }
 
-.answerEnterDone {
+.answerEnterActive {
   opacity: 1;
-  transition: opacity $transition-duration-long ease-out;
+  transform: scale(1);
+  transition: opacity $transition-duration ease-out,
+    transform $transition-duration ease-out;
 }
 
 .answerExit {
   opacity: 1;
 }
 
-.answerExitDone {
+.answerExitActive {
   opacity: 0;
-  transition: opacity $transition-duration ease-out;
+  transform: scale(0.8);
+  transition: opacity $transition-duration ease-out,
+    transform $transition-duration-long ease-out;
 }

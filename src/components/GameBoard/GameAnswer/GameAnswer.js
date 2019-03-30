@@ -16,7 +16,7 @@ const GameAnswer = (props) => {
   },[]);
 
   const answerEntered = () => {
-    //inStateSetter(false);
+    inStateSetter(false);
   };
 
   return (
@@ -24,7 +24,7 @@ const GameAnswer = (props) => {
       in={inState}
       timeout={{
         appear: 0,
-        enter: 3000,
+        enter: 2000,
         exit: 500,
        }}
       unmountOnExit
@@ -32,9 +32,9 @@ const GameAnswer = (props) => {
       onExited={props.answerWasDisplayed}
       classNames={{
         enter: styles.answerEnter,
-        enterActive: styles.answerEnterDone,
+        enterActive: styles.answerEnterActive,
         exit: styles.answerExit,
-        exitActive: styles.answerExitDone
+        exitActive: styles.answerExitActive
       }}
       >
       <div className={styles.GameAnswer}>

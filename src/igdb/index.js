@@ -8,6 +8,8 @@ export function cleanGameResponse(response) {
     aliases: knownAs(response.game)
   };
 
+  console.log(game.name);
+
   game.storyline = cleanStoryline(response.game.storyline, game.aliases);
   
   return game;

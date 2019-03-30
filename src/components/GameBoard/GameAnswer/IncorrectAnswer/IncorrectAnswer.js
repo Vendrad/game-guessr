@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './IncorrectAnswer.module.scss';
-import icon from '../../../../assets/images/icons8-delete-128.png'
+import icon from '../../../../assets/images/icons8-delete-128.png';
 
 const IncorrectAnswer = (props) => {
 

@@ -1,9 +1,14 @@
+@import "../../../../styles/SassVariables.scss";
+
 .CorrectAnswer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: white;
   padding: 2rem;
   border-radius: 5px;
   border: 1px solid green;
+  font-size: 3rem;
+  color: $dark;
 }

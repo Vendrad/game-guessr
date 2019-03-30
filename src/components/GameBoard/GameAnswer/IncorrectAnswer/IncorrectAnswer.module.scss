@@ -1,9 +1,20 @@
+@import "../../../../styles/SassVariables.scss";
+
 .IncorrectAnswer {
-  border: 6px solid rgb(172, 85, 85);
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
   border-radius: 3px;
   padding: 1em;
-  width: 80vw;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 5px;
+  border: 1px solid rgb(107, 3, 38);
+  font-size: 3rem;
+  color: $dark;
+}
+
+.IncorrectAnswer p {
+  max-width: 50vw;
 }

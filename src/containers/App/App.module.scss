@@ -2,7 +2,7 @@
 
 .App {
   text-align: center;
-  min-height: 100vh;
+  min-height: 100%;
   overflow: hidden;
 }
 
@@ -13,7 +13,7 @@
 .main {
   background-color: rgb(240, 240, 240);
   width: 100vw;
-  height: 89vh;
+  height: 89%;
   position: fixed;
   left: 0;
   padding: 0;
@@ -26,7 +26,7 @@
 }
 
 .closed {
-  bottom: -90vh;
+  bottom: -90%;
   transition: bottom $transition-duration ease-out;
 }
 

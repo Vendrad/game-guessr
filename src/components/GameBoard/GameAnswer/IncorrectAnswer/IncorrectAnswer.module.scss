@@ -16,5 +16,11 @@
 }
 
 .IncorrectAnswer p {
-  max-width: 50vw;
+  max-width: 40vw;
+}
+
+@media screen and (max-width: 500px) {
+  .IncorrectAnswer {
+    font-size: 2rem;
+  }
 }

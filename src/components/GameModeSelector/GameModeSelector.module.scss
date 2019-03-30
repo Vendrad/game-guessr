@@ -1,7 +1,7 @@
 @import "../../styles/SassVariables.scss";
 
 .GameModeSelector {
-  height: 89vh;
+  height: 89%;
   width: 100vw;
   margin: auto auto;
   position: fixed;
@@ -20,7 +20,7 @@
 }
 
 .closed {
-  transform: translateY(100vh);
+  transform: translateY(100%);
 }
 
 .GameModeSelectorHeader {
@@ -29,5 +29,5 @@
   font-size: 2.8rem;
   color: $dark;
   font-weight: bold;
-  width: 100%;
+  width: 100vw;
 }

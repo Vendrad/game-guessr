@@ -85,41 +85,43 @@ const GameBoard = props => {
 
   const inputWasClearedHandler = () => {
     inputClearStateSetter(false);
+    inputStateSetter("");
   }
 
   const feedNewQuestion = () => {
     questionNumberSetter(questionNumberState + 1);
   }
 
-  let wrappedClasses = [styles.GameBoard, styles.closed];
-  if (props.show) wrappedClasses = [styles.GameBoard, styles.open];
-
   return (
-    <div className={wrappedClasses.join(' ')}>
+    <div className={styles.GameBoard}>
       <GameHeader
         correctCount={correctCountState}
         mistakeCount={mistakeCountState} />
 
-      <CSSTransition
-        in={gameWindowInState}
-        unmountOnExit
-        timeout={50}
-        classNames={{
-          enter: styles.gameWindowEnter,
-          enterDone: styles.gameWindowEnterDone,
-          exit: styles.gameWindowExit,
-          exitDone: styles.gameWindowExitDone
-        }}
-        onExited={feedNewQuestion}
-      >
-        <GameQuestion game={gameState} />
-      </CSSTransition>
+      <div className={styles.GameQuestionArea}>      
+        <CSSTransition
+          in={gameWindowInState}
+          unmountOnExit
+          timeout={1000}
+          classNames={{
+            enter: styles.gameQuestionWindowEnter,
+            enterActive: styles.gameQuestionWindowEnterActive,
+            exit: styles.gameQuestionWindowExit,
+            exitActive: styles.gameQuestionWindowExitActive
+          }}
+          onExited={feedNewQuestion}
+        >
+          <GameQuestion game={gameState} />
+        </CSSTransition>
+      </div>
+
 
       <GameInput
         inputWasChanged={inputWasChangedHandler}
         gameWasSelected={gameWasSelectedHandler}
         inputClear={inputClearState}
-        inputWasCleared={inputWasClearedHandler} />
+        inputWasCleared={inputWasClearedHandler}
+        answerWasSubmitted={answerWasSubmittedHandler} />
 
       <GameSubmit
         disabled={selectedGameState !== null || inputState.length > 0 ? false : true}

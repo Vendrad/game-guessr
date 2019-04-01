@@ -1,11 +1,11 @@
 @import "../../../styles/SassVariables.scss";
 
 .GameQuestion {
-  position: fixed;
-  margin: auto auto;
+  margin: 1% auto;
   left: 0;
   right: 0;
-  top: 20%;
+  display: flex;
+  flex-direction: column;
 }
 
 .Year {
@@ -13,34 +13,83 @@
   right: 0;
   margin: 0 auto;
   width: 90vw;
-  padding: 1rem;
+  padding: 1%;
   box-sizing: border-box;
   background-color: white;
   border-radius: 5px;
-  font-size: 5vh;
+  font-size: 3rem;
   font-weight: bold;
   color: $dark;
   box-shadow: 0px 0px 3px 1px $medium;
 }
 
 .Storyline {
+  flex-grow: 1;
   left: 0;
   right: 0;
   margin: 0 auto;
-  margin-top: 3%;
+  margin-top: 2%;
   width: 90vw;
-  max-height: 43%;
   padding: 1rem;
   box-sizing: border-box;
   text-overflow: ellipsis;
   overflow: hidden;
   background-color: white;
   border-radius: 5px;
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   color: $dark;
   box-shadow: 0px 0px 3px 1px $medium;
 }
 
+
+
+@media screen and (max-height: 500px) {
+  .Storyline {
+    font-size: 3.5vw;
+  }
+}
+
+@media screen and (max-width: 500px) and (max-aspect-ratio: 99/100) {
+  .Storyline {
+    font-size: 3.3vw;
+  }
+}
+
+@media screen and (max-height: 500px) and (min-aspect-ratio:1/1) {
+  .GameQuestion {
+    flex-direction: row;
+    width: 90vw;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+  .Year {
+    width: 15vw;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .Storyline {
+    background-color: blue;
+    width: 70vw;
+    font-size: 3.4vh;
+    margin: 0 auto;
+    flex-grow: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+
+// @media screen and (max-width: 550px) and (max-height: 550px) and (min-aspect-ratio:1/1) {
+//   .Storyline {
+//     font-size: 3vw;
+//   }
+// }
+
+/*
 @media screen and (min-width: 500px) {
   .Storyline {
     padding: 3rem;
@@ -48,23 +97,24 @@
   }
 }
 
-@media screen and (max-aspect-ratio:15/20) {
+@media screen and (max-aspect-ratio: 15/20) {
   .Storyline {
     padding: 3vw;
     font-size: 4vw;
   }
 }
 
-@media screen and (max-aspect-ratio:12/20) {
+@media screen and (max-aspect-ratio: 12/20) {
   .Storyline {
     padding: 3vw;
     font-size: 4.4vw;
   }
 }
-@media screen and (max-aspect-ratio:9/20) {
+@media screen and (max-aspect-ratio: 9/20) {
   .Storyline {
     padding: 3vw;
     font-size: 5vw;
   }
 }
 
+*/

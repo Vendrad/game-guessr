@@ -17,7 +17,7 @@ const Game = props => {
     <>
       <GameModeSelector
         gameModeWasSelected={gameModeWasSelectedHandler.bind(this)}
-        show={props.started && !props.playing} />
+        show={!props.playing} />
       
       <GameBoard
         show={props.playing}
@@ -27,7 +27,6 @@ const Game = props => {
 };
 
 Game.propTypes = {
-  started: PropTypes.bool.isRequired,
   playing: PropTypes.bool.isRequired,
   gameModeWasSelected: PropTypes.func.isRequired
 }

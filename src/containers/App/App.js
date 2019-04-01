@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 import Header from '../../components/Header/Header';
 import Game from '../Game/Game';
@@ -23,39 +24,34 @@ const App = () => {
     playingStateSetter(true);
   }
 
-  let classesMain = [styles.main, styles.closed];
-  if (startedState) classesMain = [styles.main, styles.open];
-
   return (
     <div className={styles.App}>
       <Header
         playing={startedState}
         startButtonWasClicked={startButtonWasClickedHandler}
         restartButtonWasClicked={restartButtonWasClickedHandler} />
-      <main className={classesMain.join(' ')}>
-        {startedState ? (
-        <Game
-          started={startedState}
-          playing={playingState}
-          gameModeWasSelected={gameModeWasSelectedHandler} />
-          ) : null }
-      </main>
+
+      <CSSTransition
+        in={startedState}
+        unmountOnExit
+        timeout={500}
+        classNames={{
+          enter: styles.gameWindowEnter,
+          enterActive: styles.gameWindowEnterActive,
+          exit: styles.gameWindowExit,
+          exitActive: styles.gameWindowExitActive
+        }}
+      >
+
+        <main className={styles.main}>
+          <Game
+            started={startedState}
+            playing={playingState}
+            gameModeWasSelected={gameModeWasSelectedHandler} />
+        </main>
+      </CSSTransition>
     </div>
   );
 }
 
 export default App;
-
-
-/*
-
-  gameBeginHandler(minYear, maxYear) {
-    const gameDatabase = new GameDatabase();
-
-    // Execute game
-    // Reset score and counters
-    // Pull Game
-    // Setup boardd
-    console.log(gameDatabase.getRandom(minYear, maxYear));
-  }
-  */

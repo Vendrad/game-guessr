@@ -8,8 +8,6 @@ export function cleanGameResponse(response) {
     aliases: knownAs(response.game)
   };
 
-  console.log(game.name);
-
   game.storyline = cleanStoryline(response.game.storyline, game.aliases);
   
   return game;
@@ -22,7 +20,7 @@ const cleanStoryline = (storyline, aliases) => {
     const regex = new RegExp(escapeRegExp(name), 'gmi');
     story = story.replace(regex, '[ ... ]');
   })
-  
+
   return story;
 };
 

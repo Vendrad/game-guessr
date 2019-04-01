@@ -1,27 +1,10 @@
 @import "../../styles/SassVariables.scss";
 
-.LogoSmallText {
-  color: white;
-  font-size: 1em;
-  transition: all $transition-duration ease-out;
-  user-select: none;
-}
-
-.LogoLargeText {
-  color: white;
-  font-weight: bold;
-  font-size: 2em;
-  transition: all $transition-duration ease-out;
-  user-select: none;
-}
-
 .open {
-  font-size: 4em;
   user-select: none;
 }
 
 .closed {
-  font-size: 2.5em;
   cursor: pointer;
 }
 
@@ -30,51 +13,23 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-.App-logoB {
-  display: inline-block;
-  transform: rotate(-55deg);
-  /* animation: App-logo-spin infinite 5s linear; */
-  pointer-events: none;
-  font-size: 10vmin;
-  margin: 0px;
-
+.LogoSmallText {
+  color: white;
+  font-size: 4vh;
+  transition: all $transition-duration ease-out;
+  user-select: none;
 }
 
-.App-logoS {
-  display: inline-block;
-  transform: translate(-30px, 10px);
-  /* animation: App-logo-spin infinite 5s linear; */
-  pointer-events: none;
-  font-size: 3vmin;
-  margin: 0px;
-  text-align: right;
+.LogoLargeText {
+  color: white;
+  font-weight: bold;
+  font-size: 8vh;
+  transition: all $transition-duration ease-out;
+  user-select: none;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(-10deg);
-  }
-  50% {
-    transform: rotate(10deg);
-  }
-  to {
-    transform: rotate(-10deg);
-  }
-}
+// @media screen and (max-height: 650px) {
+//   .closed .LogoLargeText {
+//     font-size: 8vh;
+//   }
+// }

@@ -1,7 +1,7 @@
 @import "../../styles/SassVariables.scss";
 
 .GameBoard {
-  height: 89vh;
+  height: 90%;
   width: 100vw;
   margin: auto 0;
   transition: opacity $transition-duration ease-out;
@@ -9,34 +9,29 @@
   position: fixed;
   flex-wrap: wrap;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   box-sizing: border-box;
-  opacity: 0;
   z-index: 100;
 }
 
-.open {
-  opacity: 1;
+.GameQuestionArea {
+  flex-grow: 1;
 }
 
-.closed {
-  opacity: 0;
-}
-
-.gameWindowEnter {
+.gameQuestionWindowEnter {
   transform: translateX(100vw);
 }
 
-.gameWindowEnterDone {
+.gameQuestionWindowEnterActive {
   transform: translateX(0vw);
   transition: transform $transition-duration-long ease-out;
 }
 
-.gameWindowExit {
+.gameQuestionWindowExit {
   transform: translateX(0vw);
 }
 
-.gameWindowExitDone {
+.gameQuestionWindowExitActive {
   transform: translateX(-100vw);
-  transition: transform 5s ease-out;
+  transition: transform $transition-duration-long ease-out;
 }

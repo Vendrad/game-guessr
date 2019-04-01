@@ -1,11 +1,11 @@
 .GameHeader {
   
-  position: fixed;
+  //position: fixed;
   width: 90vw;
-  margin: 0 auto;
+  margin: 1% auto;
   left: 0;
   right: 0;
-  top: 13vh;
+  height: 8%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,17 +13,16 @@
 
 .CorrectCount {
   width: 5vw;
-  height: 5vh;
   color: green;
-  font-size: 4vh;
+  font-size: 7vh;
 }
 
 .MistakeCount img {
-  height: 5vh;
+  height: 7vw;
 }
 
-@media screen and (max-aspect-ratio:15/20) {
+@media screen and (min-aspect-ratio:1/1) {
   .MistakeCount img {
-    height: 7vw;
+    height: 7vh;
   }
 }

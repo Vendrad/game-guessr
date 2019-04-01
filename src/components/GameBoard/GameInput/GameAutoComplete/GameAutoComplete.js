@@ -11,11 +11,19 @@ const GameAutoComplete = props => {
 
   const [autoCompleteItemsState, autoCompleteItemsStateSetter] = useState([]);
   const [blockNextInputUpdateState, blockNextInputUpdateStateSetter] = useState(false);
+
+  let _isMounted = true;
+
+  useEffect(() => {
+    return () => {
+      _isMounted = false;
+    }
+  },[]);
   
   useEffect(() => {
 
     if (props.input.length < 3) {
-      autoCompleteItemsStateSetter([]);
+      console.log(props.input);
       return undefined;
     }
 
@@ -24,14 +32,24 @@ const GameAutoComplete = props => {
       return undefined;
     }
 
+    const source = Axios.CancelToken.source();
+
     Axios.post('games', 'fields id,name,cover.url;search "' + igdbEscapeString(props.input) + '";limit 5;')
       .then(response => {
+
+        console.log('axiosCB ' + props.input);
+
+        if (!_isMounted) return;
 
         if (response.data.length === 0) autoCompleteItemsStateSetter([]);
 
         autoCompleteItemsStateSetter(response.data);
 
       });
+
+    return () => {
+      source.cancel("GameAutoComplete - Cleanup: Request no longer needed.");
+    };
     
   }, [props.input, props.inputHasFocus]);
 

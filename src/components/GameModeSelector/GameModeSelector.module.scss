@@ -1,8 +1,9 @@
 @import "../../styles/SassVariables.scss";
 
 .GameModeSelector {
-  height: 89%;
+  height: 90%;
   width: 100vw;
+  padding: 10px auto;
   margin: auto auto;
   position: fixed;
   transition: transform $transition-duration ease-out;

@@ -14,7 +14,7 @@ const GameInput = props => {
   const [inputValueState, inputValueStateSetter] = useState("");
   const [inputHasFocusState, inputHasFocusStateSetter] = useState(false);
 
-  const autoCompleteItemWasClickedHandler = (game) => {
+  const autoCompleteItemWasClickedHandler = game => {
     inputValueStateSetter(game.name);
     inputHasFocusStateSetter(false);
     props.gameWasSelected(game);
@@ -24,7 +24,7 @@ const GameInput = props => {
     inputHasFocusStateSetter(true);
   };
 
-  const inputValueWasChangedHandler = (event) => {
+  const inputValueWasChangedHandler = event => {
 
     inputHasFocusStateSetter(true);
 
@@ -36,20 +36,31 @@ const GameInput = props => {
     props.inputWasChanged(event.target.value);
   };
 
+  const keyPressHandler = event => {
+    if(event.key === 'Enter'){
+      props.answerWasSubmitted();
+      inputValueStateSetter("");
+      inputHasFocusStateSetter(false);
+    }
+  }
+
   return (
     <div
       className={styles.GameInput}>
-      <GameAutoComplete
-        input={inputValueState}
-        autoCompleteItemWasClicked={autoCompleteItemWasClickedHandler}
-        inputHasFocus={inputHasFocusState} />
+      {inputValueState.length >= 3
+        ? <GameAutoComplete
+          input={inputValueState}
+          autoCompleteItemWasClicked={autoCompleteItemWasClickedHandler}
+          inputHasFocus={inputHasFocusState} />
+        : null
+      }
       <input
         type="text"
+        placeholder="Find the game..."
+        value={inputValueState}
         onChange={inputValueWasChangedHandler}
         onFocus={inputGainedFocusHandler}
-        placeholder="Find the match..."
-        value={inputValueState}
-        />
+        onKeyPress={keyPressHandler} />
     </div>
   )
 };
@@ -58,7 +69,8 @@ GameInput.propTypes = {
   inputWasChanged: PropTypes.func.isRequired,
   gameWasSelected: PropTypes.func.isRequired,
   inputClear: PropTypes.bool,
-  inputWasCleared: PropTypes.func
+  inputWasCleared: PropTypes.func.isRequired,
+  answerWasSubmitted: PropTypes.func.isRequired
 }
 
 export default GameInput;

@@ -2,8 +2,6 @@
 
 .App {
   text-align: center;
-  min-height: 100%;
-  overflow: hidden;
 }
 
 .App-link {
@@ -13,20 +11,28 @@
 .main {
   background-color: rgb(240, 240, 240);
   width: 100vw;
-  height: 89%;
+  height: 90%;
+  min-height: 300px;
   position: fixed;
   left: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.open {
-  bottom: 0vh;
+.gameWindowEnter {
+  bottom: -90%;
+}
+
+.gameWindowEnterActive {
+  bottom: 0%;
   transition: bottom $transition-duration ease-out;
 }
 
-.closed {
+.gameWindowExit {
+  bottom: 0%;
+}
+
+.gameWindowExitActive {
   bottom: -90%;
   transition: bottom $transition-duration ease-out;
 }
-

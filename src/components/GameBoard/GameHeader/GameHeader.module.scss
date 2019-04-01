@@ -1,6 +1,6 @@
+@import '../../../styles/SassVariables.scss';
+
 .GameHeader {
-  
-  //position: fixed;
   width: 90vw;
   margin: 1% auto;
   left: 0;
@@ -17,6 +17,29 @@
   font-size: 7vh;
 }
 
+.Flyaway {
+  font-size: 7vh;
+}
+
+.FlyawayEnter {
+  opacity: 0;
+}
+
+.FlyawayEnterActive {
+  opacity: 1;
+  transition: all $transition-duration-short ease-out;
+}
+
+.FlyawayExit {
+  opacity: 1;
+}
+
+.FlyawayExitActive {
+  opacity: 0;
+  transform: scale(1.2);
+  transition: all $transition-duration-long ease-out;
+}
+
 .MistakeCount img {
   height: 7vw;
 }
@@ -26,3 +49,5 @@
     height: 7vh;
   }
 }
+
+

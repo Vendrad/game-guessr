@@ -92,10 +92,13 @@ const GameBoard = props => {
     questionNumberSetter(questionNumberState + 1);
   }
 
+  console.log(answerState);
+
   return (
     <div className={styles.GameBoard}>
       <GameHeader
         correctCount={correctCountState}
+        correctCountFlyaway={answerState !== null ? answerState.wasCorrect : false}
         mistakeCount={mistakeCountState} />
 
       <div className={styles.GameQuestionArea}>      
@@ -114,7 +117,6 @@ const GameBoard = props => {
           <GameQuestion game={gameState} />
         </CSSTransition>
       </div>
-
 
       <GameInput
         inputWasChanged={inputWasChangedHandler}

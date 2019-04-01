@@ -23,7 +23,6 @@ const GameAutoComplete = props => {
   useEffect(() => {
 
     if (props.input.length < 3) {
-      console.log(props.input);
       return undefined;
     }
 
@@ -36,8 +35,6 @@ const GameAutoComplete = props => {
 
     Axios.post('games', 'fields id,name,cover.url;search "' + igdbEscapeString(props.input) + '";limit 5;')
       .then(response => {
-
-        console.log('axiosCB ' + props.input);
 
         if (!_isMounted) return;
 

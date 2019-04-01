@@ -13,12 +13,6 @@ const GameAutoComplete = props => {
   const [blockNextInputUpdateState, blockNextInputUpdateStateSetter] = useState(false);
 
   let _isMounted = true;
-
-  useEffect(() => {
-    return () => {
-      _isMounted = false;
-    }
-  },[]);
   
   useEffect(() => {
 
@@ -45,6 +39,7 @@ const GameAutoComplete = props => {
       });
 
     return () => {
+      _isMounted = false;
       source.cancel("GameAutoComplete - Cleanup: Request no longer needed.");
     };
     

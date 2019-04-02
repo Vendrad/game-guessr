@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import HeaderInner from './HeaderInner/HeaderInner';
 
 import styles from './Header.module.scss';
-import backgroundImage from '../../assets/images/bg.jpg';
+import backgroundImage from '../../assets/images/bg2.jpg';
 
 const Header = props => {
 

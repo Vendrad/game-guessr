@@ -5,29 +5,30 @@
   transition: all $transition-duration ease-out;
   justify-content: center;
   flex-direction: column;
-}
-
-.open {
-  cursor: none;
-}
-
-.closed {
-  cursor: pointer;
+  align-items: center;
 }
 
 .StartButton {
-  background-color: white;
+  width: 70%;
+  background-color: #246136;
   margin-top: 20px;
   padding: 30px;
   border: 0;
   box-shadow: none;
-  border-radius: 3px;
-  font-size: 2rem;
+  border-radius: 10px;
+  font-size: 3rem;
   cursor: pointer;
+  color: white;
+  transition: background-color $transition-duration-short ease-out;
 }
 
 .StartButton:hover {
-  background-color: $light;
+  background-color: #284230;
+}
+
+.StartButton:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.3rem #76b589A0;
 }
 
 .Score {

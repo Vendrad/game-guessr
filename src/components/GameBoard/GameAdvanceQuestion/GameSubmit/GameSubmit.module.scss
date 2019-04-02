@@ -1,15 +1,11 @@
-@import '../../../styles/SassVariables.scss';
+@import '../../../../styles/SassVariables.scss';
 
 .GameSubmit {
-  //position: fixed;
-  margin: 1% auto 2% auto;
-  left: 0;
-  right: 0;
-  display: flex;
+  width: 69%;
 }
 .GameSubmit button {
-  width: 80vw;
-  padding: 1%;
+  width: 100%;
+  padding: 0.5rem;
   box-sizing: border-box;
   font-size: 5vh;
   border: none;

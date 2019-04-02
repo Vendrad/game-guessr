@@ -2,16 +2,20 @@
 
 .open {
   user-select: none;
+  padding: 1rem;
+  background-color: #606b63;
+  border-radius: 10px;
 }
 
 .closed {
   cursor: pointer;
+  padding: 1vh;
+  background-color: rgb(36, 97, 54);
 }
 
 .closed .LogoSmallText {
   font-size: 0;
 }
-
 
 .LogoSmallText {
   color: white;
@@ -28,8 +32,15 @@
   user-select: none;
 }
 
-// @media screen and (max-height: 650px) {
-//   .closed .LogoLargeText {
-//     font-size: 8vh;
-//   }
-// }
+.stroke {
+  -webkit-text-stroke: 1px rgb(36, 97, 54);
+} 
+
+@media screen and (max-height: 500px) {
+  .open .LogoLargeText {
+    font-size: 8vw;
+  }
+  .open .LogoSmallText {
+    font-size: 4vw;
+  }
+}

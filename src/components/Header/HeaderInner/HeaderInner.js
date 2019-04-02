@@ -6,13 +6,11 @@ import Logo from '../../Logo/Logo';
 import styles from './HeaderInner.module.scss';
 
 const HeaderInner = props => {
-  let headerInnerClasses = [styles.HeaderInner, styles.open];
-  if (props.playing) headerInnerClasses = [styles.HeaderInner, styles.closed];
 
   return (
-    <div className={headerInnerClasses.join(' ')}>
+    <div className={styles.HeaderInner}>
       <Logo playing={props.playing} restartButtonWasClicked={props.restartButtonWasClicked} />
-      {props.playing ? null : <button className={styles.StartButton} onClick={props.startButtonWasClicked}>Start The Challenge</button>}
+      {props.playing ? null : <button className={styles.StartButton} onClick={props.startButtonWasClicked}>START</button>}
     </div>
   );
 };

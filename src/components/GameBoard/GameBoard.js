@@ -4,11 +4,12 @@ import Axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
 import { randBetweenInclusive } from '../../helpers';
 import { cleanGameResponse } from '../../igdb';
+import AppConfig from '../../config/App.config'
 
 import GameHeader from './GameHeader/GameHeader';
 import GameQuestion from './GameQuestion/GameQuestion.js';
 import GameInput from './GameInput/GameInput';
-import GameSubmit from './GameSubmit/GameSubmit';
+import GameAdvanceQuestion from './GameAdvanceQuestion/GameAdvanceQuestion';
 import GameAnswer from './GameAnswer/GameAnswer';
 
 import styles from './GameBoard.module.scss';
@@ -51,11 +52,11 @@ const GameBoard = props => {
     selectedGameStateSetter(game);
   };
 
-  const answerWasSubmittedHandler = () => {
+  const answerWasSubmittedHandler = skip => {
 
     const answer = {};
 
-    answer.wasCorrect = answerWasCorrect();
+    answer.wasCorrect = skip ? false : answerWasCorrect();
     answer.correctGame = gameState;
 
     if (answer.wasCorrect) {
@@ -71,6 +72,7 @@ const GameBoard = props => {
   }
 
   const answerWasCorrect = () => {
+
     if (selectedGameState !== null) {
       if (selectedGameState.id === gameState.id) return true;
       if (selectedGameState.name.toLowerCase() === gameState.name.toLowerCase()) return true;
@@ -92,7 +94,9 @@ const GameBoard = props => {
     questionNumberSetter(questionNumberState + 1);
   }
 
-  console.log(answerState);
+  if (mistakeCountState >= AppConfig.lives) {
+    alert('You lose!');
+  }
 
   return (
     <div className={styles.GameBoard}>
@@ -125,7 +129,7 @@ const GameBoard = props => {
         inputWasCleared={inputWasClearedHandler}
         answerWasSubmitted={answerWasSubmittedHandler} />
 
-      <GameSubmit
+      <GameAdvanceQuestion
         disabled={selectedGameState !== null || inputState.length > 0 ? false : true}
         answerWasSubmitted={answerWasSubmittedHandler} />
 

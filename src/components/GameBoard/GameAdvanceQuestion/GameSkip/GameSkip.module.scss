@@ -1,0 +1,21 @@
+.GameSkip {
+  width: 29%;
+}
+.GameSkip button {
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  font-size: 5vh;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(54, 103, 153);
+}
+
+.GameSkip button:hover {
+  background-color: rgb(37, 72, 107);
+}
+.GameSkip button:focus {
+  background-color: rgb(52, 98, 145);
+}
+
+

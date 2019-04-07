@@ -27,7 +27,7 @@ const GameAutoComplete = props => {
 
     const source = Axios.CancelToken.source();
 
-    Axios.post('games', 'fields id,name,cover.url;search "' + igdbEscapeString(props.input) + '";limit 5;')
+    Axios.get('games/search/' + igdbEscapeString(props.input))
       .then(response => {
 
         if (!_isMounted) return;

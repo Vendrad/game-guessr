@@ -2,6 +2,7 @@
   width: 29%;
 }
 .GameSkip button {
+  cursor: pointer;
   width: 100%;
   padding: 0.5rem;
   box-sizing: border-box;
@@ -9,6 +10,7 @@
   border: none;
   border-radius: 5px;
   background-color: rgb(54, 103, 153);
+  color: rgb(218, 218, 218);
 }
 
 .GameSkip button:hover {

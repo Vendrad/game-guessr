@@ -8,11 +8,11 @@ import styles from './GameModeSelector.module.scss';
 const GameModeSelector = props => {
 
   const gameModes = [
-    {id: 0, type: 'normal', title: '80\'s', minYear: 1980, maxYear: 1989},
-    {id: 1, type: 'normal', title: '90\'s', minYear: 1990, maxYear: 1999},
-    {id: 2, type: 'normal', title: '00\'s', minYear: 2000, maxYear: 2009},
-    {id: 3, type: 'normal', title: '10\'s', minYear: 2010, maxYear: 2019},
-    {id: 4, type: 'all', title: 'I can handle anything!', minYear: 1980, maxYear: 2019}
+    {id: 0, type: 'normal', title: '80\'s'},
+    {id: 1, type: 'normal', title: '90\'s'},
+    {id: 2, type: 'normal', title: '00\'s'},
+    {id: 3, type: 'normal', title: '10\'s'},
+    {id: 4, type: 'all', title: 'I can handle anything!'}
   ];
 
   const gameModeWasSelectedHandler = (gameModeId) => {

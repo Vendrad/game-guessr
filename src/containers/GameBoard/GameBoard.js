@@ -17,7 +17,7 @@ import GameOver from '../../components/GameOver/GameOver';
 
 import styles from './GameBoard.module.scss';
 
-const GameBoard = props => {
+const GameBoard = ({match}) => {
 
   const [questionNumberState, questionNumberSetter] = useState(1);
   const [correctCountState, correctCountStateSetter] = useState(0);
@@ -33,7 +33,7 @@ const GameBoard = props => {
   const [answerState, answerStateSetter] = useState(null);
 
   useEffect(() => {
-    const apiUrl = 'games/random/' + slugToApiSlug(props.match.params.slug); 
+    const apiUrl = 'games/random/' + slugToApiSlug(match.params.slug); 
 
     Axios.get(apiUrl)
       .then(response => {
@@ -57,7 +57,7 @@ const GameBoard = props => {
 
     const answer = {};
     
-    answer.wasCorrect = skip ? false : answerWasCorrect();
+    answer.wasCorrect = !skip && answerWasCorrect();
     answer.correctGame = gameState;
 
     if (answer.wasCorrect) {
@@ -105,7 +105,7 @@ const GameBoard = props => {
     <div className={styles.GameBoard}>
       <GameHeader
         correctCount={correctCountState}
-        correctCountFlyaway={answerState !== null ? answerState.wasCorrect : false}
+        correctCountFlyaway={answerState && answerState.wasCorrect}
         mistakeCount={mistakeCountState} />
 
       <div className={styles.GameQuestionArea}>      
@@ -133,24 +133,14 @@ const GameBoard = props => {
         answerWasSubmitted={answerWasSubmittedHandler} />
 
       <GameAdvanceQuestion
-        disabled={selectedGameState !== null || inputState.length > 0 ? false : true}
+        disabled={selectedGameState !== null || inputState.length > 0}
         answerWasSubmitted={answerWasSubmittedHandler} />
 
-      {answerState !== null
-        ? <GameAnswer answer={answerState}
-          answerWasDisplayed={answerWasDisplayedHandler} />
-        : null }
+      {answerState !== null && <GameAnswer answer={answerState} answerWasDisplayed={answerWasDisplayedHandler} />}
 
-      {displayGameOverModal
-        ? <GameOver correctCount={correctCountState} />
-        : null }
+      {displayGameOverModal && <GameOver correctCount={correctCountState} />}
     </div>
   );
-}
-
-GameBoard.propTypes = {
-  show: PropTypes.bool.isRequired,
-  questionNumber: PropTypes.number
 }
 
 export default withRouter(GameBoard);

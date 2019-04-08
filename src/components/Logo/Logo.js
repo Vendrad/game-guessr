@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 
 import styles from './Logo.module.scss';
 
-const Logo = props => {
+const Logo = ({playing, restartButtonWasClicked}) => {
 
   let logoClasses = [/*styles.Logo,*/ styles.open];
-  if (props.playing) logoClasses = [/*styles.Logo, */styles.closed];
+  if (playing) logoClasses = [/*styles.Logo, */styles.closed];
 
   return (
     <>
       <div
         className={logoClasses.join(' ')}
-        onClick={props.restartButtonWasClicked}>
+        onClick={restartButtonWasClicked}>
         <span className={styles.LogoLargeText}>G</span>
         <span className={styles.LogoSmallText}>ame</span>
         <span className={styles.LogoLargeText}>G</span>

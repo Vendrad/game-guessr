@@ -1,12 +1,23 @@
-import React, { memo } from 'react';
-import { PropTypes } from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { randBetweenInclusive } from '../../../helpers';
 
 import styles from './GameQuip.module.scss';
 
-const GameQuip = props => {
+const GameQuip = ({correctCount}) => {
 
+  const [quipState, quipStateSetter] = useState(null);
+
+  useEffect(() => {
+    const quip = correctCount >= 5
+      ? goodResult[randBetweenInclusive(0, goodResult.length)]
+      : badResult[randBetweenInclusive(0, goodResult.length)];
+    
+    quipStateSetter(quip);
+  }, []);
+
+  console.log("gamequip");
   const badResult = [
     "/ff",
     "Game Over. Insert coin to continue.",
@@ -37,12 +48,8 @@ const GameQuip = props => {
 
   ];
 
-  const quip = props.correctCount >= 5
-    ? goodResult[randBetweenInclusive(0, goodResult.length)]
-    : badResult[randBetweenInclusive(0, goodResult.length)];
-
   return (
-    <p className={styles.GameQuip}>"{quip}"</p>
+    <p className={styles.GameQuip}>"{quipState}"</p>
   );
 }
 
@@ -50,4 +57,4 @@ GameQuip.propTypes = {
   correctCount: PropTypes.number
 }
 
-export default memo(GameQuip);
+export default GameQuip;

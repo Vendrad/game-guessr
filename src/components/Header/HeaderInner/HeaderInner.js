@@ -5,20 +5,18 @@ import Logo from '../../Logo/Logo';
 
 import styles from './HeaderInner.module.scss';
 
-const HeaderInner = props => {
+const HeaderInner = ({started, startButtonWasClicked, restartButtonWasClicked}) => {
 
   return (
     <div className={styles.HeaderInner}>
-      <Logo playing={props.playing} restartButtonWasClicked={props.restartButtonWasClicked} />
-      { props.playing ? null : 
-        <button className={styles.StartButton} onClick={props.startButtonWasClicked}>START</button>
-      }
+      <Logo playing={started} restartButtonWasClicked={restartButtonWasClicked} />
+      {!started && <button className={styles.StartButton} onClick={startButtonWasClicked}>START</button>}
     </div>
   );
 };
 
 HeaderInner.propTypes = {
-  playing: PropTypes.bool.isRequired,
+  started: PropTypes.bool.isRequired,
   startButtonWasClicked: PropTypes.func.isRequired,
   restartButtonWasClicked: PropTypes.func.isRequired
 }

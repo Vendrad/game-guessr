@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import styles from './GameInput.module.scss';
 import GameAutoComplete from './GameAutoComplete/GameAutoComplete';
 
-const GameInput = props => {
+const GameInput = ({inputWasChanged, gameWasSelected, inputClear, inputWasCleared, answerWasSubmitted}) => {
 
   useEffect(() => {
     inputValueStateSetter("");
-    props.inputWasCleared();
-  }, [props.inputClear])
+    inputWasCleared();
+  }, [inputClear])
 
   const [inputValueState, inputValueStateSetter] = useState("");
   const [inputHasFocusState, inputHasFocusStateSetter] = useState(false);
@@ -17,7 +17,7 @@ const GameInput = props => {
   const autoCompleteItemWasClickedHandler = game => {
     inputValueStateSetter(game.name);
     inputHasFocusStateSetter(false);
-    props.gameWasSelected(game);
+    gameWasSelected(game);
   };
 
   const inputGainedFocusHandler = () => {
@@ -32,13 +32,13 @@ const GameInput = props => {
     
     inputValueStateSetter(event.target.value)
     
-    props.gameWasSelected(null);
-    props.inputWasChanged(event.target.value);
+    gameWasSelected(null);
+    inputWasChanged(event.target.value);
   };
 
   const keyPressHandler = event => {
     if(event.key === 'Enter'){
-      props.answerWasSubmitted();
+      answerWasSubmitted();
       inputValueStateSetter("");
       inputHasFocusStateSetter(false);
     }
@@ -48,11 +48,10 @@ const GameInput = props => {
     <div
       className={styles.GameInput}>
       {inputValueState.length >= 3
-        ? <GameAutoComplete
+        && <GameAutoComplete
           input={inputValueState}
           autoCompleteItemWasClicked={autoCompleteItemWasClickedHandler}
           inputHasFocus={inputHasFocusState} />
-        : null
       }
       <input
         type="text"

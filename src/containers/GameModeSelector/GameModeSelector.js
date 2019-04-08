@@ -6,11 +6,11 @@ import gameModes from '../../core/gameModes/gameModes';
 
 import styles from './GameModeSelector.module.scss';
 
-const GameModeSelector = props => {
+const GameModeSelector = ({gameModeWasSelected}) => {
 
   const gameModeWasSelectedHandler = (gameModeId) => {
     const [gameMode] = gameModes.filter((gameMode) => { return gameMode.id === gameModeId } );
-    props.gameModeWasSelected(gameMode);
+    gameModeWasSelected(gameMode);
   }
  
   return (
@@ -28,7 +28,6 @@ const GameModeSelector = props => {
 };
 
 GameModeSelector.propTypes = {
-  show: PropTypes.bool.isRequired,
   gameModeWasSelected: PropTypes.func.isRequired
 }
 

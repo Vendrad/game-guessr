@@ -5,27 +5,22 @@ import { Route } from 'react-router-dom';
 import GameModeSelector from '../GameModeSelector/GameModeSelector';
 import GameBoard from '../GameBoard/GameBoard';
 
-const Game = props => {
+const Game = ({gameModeWasSelected}) => {
 
   return (
     <>
       <Route path="/new-game" exact component={() => (
         <GameModeSelector
-          gameModeWasSelected={props.gameModeWasSelected.bind(this)}
-          show={!props.playing} />
+          gameModeWasSelected={gameModeWasSelected.bind(this)} />
       )} />
       
-      <Route path="/game/:slug" exact component={() => (
-        <GameBoard
-          show={props.playing} />
-      )} />
+      <Route path="/game/:slug" exact component={() => <GameBoard />} />
       
     </>
   );
 };
 
 Game.propTypes = {
-  playing: PropTypes.bool.isRequired,
   gameModeWasSelected: PropTypes.func.isRequired
 }
 

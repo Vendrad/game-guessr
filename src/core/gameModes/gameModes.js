@@ -11,7 +11,7 @@ export const slugToApiSlug = slug => {
     return mode.slug === slug;
   });
 
-  return match === undefined ? undefined : match.apiSlug;
+  return match !== undefined && match.apiSlug;
 }
 
 export default gameModes;

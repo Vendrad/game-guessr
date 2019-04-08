@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import styles from './GameOver.module.scss';
@@ -7,19 +7,19 @@ import Modal from '../UI/Modal/Modal';
 
 import GameQuip from './GameQuip/GameQuip';
 
-const GameOver = (props) => {
+const GameOver = ({history, correctCount, answerWasDisplayed}) => {
 
   const playAgainButtonWasClickedHandler = () => {
-    props.history.push('/new-game');
+    history.push('/new-game');
   };
 
   return (
     <Modal
-      modalExitedCallback={props.answerWasDisplayed}
+      modalExitedCallback={answerWasDisplayed}
       automaticallyExit={false}
-      styles={styles.GameOverModal}>
-      <p className={styles.FinalScore}>You scored: {props.correctCount}</p>
-      <GameQuip correctCount={props.correctCount} />
+      extraStyles={styles.GameOverModal}>
+      <p className={styles.FinalScore}>You scored: {correctCount}</p>
+      <GameQuip correctCount={correctCount} />
       <p className={styles.Plug}>Head over to <a href="https://igdb.com">igdb.com</a> to discover more games!</p>
       <button className={styles.PlayAgainButton} onClick={playAgainButtonWasClickedHandler}>Play Again</button>
     </Modal>
@@ -27,7 +27,9 @@ const GameOver = (props) => {
 };
 
 GameOver.propTypes = {
-  correctCount: PropTypes.number
+  history: PropTypes.instanceOf(Object),
+  correctCount: PropTypes.number,
+  answerWasDisplayed: PropTypes.func
 }
 
 export default withRouter(GameOver);

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
-const Flyaway = props => {
+const Flyaway = ({styles, animationStyles, timeout, cleanup, children}) => {
+
   const [inState, inStateSetter] = useState(false);
 
   useEffect(() => {
@@ -13,27 +14,30 @@ const Flyaway = props => {
     inStateSetter(false);
   }
 
-  let timeout = props.timeout !== null ? props.timeout : 500;
-
   return (
     <CSSTransition
       in={inState}
       unmountOnExit
       timeout={timeout}
-      className={props.styles}
-      classNames={props.animationStyles}
+      className={styles}
+      classNames={animationStyles}
       onEntered={chainExit}
-      onExited={props.cleanup}>
-      {props.children}
+      onExited={cleanup}>
+      {children}
     </CSSTransition>
   )
+};
+
+Flyaway.defaultProps = {
+  timeout: {appear: 500, enter: 500, exit: 500}
 };
 
 Flyaway.propTypes = {
   styles: PropTypes.string.isRequired,
   animationStyles: PropTypes.instanceOf(Object),
   timeout: PropTypes.instanceOf(Object),
-  onExited: PropTypes.func
+  cleanup: PropTypes.func, 
+  children: PropTypes.instanceOf(Object)
 }
 
 export default Flyaway;

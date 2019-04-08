@@ -6,14 +6,14 @@ import GameSubmit from './GameSubmit/GameSubmit';
 
 import styles from './GameAdvanceQuestion.module.scss';
 
-const GameAdvanceQuestion = props => {
+const GameAdvanceQuestion = ({disabled, answerWasSubmitted}) => {
   return (
     <div className={styles.GameAdvanceQuestion}>
       <GameSkip
-        answerWasSubmitted={props.answerWasSubmitted} />
+        answerWasSubmitted={answerWasSubmitted} />
       <GameSubmit
-        disabled={props.disabled}
-        answerWasSubmitted={props.answerWasSubmitted} />
+        disabled={disabled}
+        answerWasSubmitted={answerWasSubmitted} />
     </div>
   )
 };

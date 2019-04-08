@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import styles from './GameSkip.module.scss';
 
-const GameSkip = props => {
+const GameSkip = ({answerWasSubmitted}) => {
   return (
     <div className={styles.GameSkip}>
-      <button onClick={props.answerWasSubmitted.bind(this, true)}>Skip</button>
+      <button onClick={answerWasSubmitted.bind(this, true)}>Skip</button>
     </div>
   )
 };

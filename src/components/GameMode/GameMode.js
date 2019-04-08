@@ -1,15 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './GameMode.module.scss';
 
-const GameMode = props => {
+const GameMode = ({gameMode,gameModeWasSelected}) => {
 
   return (
-    <div className={[styles.GameMode, styles[props.gameMode.type]].join(' ')} onClick={props.gameModeWasSelected.bind(this, props.gameMode.id)}>
-      <p>{props.gameMode.title}</p>
+    <div className={[styles.GameMode, styles[gameMode.type]].join(' ')} onClick={gameModeWasSelected.bind(this, gameMode.id)}>
+      <p>{gameMode.title}</p>
     </div>
   );
   
+}
+
+GameMode.propTypes = {
+  gameMode: PropTypes.instanceOf(Object),
+  gameModeWasSelected: PropTypes.func
 }
 
 export default GameMode

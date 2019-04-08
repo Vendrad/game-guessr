@@ -8,17 +8,17 @@ import styles from './GameHeader.module.scss';
 import heartFull from '../../assets/images/icons8-heart-full-64.png';
 import heartEmpty from '../../assets/images/icons8-heart-empty-64.png';
 
-const GameHeader = props => {
+const GameHeader = ({correctCount, correctCountFlyaway, mistakeCount}) => {
 
   let lives = Array.apply(null, Array(AppConfig.lives));
-  lives = lives.fill('full').fill('empty', 0, props.mistakeCount);
+  lives = lives.fill('full').fill('empty', 0, mistakeCount);
   lives = lives.map((life, index) => {
     return <img key={index} src={life === 'full' ? heartFull : heartEmpty} alt={"Heart Piece - " + life} />;
   });
 
   const GetFlyaway = () => {
-    return props.correctCountFlyaway
-      ? (
+    return correctCountFlyaway &&
+      (
         <Flyaway
           timeout={{
             enter:200,
@@ -34,13 +34,12 @@ const GameHeader = props => {
           >
           <div>+1</div>
         </Flyaway>
-      )
-      : null;
+      );
   };
 
   return (
     <div className={styles.GameHeader}>
-      <div className={styles.CorrectCount}>{props.correctCount}</div>
+      <div className={styles.CorrectCount}>{correctCount}</div>
       {GetFlyaway()}
       <div className={styles.MistakeCount}>{lives}</div>
     </div>

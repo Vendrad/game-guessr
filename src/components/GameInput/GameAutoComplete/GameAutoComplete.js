@@ -7,7 +7,7 @@ import GameAutoCompleteItem from './GameAutoCompleteItem/GameAutoCompleteItem';
 
 import styles from './GameAutoComplete.module.scss';
 
-const GameAutoComplete = props => {
+const GameAutoComplete = ({id, input, autoCompleteItemWasClicked, inputHasFocus}) => {
 
   const [autoCompleteItemsState, autoCompleteItemsStateSetter] = useState([]);
   const [blockNextInputUpdateState, blockNextInputUpdateStateSetter] = useState(false);
@@ -16,7 +16,7 @@ const GameAutoComplete = props => {
   
   useEffect(() => {
 
-    if (props.input.length < 3) {
+    if (input.length < 3) {
       return undefined;
     }
 
@@ -27,7 +27,7 @@ const GameAutoComplete = props => {
 
     const source = Axios.CancelToken.source();
 
-    Axios.get('games/search/' + encodeUrlString(props.input))
+    Axios.get('games/search/' + encodeUrlString(input))
       .then(response => {
 
         if (!_isMounted) return;
@@ -43,12 +43,12 @@ const GameAutoComplete = props => {
       source.cancel("GameAutoComplete - Cleanup: Request no longer needed.");
     };
     
-  }, [props.input, props.inputHasFocus]);
+  }, [input, inputHasFocus]);
 
   const autoCompleteItemWasClickedHandler = (game) => {
     autoCompleteItemsStateSetter([]);
     blockNextInputUpdateStateSetter(true);
-    props.autoCompleteItemWasClicked(game)
+    autoCompleteItemWasClicked(game)
   }
 
   if (autoCompleteItemsState.length === 0) return null;
@@ -59,7 +59,7 @@ const GameAutoComplete = props => {
         <ul>
           {autoCompleteItemsState.map(item => {
 
-            const coverUrl = item.cover && item.cover.url ? item.cover.url : null;
+            const coverUrl = item.cover && item.cover.url && item.cover.url;
 
             return <GameAutoCompleteItem
               key={item.id}

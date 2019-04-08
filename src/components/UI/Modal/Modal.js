@@ -4,7 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import styles from './Modal.module.scss';
 
-const Modal = (props) => {
+const Modal = ({automaticallyExit, displayCloseButton, modalExitedCallback, extraStyles, children}) => {
 
   const [inState, inStateSetter] = useState(false);
 
@@ -25,8 +25,8 @@ const Modal = (props) => {
         exit: 500,
        }}
       unmountOnExit
-      onEntered={props.automaticallyExit ? closeModalHandler : undefined}
-      onExited={props.modalExitedCallback}
+      onEntered={automaticallyExit && closeModalHandler}
+      onExited={modalExitedCallback}
       classNames={{
         enter: styles.modalEnter,
         enterActive: styles.modalEnterActive,
@@ -34,11 +34,9 @@ const Modal = (props) => {
         exitActive: styles.modalExitActive
       }} >
       <div className={styles.ModalWrapper}>
-        <div className={[props.styles, styles.Modal].join(" ")} onClick={null}>
-          {props.children}
-          {props.displayCloseButton
-            ? <div className={styles.ModalCloseButton} onClick={closeModalHandler} aria-label="Close Modal">&times;</div>
-            : null }
+        <div className={[extraStyles, styles.Modal].join(" ")} onClick={null}>
+          {children}
+          {displayCloseButton && <div className={styles.ModalCloseButton} onClick={closeModalHandler} aria-label="Close Modal">&times;</div>}
         </div>
       </div>
     </CSSTransition>
@@ -54,7 +52,7 @@ Modal.propTypes = {
   automaticallyExit: PropTypes.bool,
   displayCloseButton: PropTypes.bool,
   modalExitedCallback: PropTypes.func,
-  styles: PropTypes.string
+  extraStyles: PropTypes.string
 };
 
 export default Modal;

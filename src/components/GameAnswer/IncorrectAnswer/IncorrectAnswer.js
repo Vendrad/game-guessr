@@ -4,18 +4,17 @@ import PropTypes from 'prop-types';
 import styles from './IncorrectAnswer.module.scss';
 import icon from '../../../assets/images/icons8-delete-128.png';
 
-const IncorrectAnswer = (props) => {
+const IncorrectAnswer = ({game}) => {
 
-  const gameCover = props.game.cover === null || props.game.cover === undefined
-    ? null
-    : <img src={props.game.cover} alt={props.game.name + " cover art."} />;
+  const gameCover = game.cover !== null && game.cover !== undefined 
+    && <img src={game.cover} alt={game.name + " cover art."} />;
   
   return (
     <div className={styles.IncorrectAnswer}>
       <img src={icon} alt="Incorrect Answer" />
       <div>
         <p>The correct answer was:</p>
-        <p>{props.game.name}</p>
+        <p>{game.name}</p>
         {gameCover}
       </div>
     </div>

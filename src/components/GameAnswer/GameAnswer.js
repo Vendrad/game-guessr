@@ -7,15 +7,15 @@ import IncorrectAnswer from './IncorrectAnswer/IncorrectAnswer';
 import styles from './GameAnswer.module.scss';
 import Modal from '../UI/Modal/Modal';
 
-const GameAnswer = (props) => {
+const GameAnswer = ({answer, answerWasDisplayed}) => {
 
   return (
     <Modal
-      modalExitedCallback={props.answerWasDisplayed}
-      styles={props.answer.wasCorrect ? styles.correct : styles.incorrect}>
-      {props.answer.wasCorrect ?
+      modalExitedCallback={answerWasDisplayed}
+      extraStyles={answer.wasCorrect ? styles.correct : styles.incorrect}>
+      {answer.wasCorrect ?
         <CorrectAnswer /> :
-        <IncorrectAnswer game={props.answer.correctGame} />
+        <IncorrectAnswer game={answer.correctGame} />
       }
     </Modal>
   )

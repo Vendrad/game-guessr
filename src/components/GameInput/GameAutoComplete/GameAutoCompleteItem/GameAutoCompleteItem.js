@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import styles from './GameAutoCompleteItem.module.scss';
 import unknownCover from '../../../../assets/images/icons8-question-mark-64.png'
 
-const GameAutoCompleteItem = props => {
+const GameAutoCompleteItem = ({gameId, gameName, gameCover, gameAutoCompleteItemWasClicked}) => {
   return (
-    <li className={styles.GameAutoCompleteItem} onClick={() => props.gameAutoCompleteItemWasClicked({id: props.gameId, name: props.gameName})}>
-      <img src={props.gameCover === null ? unknownCover : props.gameCover} alt={props.gameName + "cover art"} />
-      <p>{props.gameName}</p>
+    <li className={styles.GameAutoCompleteItem} onClick={() => gameAutoCompleteItemWasClicked({id: gameId, name: gameName})}>
+      <img src={gameCover === null ? unknownCover : gameCover} alt={gameName + "cover art"} />
+      <p>{gameName}</p>
     </li>
   )
 };

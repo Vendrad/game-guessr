@@ -6,24 +6,24 @@ import HeaderInner from './HeaderInner/HeaderInner';
 import styles from './Header.module.scss';
 import backgroundImage from '../../assets/images/bg2.jpg';
 
-const Header = props => {
+const Header = ({started, startButtonWasClicked, restartButtonWasClicked}) => {
 
   let headerClasses = [styles.Header, styles.open];
-  if (props.playing) headerClasses = [styles.Header, styles.closed];
+  if (started) headerClasses = [styles.Header, styles.closed];
 
   return (
     <header className={headerClasses.join(' ')} style={{backgroundImage: "url(" + backgroundImage +")"}}>
       <HeaderInner
-        playing={props.playing}
-        startButtonWasClicked={props.startButtonWasClicked}
-        restartButtonWasClicked={props.restartButtonWasClicked} />
-      {!props.playing ? <div className={styles.Footer}>Created by Dane Shenton. Powered by <a href="https://IGDB.com">IGDB.com</a></div> : null}
+        started={started}
+        startButtonWasClicked={startButtonWasClicked}
+        restartButtonWasClicked={restartButtonWasClicked} />
+      {!started && <div className={styles.Footer}>Created by Dane Shenton. Powered by <a href="https://IGDB.com">IGDB.com</a></div>}
     </header>
   );
 };
 
 Header.propTypes = {
-  playing: PropTypes.bool.isRequired,
+  started: PropTypes.bool.isRequired,
   startButtonWasClicked: PropTypes.func.isRequired,
   restartButtonWasClicked: PropTypes.func.isRequired
 }

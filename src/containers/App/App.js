@@ -7,31 +7,28 @@ import Game from '../Game/Game';
 
 import styles from './App.module.scss';
 
-const App = props => {
+const App = ({location, history}) => {
 
-  const [startedState, startedtateSetter] = useState(props.location.pathname !== '/');
-  const [playingState, playingStateSetter] = useState(false);
+  const [startedState, startedtateSetter] = useState(location.pathname !== '/');
 
   const startButtonWasClickedHandler = () => {
     startedtateSetter(true);
-    props.history.push('/new-game');
+    history.push('/new-game');
   }
 
   const restartButtonWasClickedHandler = () => {
     startedtateSetter(false);
-    playingStateSetter(false);
-    props.history.push('/');
+    history.push('/');
   }
 
   const gameModeWasSelectedHandler = (gameMode) => {
-    playingStateSetter(true);
-    props.history.push(`/game/${gameMode.slug}`);
+    history.push(`/game/${gameMode.slug}`);
   }
 
   return (
     <div className={styles.App}>
       <Header
-        playing={startedState}
+        started={startedState}
         startButtonWasClicked={startButtonWasClickedHandler}
         restartButtonWasClicked={restartButtonWasClickedHandler} />
 
@@ -50,7 +47,6 @@ const App = props => {
         <main className={styles.main}>
           <Game
             started={startedState}
-            playing={playingState}
             gameModeWasSelected={gameModeWasSelectedHandler} />
         </main>
       </CSSTransition>

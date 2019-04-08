@@ -36,7 +36,9 @@ const Modal = (props) => {
       <div className={styles.ModalWrapper}>
         <div className={[props.styles, styles.Modal].join(" ")} onClick={null}>
           {props.children}
-          <div className={styles.ModalCloseButton} onClick={closeModalHandler} aria-label="Close Modal">&times;</div>
+          {props.displayCloseButton
+            ? <div className={styles.ModalCloseButton} onClick={closeModalHandler} aria-label="Close Modal">&times;</div>
+            : null }
         </div>
       </div>
     </CSSTransition>

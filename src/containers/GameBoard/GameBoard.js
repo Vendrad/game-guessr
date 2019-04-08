@@ -13,6 +13,7 @@ import GameQuestion from '../../components/GameQuestion/GameQuestion';
 import GameInput from '../../components/GameInput/GameInput';
 import GameAdvanceQuestion from '../../components/GameAdvanceQuestion/GameAdvanceQuestion';
 import GameAnswer from '../../components/GameAnswer/GameAnswer';
+import GameOver from '../../components/GameOver/GameOver';
 
 import styles from './GameBoard.module.scss';
 
@@ -21,6 +22,7 @@ const GameBoard = props => {
   const [questionNumberState, questionNumberSetter] = useState(1);
   const [correctCountState, correctCountStateSetter] = useState(0);
   const [mistakeCountState, mistakeCountStateSetter] = useState(0);
+  const [displayGameOverModal, displayGameOverModalSetter] = useState(false);
 
   const [gameState, gameStateSetter] = useState(null);
   const [gameWindowInState, gameWindowInStateSetter] = useState(false);
@@ -62,11 +64,12 @@ const GameBoard = props => {
       correctCountStateSetter(correctCountState + 1);
     } else {
 
-      if (mistakeCountState + 1 >= AppConfig.lives) {
-        
-      }
-
       mistakeCountStateSetter(mistakeCountState + 1);
+
+      if (mistakeCountState + 1 >= AppConfig.lives) {
+        displayGameOverModalSetter(true);
+        return;
+      }
     }
 
     answerStateSetter(answer);
@@ -96,10 +99,6 @@ const GameBoard = props => {
 
   const feedNewQuestion = () => {
     questionNumberSetter(questionNumberState + 1);
-  }
-
-  if (mistakeCountState >= AppConfig.lives) {
-    alert('You lose!');
   }
 
   return (
@@ -140,6 +139,10 @@ const GameBoard = props => {
       {answerState !== null
         ? <GameAnswer answer={answerState}
           answerWasDisplayed={answerWasDisplayedHandler} />
+        : null }
+
+      {displayGameOverModal
+        ? <GameOver />
         : null }
     </div>
   );

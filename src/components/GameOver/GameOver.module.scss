@@ -5,8 +5,8 @@
 }
 
 .FinalScore {
-  font-size: 2rem;
-  color: $dark;
+  font-size: 2.5rem;
+  color: $ggreen;
 }
 
 .Plug {
@@ -22,7 +22,7 @@
 
 .PlayAgainButton {
   width: 70%;
-  background-color: #246136;
+  background-color: $ggreen;
   box-shadow: 0 2px 3px -1px black;
   margin-top: 20px;
   padding: 30px;

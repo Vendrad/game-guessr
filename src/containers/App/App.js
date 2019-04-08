@@ -9,7 +9,7 @@ import styles from './App.module.scss';
 
 const App = props => {
 
-  const [startedState, startedtateSetter] = useState(props.history.url !== '/');
+  const [startedState, startedtateSetter] = useState(props.location.pathname !== '/');
   const [playingState, playingStateSetter] = useState(false);
 
   const startButtonWasClickedHandler = () => {

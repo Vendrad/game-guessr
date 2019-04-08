@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import { withRouter } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
 import Game from '../Game/Game';
 
 import styles from './App.module.scss';
 
-const App = () => {
+const App = props => {
 
-  const [startedState, startedtateSetter] = useState(false);
+  const [startedState, startedtateSetter] = useState(props.history.url !== '/');
   const [playingState, playingStateSetter] = useState(false);
 
   const startButtonWasClickedHandler = () => {
     startedtateSetter(true);
+    props.history.push('/new-game');
   }
 
   const restartButtonWasClickedHandler = () => {
     startedtateSetter(false);
     playingStateSetter(false);
+    props.history.push('/');
   }
 
-  const gameModeWasSelectedHandler = () => {
+  const gameModeWasSelectedHandler = (gameMode) => {
     playingStateSetter(true);
+    props.history.push(`/game/${gameMode.slug}`);
   }
 
   return (
@@ -54,4 +58,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default withRouter(App);

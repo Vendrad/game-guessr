@@ -1,4 +1,4 @@
-import { escapeRegExp } from '../helpers';
+import { escapeRegExp } from '../../helpers';
 
 export function cleanGameResponse(response) {
   const game = {
@@ -38,9 +38,3 @@ const knownAs = game => {
 
   return names;
 };
-
-export function igdbEscapeString(string) {
-  return string
-    .replace(/\\/g, '\\\\')
-    .replace(/"/g, '\\"');
-}

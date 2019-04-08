@@ -1,27 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 
-import GameModeSelector from '../../components/GameModeSelector/GameModeSelector';
+import GameModeSelector from '../GameModeSelector/GameModeSelector';
 import GameBoard from '../../components/GameBoard/GameBoard';
 
 const Game = props => {
 
-  const [gameModeState, gameModeStateSetter] = useState(null);
-
-  const gameModeWasSelectedHandler = gameMode => {
-    gameModeStateSetter(gameMode);
-    props.gameModeWasSelected();
-  };
-
   return (
     <>
-      <GameModeSelector
-        gameModeWasSelected={gameModeWasSelectedHandler.bind(this)}
-        show={!props.playing} />
+      <Route path="/new-game" exact component={() => (
+        <GameModeSelector
+          gameModeWasSelected={props.gameModeWasSelected.bind(this)}
+          show={!props.playing} />
+      )} />
       
-      <GameBoard
-        show={props.playing}
-        gameMode={gameModeState} />
+      <Route path="/game/:slug" exact component={() => (
+        <GameBoard
+          show={props.playing} />
+      )} />
+      
     </>
   );
 };

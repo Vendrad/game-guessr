@@ -1,3 +1,9 @@
 import Axios from 'axios';
 
-Axios.defaults.baseURL = 'https://api2.raredevil.co.uk/api/v1/';
+switch (process.env.NODE_ENV) {
+  case 'development':
+    Axios.defaults.baseURL = 'http://localhost:3080/api/v1/';
+    break;
+  default:
+    Axios.defaults.baseURL = 'https://api2.raredevil.co.uk/api/v1/';
+};

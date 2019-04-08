@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
-import { cleanGameResponse } from '../../igdb';
-import AppConfig from '../../config/App.config'
+
+import { slugToApiSlug } from '../../core/gameModes/gameModes';
+import { cleanGameResponse } from '../../core/gameManipulators';
+import AppConfig from '../../config/App.config';
 
 import GameHeader from './GameHeader/GameHeader';
 import GameQuestion from './GameQuestion/GameQuestion.js';
@@ -28,14 +31,14 @@ const GameBoard = props => {
   const [answerState, answerStateSetter] = useState(null);
 
   useEffect(() => {
-    if (props.gameMode === undefined || props.gameMode === null) return undefined;
+    const apiUrl = 'games/random/' + slugToApiSlug(props.match.params.slug); 
 
-    Axios.get('games/random/' + props.gameMode.id)
+    Axios.get(apiUrl)
       .then(response => {
         gameStateSetter(cleanGameResponse(response.data));
         gameWindowInSetter(true);
       });
-  }, [questionNumberState, props.gameMode]);
+  }, [questionNumberState]);
 
   const inputWasChangedHandler = (input) => {
     inputStateSetter(input);
@@ -67,6 +70,7 @@ const GameBoard = props => {
   const answerWasCorrect = () => {
 
     if (selectedGameState !== null) {
+      console.log(selectedGameState);
       if (selectedGameState.id === gameState.id) return true;
       if (selectedGameState.name.toLowerCase() === gameState.name.toLowerCase()) return true;
     }
@@ -136,8 +140,7 @@ const GameBoard = props => {
 
 GameBoard.propTypes = {
   show: PropTypes.bool.isRequired,
-  gameMode: PropTypes.instanceOf(Object),
   questionNumber: PropTypes.number
 }
 
-export default GameBoard;
+export default withRouter(GameBoard);

@@ -10,7 +10,9 @@ const HeaderInner = props => {
   return (
     <div className={styles.HeaderInner}>
       <Logo playing={props.playing} restartButtonWasClicked={props.restartButtonWasClicked} />
-      {props.playing ? null : <button className={styles.StartButton} onClick={props.startButtonWasClicked}>START</button>}
+      { props.playing ? null : 
+        <button className={styles.StartButton} onClick={props.startButtonWasClicked}>START</button>
+      }
     </div>
   );
 };

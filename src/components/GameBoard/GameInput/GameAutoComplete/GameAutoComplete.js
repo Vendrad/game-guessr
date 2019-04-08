@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
-import { igdbEscapeString } from '../../../../igdb'; 
+import { encodeUrlString } from '../../../../helpers'; 
 
 import GameAutoCompleteItem from './GameAutoCompleteItem/GameAutoCompleteItem';
 
@@ -27,7 +27,7 @@ const GameAutoComplete = props => {
 
     const source = Axios.CancelToken.source();
 
-    Axios.get('games/search/' + igdbEscapeString(props.input))
+    Axios.get('games/search/' + encodeUrlString(props.input))
       .then(response => {
 
         if (!_isMounted) return;

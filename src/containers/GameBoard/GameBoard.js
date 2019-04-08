@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
 

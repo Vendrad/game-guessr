@@ -7,7 +7,6 @@ const gameModes = [
 ];
 
 export const slugToApiSlug = slug => {
-  console.log(slug);
   const match = gameModes.find(mode => {
     return mode.slug === slug;
   });

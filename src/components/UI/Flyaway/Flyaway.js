@@ -15,8 +15,6 @@ const Flyaway = props => {
 
   let timeout = props.timeout !== null ? props.timeout : 500;
 
-  console.log(props.styles);
-
   return (
     <CSSTransition
       in={inState}

@@ -7,7 +7,7 @@ const GameSubmit = props => {
   const attribute = props.disabled ? 'disabled' : null;
   return (
     <div className={styles.GameSubmit}>
-      <button disabled={attribute} className={props.disabled ? styles.inactive : styles.active} onClick={props.answerWasSubmitted}>Submit</button>
+      <button disabled={attribute} className={props.disabled ? styles.inactive : styles.active} onClick={props.answerWasSubmitted.bind(this, false)}>Submit</button>
     </div>
   )
 };

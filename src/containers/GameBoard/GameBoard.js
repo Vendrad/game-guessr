@@ -8,11 +8,11 @@ import { slugToApiSlug } from '../../core/gameModes/gameModes';
 import { cleanGameResponse } from '../../core/gameManipulators';
 import AppConfig from '../../config/App.config';
 
-import GameHeader from './GameHeader/GameHeader';
-import GameQuestion from './GameQuestion/GameQuestion.js';
-import GameInput from './GameInput/GameInput';
-import GameAdvanceQuestion from './GameAdvanceQuestion/GameAdvanceQuestion';
-import GameAnswer from './GameAnswer/GameAnswer';
+import GameHeader from '../../components/GameHeader/GameHeader';
+import GameQuestion from '../../components/GameQuestion/GameQuestion';
+import GameInput from '../../components/GameInput/GameInput';
+import GameAdvanceQuestion from '../../components/GameAdvanceQuestion/GameAdvanceQuestion';
+import GameAnswer from '../../components/GameAnswer/GameAnswer';
 
 import styles from './GameBoard.module.scss';
 
@@ -23,7 +23,7 @@ const GameBoard = props => {
   const [mistakeCountState, mistakeCountStateSetter] = useState(0);
 
   const [gameState, gameStateSetter] = useState(null);
-  const [gameWindowInState, gameWindowInSetter] = useState(false);
+  const [gameWindowInState, gameWindowInStateSetter] = useState(false);
   
   const [inputState, inputStateSetter] = useState("");
   const [selectedGameState, selectedGameStateSetter] = useState(null);
@@ -35,8 +35,11 @@ const GameBoard = props => {
 
     Axios.get(apiUrl)
       .then(response => {
+
+        if (process.env.NODE_ENV === 'development') console.log(response.data);
+
         gameStateSetter(cleanGameResponse(response.data));
-        gameWindowInSetter(true);
+        gameWindowInStateSetter(true);
       });
   }, [questionNumberState]);
 
@@ -51,18 +54,23 @@ const GameBoard = props => {
   const answerWasSubmittedHandler = skip => {
 
     const answer = {};
-
+    
     answer.wasCorrect = skip ? false : answerWasCorrect();
     answer.correctGame = gameState;
 
     if (answer.wasCorrect) {
       correctCountStateSetter(correctCountState + 1);
     } else {
+
+      if (mistakeCountState + 1 >= AppConfig.lives) {
+        
+      }
+
       mistakeCountStateSetter(mistakeCountState + 1);
     }
 
     answerStateSetter(answer);
-    gameWindowInSetter(false);
+    gameWindowInStateSetter(false);
     inputClearStateSetter(true);
     selectedGameStateSetter(null);
   }
@@ -70,7 +78,6 @@ const GameBoard = props => {
   const answerWasCorrect = () => {
 
     if (selectedGameState !== null) {
-      console.log(selectedGameState);
       if (selectedGameState.id === gameState.id) return true;
       if (selectedGameState.name.toLowerCase() === gameState.name.toLowerCase()) return true;
     }

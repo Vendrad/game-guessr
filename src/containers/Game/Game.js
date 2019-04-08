@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
 import GameModeSelector from '../GameModeSelector/GameModeSelector';
-import GameBoard from '../../components/GameBoard/GameBoard';
+import GameBoard from '../GameBoard/GameBoard';
 
 const Game = props => {
 

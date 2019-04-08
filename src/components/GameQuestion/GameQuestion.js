@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { truncateString } from '../../../helpers';
+import { truncateString } from '../../helpers';
 
-import Loading from '../../UI/Loading/Loading';
+import Loading from '../UI/Loading/Loading';
 
 import styles from './GameQuestion.module.scss';
 

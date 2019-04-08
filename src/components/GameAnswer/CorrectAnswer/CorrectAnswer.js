@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './CorrectAnswer.module.scss';
-import icon from '../../../../assets/images/icons8-rating-128.png';
+import icon from '../../../assets/images/icons8-rating-128.png';
 
 const CorrectAnswer = () => {
 

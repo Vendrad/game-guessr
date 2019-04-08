@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AppConfig from '../../../config/App.config';
-import Flyaway from '../../UI/Flyaway/Flyaway';
+import AppConfig from '../../config/App.config';
+import Flyaway from '../UI/Flyaway/Flyaway';
 
 import styles from './GameHeader.module.scss';
-import heartFull from '../../../assets/images/icons8-heart-full-64.png';
-import heartEmpty from '../../../assets/images/icons8-heart-empty-64.png';
+import heartFull from '../../assets/images/icons8-heart-full-64.png';
+import heartEmpty from '../../assets/images/icons8-heart-empty-64.png';
 
 const GameHeader = props => {
 

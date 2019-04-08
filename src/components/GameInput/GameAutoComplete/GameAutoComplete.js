@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
-import { encodeUrlString } from '../../../../helpers'; 
+import { encodeUrlString } from '../../../helpers'; 
 
 import GameAutoCompleteItem from './GameAutoCompleteItem/GameAutoCompleteItem';
 

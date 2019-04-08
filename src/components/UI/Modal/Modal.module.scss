@@ -11,11 +11,13 @@
 }
 
 .Modal {
+  max-width: 80%;
   position: relative;
   border-radius: 5px;
   margin: auto auto;
   background-color: white;
   padding: 2rem;
+  box-shadow: 0px 2px 3px -1px #8f8c88;
 }
 
 .ModalCloseButton {

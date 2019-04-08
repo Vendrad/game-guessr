@@ -1,0 +1,11 @@
+@import "../../../styles/SassVariables.scss";
+
+.GameQuip {
+  font-style: italic;
+  font-size: 3rem;
+  color: $medium;
+}
+
+.GameQuip::before .GameQuip::after {
+  content: "\"";
+}

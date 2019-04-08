@@ -5,12 +5,14 @@
   padding: 1rem;
   background-color: #749e88;
   border-radius: 10px;
+  box-shadow: 0 0 1rem 0rem black;
 }
 
 .closed {
   cursor: pointer;
   padding: 1vh;
   background-color: rgb(36, 97, 54);
+  box-shadow: 0 0 1rem 0rem black;
 }
 
 .closed .LogoSmallText {

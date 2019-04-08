@@ -1,4 +1,44 @@
+@import "../../styles/SassVariables.scss";
+
 .GameOverModal {
-  font-size: 4rem;
-  border: 2px solid rgb(100, 11, 11);
+  border: 1px solid rgb(100, 11, 11);
+}
+
+.FinalScore {
+  font-size: 2rem;
+  color: $dark;
+}
+
+.Plug {
+  font-size: 1.3rem;
+  color: $dark;
+}
+
+.Plug a:link,
+.Plug a:visited,
+.Plug a:active {
+  color: $dark;
+}
+
+.PlayAgainButton {
+  width: 70%;
+  background-color: #246136;
+  box-shadow: 0 2px 3px -1px black;
+  margin-top: 20px;
+  padding: 30px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 3rem;
+  cursor: pointer;
+  color: white;
+  transition: background-color $transition-duration-short ease-out;
+}
+
+.PlayAgainButton:hover {
+  background-color: #284230;
+}
+
+.PlayAgainButton:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.3rem #76b589A0;
 }

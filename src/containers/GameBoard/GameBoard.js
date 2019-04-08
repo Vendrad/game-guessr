@@ -142,7 +142,7 @@ const GameBoard = props => {
         : null }
 
       {displayGameOverModal
-        ? <GameOver />
+        ? <GameOver correctCount={correctCountState} />
         : null }
     </div>
   );

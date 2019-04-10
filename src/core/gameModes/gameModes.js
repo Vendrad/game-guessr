@@ -8,7 +8,7 @@ const gameModes = () => ([
 
 export const slugToApiSlug = slug => {
   const match = gameModes().find(mode => {
-    return mode.slug === slug;
+    return mode.slug === slug + "";
   });
 
   return match !== undefined && match.apiSlug;

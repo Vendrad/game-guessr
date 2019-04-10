@@ -7,6 +7,7 @@ export function randBetweenInclusive (min, max) {
 }
 
 export function truncateString (string, length) {
+  if (length <= 0) return "";
   if (string.length <= length) return string;
   return `${string.substr(0, length)}...`;
 }

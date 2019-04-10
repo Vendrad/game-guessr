@@ -25,7 +25,7 @@ const Modal = ({automaticallyExit, displayCloseButton, modalExitedCallback, extr
         exit: 500,
        }}
       unmountOnExit
-      onEntered={automaticallyExit && closeModalHandler}
+      onEntered={automaticallyExit ? closeModalHandler : null}
       onExited={modalExitedCallback}
       classNames={{
         enter: styles.modalEnter,

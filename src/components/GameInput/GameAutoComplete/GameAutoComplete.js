@@ -27,7 +27,7 @@ const GameAutoComplete = ({id, input, autoCompleteItemWasClicked, inputHasFocus}
 
     const source = Axios.CancelToken.source();
 
-    Axios.get('games/search/' + encodeUrlString(input))
+    Axios.get(`games/search/${encodeUrlString(input)}`)
       .then(response => {
 
         if (!_isMounted) return;

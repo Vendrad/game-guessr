@@ -7,7 +7,7 @@ import unknownCover from '../../../../assets/images/icons8-question-mark-64.png'
 const GameAutoCompleteItem = ({gameId, gameName, gameCover, gameAutoCompleteItemWasClicked}) => {
   return (
     <li className={styles.GameAutoCompleteItem} onClick={() => gameAutoCompleteItemWasClicked({id: gameId, name: gameName})}>
-      <img src={gameCover === null ? unknownCover : gameCover} alt={gameName + "cover art"} />
+      <img src={gameCover === null ? unknownCover : gameCover} alt={`${gameName} cover art`} />
       <p>{gameName}</p>
     </li>
   )

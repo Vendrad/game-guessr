@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import GameModeSelector from '../GameModeSelector/GameModeSelector';
 import GameBoard from '../GameBoard/GameBoard';
 
-const Game = ({gameModeWasSelected}) => {
+export const Game = ({gameModeWasSelected}) => {
 
   return (
     <>

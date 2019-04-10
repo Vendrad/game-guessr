@@ -16,8 +16,7 @@ const GameQuip = ({correctCount}) => {
     
     quipStateSetter(quip);
   }, []);
-
-  console.log("gamequip");
+  
   const badResult = [
     "/ff",
     "Game Over. Insert coin to continue.",
@@ -45,7 +44,6 @@ const GameQuip = ({correctCount}) => {
     "grats",
     "A WINNER IS YOU",
     "Parzival wished he had your skills."
-
   ];
 
   return (

@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import styles from './GameInput.module.scss';
 import GameAutoComplete from './GameAutoComplete/GameAutoComplete';
 
-const GameInput = ({inputWasChanged, gameWasSelected, inputClear, inputWasCleared, answerWasSubmitted}) => {
+const GameInput = ({inputWasChanged, gameWasSelected, inputShouldBeCleared, inputWasCleared, answerWasSubmitted}) => {
 
   useEffect(() => {
     inputValueStateSetter("");
     inputWasCleared();
-  }, [inputClear])
+  }, [inputShouldBeCleared])
 
   const [inputValueState, inputValueStateSetter] = useState("");
   const [inputHasFocusState, inputHasFocusStateSetter] = useState(false);
@@ -37,11 +37,14 @@ const GameInput = ({inputWasChanged, gameWasSelected, inputClear, inputWasCleare
   };
 
   const keyPressHandler = event => {
-    if(event.key === 'Enter'){
-      answerWasSubmitted();
-      inputValueStateSetter("");
-      inputHasFocusStateSetter(false);
-    }
+
+    if (event.key !== 'Enter') return;
+
+    if (inputValueState === '') return;
+
+    answerWasSubmitted();
+    inputValueStateSetter("");
+    inputHasFocusStateSetter(false);
   }
 
   return (
@@ -67,7 +70,7 @@ const GameInput = ({inputWasChanged, gameWasSelected, inputClear, inputWasCleare
 GameInput.propTypes = {
   inputWasChanged: PropTypes.func.isRequired,
   gameWasSelected: PropTypes.func.isRequired,
-  inputClear: PropTypes.bool,
+  inputShouldBeCleared: PropTypes.bool,
   inputWasCleared: PropTypes.func.isRequired,
   answerWasSubmitted: PropTypes.func.isRequired
 }

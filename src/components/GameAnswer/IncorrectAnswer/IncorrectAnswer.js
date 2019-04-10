@@ -7,7 +7,7 @@ import icon from '../../../assets/images/icons8-delete-128.png';
 const IncorrectAnswer = ({game}) => {
 
   const gameCover = game.cover !== null && game.cover !== undefined 
-    && <img src={game.cover} alt={game.name + " cover art."} />;
+    && <img src={game.cover} alt={`${game.name} cover art.`} />;
   
   return (
     <div className={styles.IncorrectAnswer}>

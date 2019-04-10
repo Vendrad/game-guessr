@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
@@ -16,130 +16,162 @@ import GameOver from '../../components/GameOver/GameOver';
 
 import styles from './GameBoard.module.scss';
 
-const GameBoard = ({match}) => {
+export class GameBoard extends Component {
 
-  const [questionNumberState, questionNumberSetter] = useState(1);
-  const [correctCountState, correctCountStateSetter] = useState(0);
-  const [mistakeCountState, mistakeCountStateSetter] = useState(0);
-  const [displayGameOverModal, displayGameOverModalSetter] = useState(false);
+  state = {
+    questionNumber: 1,
+    correctCount: 0,
+    mistakeCount: 0,
+    displayGameoverModal: false,
+    gameWindowIn: false,
+    game: null,
+    answer: null,
+    input: "",
+    inputShouldBeCleared: false,
+    selectedGame: null
+  }
 
-  const [gameState, gameStateSetter] = useState(null);
-  const [gameWindowInState, gameWindowInStateSetter] = useState(false);
-  
-  const [inputState, inputStateSetter] = useState("");
-  const [selectedGameState, selectedGameStateSetter] = useState(null);
-  const [inputClearState, inputClearStateSetter] = useState(false);
-  const [answerState, answerStateSetter] = useState(null);
+  componentDidMount() {
+    this.getQuestion();
+  }
 
-  useEffect(() => {
-    const apiUrl = 'games/random/' + slugToApiSlug(match.params.slug); 
+  componentDidUpdate(prevProps, prevState) {
+    prevState.questionNumber !== this.state.questionNumber && this.getQuestion();
+  }
 
-    Axios.get(apiUrl)
-      .then(response => {
+  getQuestion () {
+    const {match} = this.props;
 
-        if (process.env.NODE_ENV === 'development') console.log(response.data);
+    const apiUrl = `games/random/${slugToApiSlug(match.params.slug)}`; 
 
-        gameStateSetter(cleanGameResponse(response.data));
-        gameWindowInStateSetter(true);
-      });
-  }, [questionNumberState]);
+    this.handleGetQuestionRequest(apiUrl);
+  }
 
-  const inputWasChangedHandler = (input) => {
-    inputStateSetter(input);
+  handleGetQuestionRequest(url) {
+    Axios.get(url).then(response => {
+        this.handleGetQuestionResponse(response.data);
+    });
+  }
+
+  handleGetQuestionResponse(response) {
+    if (process.env.NODE_ENV === 'development') console.log(response);
+    
+    this.setState({
+      game: cleanGameResponse(response),
+      gameWindowIn: true
+    });
+  }
+
+  feedNewQuestion = () => {
+    this.setState({questionNumber: this.state.questionNumber + 1});
+  }
+
+  inputWasChangedHandler = input => {
+    this.setState({input: input});
   };
 
-  const gameWasSelectedHandler = (game) => {
-    selectedGameStateSetter(game);
+  inputWasClearedHandler = () => {
+    this.setState({inputShouldBeCleared: false, input: ""});
+  }
+
+  gameWasSelectedHandler = game => {
+    this.setState({selectedGame: game});
   };
 
-  const answerWasSubmittedHandler = skip => {
+  answerWasDisplayedHandler = () => {
+    this.setState({answer: null});
+  }
+
+  answerWasSubmittedHandler = skip => {
+
+    const {correctCount, mistakeCount, game} = this.state;
+
+    if (game === null) return;
 
     const answer = {};
+    const state = {};
     
-    answer.wasCorrect = !skip && answerWasCorrect();
-    answer.correctGame = gameState;
+    answer.wasCorrect = !skip && this.answerIsCorrect();
+    answer.correctGame = game;
 
     if (answer.wasCorrect) {
-      correctCountStateSetter(correctCountState + 1);
+      state.correctCount = correctCount + 1;
     } else {
-
-      mistakeCountStateSetter(mistakeCountState + 1);
-
-      if (mistakeCountState + 1 >= AppConfig.lives) {
-        displayGameOverModalSetter(true);
-        return;
-      }
+      state.mistakeCount = mistakeCount + 1;
     }
 
-    answerStateSetter(answer);
-    gameWindowInStateSetter(false);
-    inputClearStateSetter(true);
-    selectedGameStateSetter(null);
-  }
-
-  const answerWasCorrect = () => {
-
-    if (selectedGameState !== null) {
-      if (selectedGameState.id === gameState.id) return true;
-      if (selectedGameState.name.toLowerCase() === gameState.name.toLowerCase()) return true;
+    if (mistakeCount + 1 >= AppConfig.lives) {
+      state.displayGameOverModal = true;
+      this.setState(state);
+      return;
     }
 
-    return inputState.toLowerCase() === gameState.name.toLowerCase();
-  }
+    state.answer = answer;
+    state.gameWindowIn = false;
+    state.inputShouldBeCleared = true;
+    state.selectedGame = null;
 
-  const answerWasDisplayedHandler = () => {
-    answerStateSetter(null);
-  }
+    this.setState(state);
+  };
 
-  const inputWasClearedHandler = () => {
-    inputClearStateSetter(false);
-    inputStateSetter("");
-  }
+  answerIsCorrect = () => {
 
-  const feedNewQuestion = () => {
-    questionNumberSetter(questionNumberState + 1);
-  }
+    const {selectedGame, game, input} = this.state;
 
-  return (
-    <div className={styles.GameBoard}>
-      <GameHeader
-        correctCount={correctCountState}
-        correctCountFlyaway={answerState && answerState.wasCorrect}
-        mistakeCount={mistakeCountState} />
+    if (selectedGame !== null) {
+      if (selectedGame.id === game.id) return true;
+      if (selectedGame.name.toLowerCase() === game.name.toLowerCase()) return true;
+    }
 
-      <div className={styles.GameQuestionArea}>      
-        <CSSTransition
-          in={gameWindowInState}
-          unmountOnExit
-          timeout={1000}
-          classNames={{
-            enter: styles.gameQuestionWindowEnter,
-            enterActive: styles.gameQuestionWindowEnterActive,
-            exit: styles.gameQuestionWindowExit,
-            exitActive: styles.gameQuestionWindowExitActive
-          }}
-          onExited={feedNewQuestion}
-        >
-          <GameQuestion game={gameState} />
-        </CSSTransition>
+    return input.toLowerCase() === game.name.toLowerCase();
+  };
+
+  render () {
+
+    const { correctCount, mistakeCount, answer, gameWindowIn, game,
+      inputShouldBeCleared, input, selectedGame, displayGameOverModal } = this.state;
+
+    return (
+      <div className={styles.GameBoard}>
+        <GameHeader
+          correctCount={correctCount}
+          correctCountFlyaway={answer && answer.wasCorrect}
+          mistakeCount={mistakeCount} />
+
+        <div className={styles.GameQuestionArea}>      
+          <CSSTransition
+            in={gameWindowIn}
+            unmountOnExit
+            timeout={1000}
+            classNames={{
+              enter: styles.gameQuestionWindowEnter,
+              enterActive: styles.gameQuestionWindowEnterActive,
+              exit: styles.gameQuestionWindowExit,
+              exitActive: styles.gameQuestionWindowExitActive
+            }}
+            onExited={this.feedNewQuestion}
+          >
+            <GameQuestion game={game} />
+          </CSSTransition>
+        </div>
+
+        <GameInput
+          inputWasChanged={this.inputWasChangedHandler}
+          gameWasSelected={this.gameWasSelectedHandler}
+          inputWasCleared={this.inputWasClearedHandler}
+          answerWasSubmitted={this.answerWasSubmittedHandler}
+          inputShouldBeCleared={inputShouldBeCleared} />
+
+        <GameAdvanceQuestion
+          disabled={selectedGame === null && input.length === 0}
+          answerWasSubmitted={this.answerWasSubmittedHandler} />
+
+        {answer !== null && <GameAnswer answer={answer} answerWasDisplayed={this.answerWasDisplayedHandler} />}
+
+        {displayGameOverModal && <GameOver correctCount={correctCount} />}
       </div>
-
-      <GameInput
-        inputWasChanged={inputWasChangedHandler}
-        gameWasSelected={gameWasSelectedHandler}
-        inputClear={inputClearState}
-        inputWasCleared={inputWasClearedHandler}
-        answerWasSubmitted={answerWasSubmittedHandler} />
-
-      <GameAdvanceQuestion
-        disabled={selectedGameState !== null || inputState.length > 0}
-        answerWasSubmitted={answerWasSubmittedHandler} />
-
-      {answerState !== null && <GameAnswer answer={answerState} answerWasDisplayed={answerWasDisplayedHandler} />}
-
-      {displayGameOverModal && <GameOver correctCount={correctCountState} />}
-    </div>
-  );
+    );
+  };
 }
 
 export default withRouter(GameBoard);

@@ -12,7 +12,7 @@ const Header = ({started, startButtonWasClicked, restartButtonWasClicked}) => {
   if (started) headerClasses = [styles.Header, styles.closed];
 
   return (
-    <header className={headerClasses.join(' ')} style={{backgroundImage: "url(" + backgroundImage +")"}}>
+    <header className={headerClasses.join(' ')} style={{backgroundImage: `url(${backgroundImage})`}}>
       <HeaderInner
         started={started}
         startButtonWasClicked={startButtonWasClicked}

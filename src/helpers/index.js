@@ -8,7 +8,7 @@ export function randBetweenInclusive (min, max) {
 
 export function truncateString (string, length) {
   if (string.length <= length) return string;
-  return string.substr(0, length) + '...';
+  return `${string.substr(0, length)}...`;
 }
 
 export function encodeUrlString(string) {

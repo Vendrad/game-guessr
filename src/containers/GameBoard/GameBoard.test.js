@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { GameBoard } from './GameBoard';
 import GameHeader from '../../components/GameHeader/GameHeader';
 import * as AppConfig from '../../config/App.config';
-import * as gameManipulators from '../../core/gameManipulators';
+import * as gameManipulators from '../../core/gameManipulators/cleanGameResponse';
 import * as gameModes from '../../core/gameModes/gameModes';
 
 const defaultProps = {

@@ -4,7 +4,7 @@ import Axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
 
 import { slugToApiSlug } from '../../core/gameModes/gameModes';
-import { cleanGameResponse } from '../../core/gameManipulators';
+import { cleanGameResponse } from '../../core/gameManipulators/cleanGameResponse';
 import AppConfig from '../../config/App.config';
 
 import GameHeader from '../../components/GameHeader/GameHeader';

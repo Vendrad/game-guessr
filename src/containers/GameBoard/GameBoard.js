@@ -84,14 +84,14 @@ export class GameBoard extends Component {
 
   answerWasSubmittedHandler = skip => {
 
-    const {correctCount, mistakeCount, game} = this.state;
+    const {correctCount, mistakeCount, selectedGame, game, input} = this.state;
 
     if (game === null) return;
 
     const answer = {};
     const state = {};
     
-    answer.wasCorrect = !skip && this.answerIsCorrect();
+    answer.wasCorrect = !skip && this.answerIsCorrect(selectedGame, game, input);
     answer.correctGame = game;
 
     if (answer.wasCorrect) {
@@ -114,9 +114,7 @@ export class GameBoard extends Component {
     this.setState(state);
   };
 
-  answerIsCorrect = () => {
-
-    const {selectedGame, game, input} = this.state;
+  answerIsCorrect (selectedGame, game, input) {
 
     if (selectedGame !== null) {
       if (selectedGame.id === game.id) return true;

@@ -1,7 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+
 import { GameBoard } from './GameBoard';
 import GameHeader from '../../components/GameHeader/GameHeader';
+import AppConfig from '../../config/App.config';
 
 const defaultProps = {
   history: { push: jest.fn()},
@@ -61,4 +63,142 @@ describe('<GameBoard />', () => {
     wrapper.instance().handleGetQuestionResponse(response);
     expect(spy).toHaveBeenCalledWith(expectedState);
   });
+  
+  it('should increment question number when a new question is fed.', () => {
+    spy = jest.spyOn(wrapper.instance(), 'setState');
+    const expectedState = {questionNumber: wrapper.state('questionNumber') + 1};
+    wrapper.instance().feedNewQuestion();
+    expect(spy).toHaveBeenCalledWith(expectedState);
+  });
+  
+  it('should record input value when input change handler is called.', () => {
+    spy = jest.spyOn(wrapper.instance(), 'setState');
+    const expectedState = {input: 'test'};
+    wrapper.instance().inputWasChangedHandler('test');
+    expect(spy).toHaveBeenCalledWith(expectedState);
+  });
+  
+  it('should clear input record and should be cleared intender when the input was cleared handler is called.', () => {
+    spy = jest.spyOn(wrapper.instance(), 'setState');
+    const expectedState = {inputShouldBeCleared: false, input: ""};
+    wrapper.instance().inputWasClearedHandler();
+    expect(spy).toHaveBeenCalledWith(expectedState);
+  });
+  
+  it('should store a record of the selected game when the game was selected handler is called.', () => {
+    spy = jest.spyOn(wrapper.instance(), 'setState');
+    const game = {name: 'dummyGame'};
+    const expectedState = {selectedGame: game};
+    wrapper.instance().gameWasSelectedHandler(game);
+    expect(spy).toHaveBeenCalledWith(expectedState);
+  });
+  
+  it('should clear out the stored answer when the answer was displayed handler is called.', () => {
+    spy = jest.spyOn(wrapper.instance(), 'setState');
+    const expectedState = {answer: null};
+    wrapper.instance().answerWasDisplayedHandler();
+    expect(spy).toHaveBeenCalledWith(expectedState);
+  });
+  
+  it('should increment the mistake count if a question is skipped.', () => {
+    wrapper.setState({game: {name: 'dummyGame'}});
+    spy = jest.spyOn(wrapper.instance(), 'setState');
+    const expected = {mistakeCount: wrapper.state('mistakeCount') + 1};
+    wrapper.instance().answerWasSubmittedHandler(true);
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
+  });
+  
+  it('should increment the correct count if the answer is correct.', () => {
+    wrapper.setState({game: {name: 'dummyGame'}});
+    spy = jest.spyOn(wrapper.instance(), 'setState');
+    const mock = jest.fn().mockReturnValue(true);
+    wrapper.instance().answerIsCorrect = mock;
+    const expected = {correctCount: wrapper.state('correctCount') + 1};
+
+    wrapper.instance().answerWasSubmittedHandler();
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
+    mock.mockClear() && mock.mockRestore();
+  });
+
+  it('should increment the mistake count if the answer is false.', () => {
+    wrapper.setState({game: {name: 'dummyGame'}});
+    spy = jest.spyOn(wrapper.instance(), 'setState');
+    const mock = jest.fn().mockReturnValue(false);
+    wrapper.instance().answerIsCorrect = mock;
+    const expected = {mistakeCount: wrapper.state('mistakeCount') + 1};
+
+    wrapper.instance().answerWasSubmittedHandler();
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
+    mock.mockClear() && mock.mockRestore();
+  });
+  
+  it('should set flag to display game over if all lives are used up.', () => {
+    const lives = AppConfig.lives;
+    const mock = jest.fn().mockReturnValue(false);
+    wrapper.instance().answerIsCorrect = mock;
+
+    wrapper.setState({game: {name: 'dummyGame'}, mistakeCount: lives - 1});
+    const expected = {displayGameOverModal: true};
+
+    spy = jest.spyOn(wrapper.instance(), 'setState');
+    
+    wrapper.instance().answerWasSubmittedHandler();
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
+
+    mock.mockClear() && mock.mockRestore();
+  });
+  
+  it('should set flag to display game over if all lives are used up.', () => {
+    const lives = AppConfig.lives;
+    const mock = jest.fn().mockReturnValue(false);
+    wrapper.instance().answerIsCorrect = mock;
+
+    wrapper.setState({game: {name: 'dummyGame'}, mistakeCount: lives - 1});
+    const expected = {displayGameOverModal: true};
+
+    spy = jest.spyOn(wrapper.instance(), 'setState');
+    
+    wrapper.instance().answerWasSubmittedHandler();
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
+
+    mock.mockClear() && mock.mockRestore();
+  });
+
+  
+});
+
+describe('<GameBoard /> : answerIsCorrect()', () => {
+
+  it('should return true if selectedGame matches game.', () => {
+    const selectedGame = {id: 100, name: 'dummyGame'};
+    const game = {id: 100, name: 'dummyGame'};
+    const input = "";
+
+    expect(GameBoard.prototype.answerIsCorrect(selectedGame, game, input)).toBe(true);
+  });
+  
+  it('should return true if selectedGame name matches game name.', () => {
+    const selectedGame = {id: 100, name: 'dummyGame'};
+    const game = {id: 200, name: 'dummyGame'};
+    const input = "";
+
+    expect(GameBoard.prototype.answerIsCorrect(selectedGame, game, input)).toBe(true);
+  });
+
+  it('should return true if input name matches game name.', () => {
+    const selectedGame = null;
+    const game = {id: 100, name: 'dummyGame'};
+    const input = "dummyGame";
+
+    expect(GameBoard.prototype.answerIsCorrect(selectedGame, game, input)).toBe(true);
+  });
+  
+  it('should return false if there is no match.', () => {
+    const selectedGame = {id: 200, name: 'otherDummyGame'};
+    const game = {id: 100, name: 'dummyGame'};
+    const input = "otherDummyGame";
+
+    expect(GameBoard.prototype.answerIsCorrect(selectedGame, game, input)).toBe(false);
+  });
+  
 });

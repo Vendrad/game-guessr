@@ -100,7 +100,7 @@ export class GameBoard extends Component {
       state.mistakeCount = mistakeCount + 1;
     }
 
-    if (mistakeCount + 1 >= AppConfig.lives) {
+    if (mistakeCount + 1 >= AppConfig().lives) {
       state.displayGameOverModal = true;
       this.setState(state);
       return;

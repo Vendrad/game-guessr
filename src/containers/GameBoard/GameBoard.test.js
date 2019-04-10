@@ -3,7 +3,9 @@ import { shallow } from 'enzyme';
 
 import { GameBoard } from './GameBoard';
 import GameHeader from '../../components/GameHeader/GameHeader';
-import AppConfig from '../../config/App.config';
+import * as AppConfig from '../../config/App.config';
+import * as gameManipulators from '../../core/gameManipulators';
+import * as gameModes from '../../core/gameModes/gameModes';
 
 const defaultProps = {
   history: { push: jest.fn()},
@@ -12,16 +14,22 @@ const defaultProps = {
   match: {params: {slug: "00"}}
 };
 
+const apiSlugReturn = 2;
+
 describe('<GameBoard />', () => {
 
   let wrapper;
   let spy;
 
   beforeEach(() => {
+    gameModes.slugToApiSlug = jest.fn().mockReturnValue(apiSlugReturn);
+    AppConfig.default = jest.fn().mockReturnValue({lives: 5});
     wrapper = shallow(<GameBoard {...defaultProps} />);
   });
 
   afterEach(() => {
+    gameModes.slugToApiSlug.mockClear() && gameModes.slugToApiSlug.mockRestore();
+    AppConfig.default.mockClear() && AppConfig.default.mockRestore();
     spy !== undefined 
       && spy.mockClear()
       && spy.mockRestore();
@@ -33,19 +41,19 @@ describe('<GameBoard />', () => {
 
   it('should load a question on mount.', () => {
     // Rewrap after spy setup
-    spy = jest.spyOn(GameBoard.prototype, 'getQuestion');
+    spy = jest.spyOn(GameBoard.prototype, 'getQuestion').mockImplementation(jest.fn());
     shallow(<GameBoard {...defaultProps} />);  
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('should load a new question if question number is incremented.', () => {
-    spy = jest.spyOn(wrapper.instance(), 'getQuestion');
+    spy = jest.spyOn(wrapper.instance(), 'getQuestion').mockImplementation(jest.fn());
     wrapper.setState({questionNumber: wrapper.state('questionNumber') + 1});
     expect(spy).toHaveBeenCalledTimes(1);
   });
   
   it('should not load a new question if question number is the same as previous.', () => {
-    spy = jest.spyOn(wrapper.instance(), 'getQuestion');
+    spy = jest.spyOn(wrapper.instance(), 'getQuestion').mockImplementation(jest.fn());
     wrapper.setState({questionNumber: wrapper.state('questionNumber')});
     expect(spy).toHaveBeenCalledTimes(0);
   });
@@ -53,15 +61,22 @@ describe('<GameBoard />', () => {
   it('should make an API call with the correct path when getting a new question.', () => {
     spy = jest.spyOn(wrapper.instance(), 'handleGetQuestionRequest');
     wrapper.instance().getQuestion();
-    expect(spy).toHaveBeenCalledWith('games/random/2');
+    expect(spy).toHaveBeenCalledWith(`games/random/${apiSlugReturn}`);
   });
   
   it('should set the state correctly once we get a response from the API.', () => {
     spy = jest.spyOn(wrapper.instance(), 'setState');
-    const response = {id:27730,game:{id:325,name:"Hellgate: London",storyline:"Hellgate: London takes place in 2038, 18 years after the start of a war: London has been invaded by demons from Hell. These particular hellions are a tireless lot, and have been looking for a way into our universe for a long time. Up until recently, humans have had many champions looking to hold back the flood. Various real-world events are referenced in the background of the Hellgate story as averted crossover attempts. The Crusades were actually undertaken to fight back the minions of Hell, as was the charring of London in the great fire to wipe out the Plague. According to the story line, the famous Knights Templar were the keepers of knowledge on how to battle these demonic forces. Unfortunately, these heroes underwent a charring of their own at the hands of a jealous King Phillip IV, who hated the power they held in the world at large. While the Knights Templar survived as an organization, their numbers were severely diminished and were forced to remain in hiding to stay alive."},y:2007};
-    const expectedState = {game:{aliases:["Hellgate: London", "Hellgate:"],id: 325,name: "Hellgate: London",storyline: "[ ... ] takes place in 2038, 18 years after the start of a war: London has been invaded by demons from Hell. These particular hellions are a tireless lot, and have been looking for a way into our universe for a long time. Up until recently, humans have had many champions looking to hold back the flood. Various real-world events are referenced in the background of the Hellgate story as averted crossover attempts. The Crusades were actually undertaken to fight back the minions of Hell, as was the charring of London in the great fire to wipe out the Plague. According to the story line, the famous Knights Templar were the keepers of knowledge on how to battle these demonic forces. Unfortunately, these heroes underwent a charring of their own at the hands of a jealous King Phillip IV, who hated the power they held in the world at large. While the Knights Templar survived as an organization, their numbers were severely diminished and were forced to remain in hiding to stay alive.",year: 2007},gameWindowIn: true};
+
+    const response = {id:27730,game:{id:325,name:"DummyGame",storyline:"DummyGame"},y:2007};
+    const cleaned = {aliases:["DummyGame"],id: 325,name: "DummyGame: London",storyline: "[ ... ]",year: 2007};
+    const expectedState = {game: cleaned,gameWindowIn: true};
+    
+    gameManipulators.cleanGameResponse = jest.fn().mockReturnValue(cleaned);
+
     wrapper.instance().handleGetQuestionResponse(response);
     expect(spy).toHaveBeenCalledWith(expectedState);
+
+    gameManipulators.cleanGameResponse.mockClear() && gameManipulators.cleanGameResponse.mockRestore();
   });
   
   it('should increment question number when a new question is fed.', () => {
@@ -133,11 +148,11 @@ describe('<GameBoard />', () => {
   });
   
   it('should set flag to display game over if all lives are used up.', () => {
-    const lives = AppConfig.lives;
+    AppConfig.default = jest.fn().mockReturnValue({lives: 1});
     const mock = jest.fn().mockReturnValue(false);
     wrapper.instance().answerIsCorrect = mock;
 
-    wrapper.setState({game: {name: 'dummyGame'}, mistakeCount: lives - 1});
+    wrapper.setState({game: {name: 'dummyGame'}});
     const expected = {displayGameOverModal: true};
 
     spy = jest.spyOn(wrapper.instance(), 'setState');
@@ -147,24 +162,7 @@ describe('<GameBoard />', () => {
 
     mock.mockClear() && mock.mockRestore();
   });
-  
-  it('should set flag to display game over if all lives are used up.', () => {
-    const lives = AppConfig.lives;
-    const mock = jest.fn().mockReturnValue(false);
-    wrapper.instance().answerIsCorrect = mock;
-
-    wrapper.setState({game: {name: 'dummyGame'}, mistakeCount: lives - 1});
-    const expected = {displayGameOverModal: true};
-
-    spy = jest.spyOn(wrapper.instance(), 'setState');
     
-    wrapper.instance().answerWasSubmittedHandler();
-    expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
-
-    mock.mockClear() && mock.mockRestore();
-  });
-
-  
 });
 
 describe('<GameBoard /> : answerIsCorrect()', () => {
@@ -193,7 +191,7 @@ describe('<GameBoard /> : answerIsCorrect()', () => {
     expect(GameBoard.prototype.answerIsCorrect(selectedGame, game, input)).toBe(true);
   });
   
-  it('should return false if there is no match.', () => {
+  it('should return false if there is no game match.', () => {
     const selectedGame = {id: 200, name: 'otherDummyGame'};
     const game = {id: 100, name: 'dummyGame'};
     const input = "otherDummyGame";

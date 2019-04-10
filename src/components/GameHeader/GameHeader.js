@@ -10,7 +10,7 @@ import heartEmpty from '../../assets/images/icons8-heart-empty-64.png';
 
 const GameHeader = ({correctCount, correctCountFlyaway, mistakeCount}) => {
 
-  let lives = Array.apply(null, Array(AppConfig.lives));
+  let lives = Array.apply(null, Array(AppConfig().lives));
   lives = lives.fill('full').fill('empty', 0, mistakeCount);
   lives = lives.map((life, index) => {
     return <img key={index} src={life === 'full' ? heartFull : heartEmpty} alt={`Heart Piece - ${life}`} />;

@@ -9,14 +9,14 @@ import styles from './GameModeSelector.module.scss';
 const GameModeSelector = ({gameModeWasSelected}) => {
 
   const gameModeWasSelectedHandler = (gameModeId) => {
-    const [gameMode] = gameModes.filter((gameMode) => { return gameMode.id === gameModeId } );
+    const [gameMode] = gameModes().filter((gameMode) => { return gameMode.id === gameModeId } );
     gameModeWasSelected(gameMode);
   }
  
   return (
     <div className={styles.GameModeSelector}>
       <p className={styles.GameModeSelectorHeader}>Choose your decade!</p>
-      {gameModes.map((gameMode) => {
+      {gameModes().map((gameMode) => {
         return <GameMode
           key={gameMode.id}
           gameMode={gameMode}

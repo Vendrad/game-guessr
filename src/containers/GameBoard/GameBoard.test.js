@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { mockCR } from '../../helpers/testing';
 
 import { GameBoard } from './GameBoard';
 import GameHeader from '../../components/GameHeader/GameHeader';
@@ -28,11 +29,10 @@ describe('<GameBoard />', () => {
   });
 
   afterEach(() => {
-    gameModes.slugToApiSlug.mockClear() && gameModes.slugToApiSlug.mockRestore();
-    AppConfig.default.mockClear() && AppConfig.default.mockRestore();
+    mockCR(gameModes.slugToApiSlug);
+    mockCR(AppConfig.default);
     spy !== undefined 
-      && spy.mockClear()
-      && spy.mockRestore();
+      && mockCR(spy);
   });
 
   it('should render without errors.', () => {
@@ -76,7 +76,7 @@ describe('<GameBoard />', () => {
     wrapper.instance().handleGetQuestionResponse(response);
     expect(spy).toHaveBeenCalledWith(expectedState);
 
-    gameManipulators.cleanGameResponse.mockClear() && gameManipulators.cleanGameResponse.mockRestore();
+    mockCR(gameManipulators.cleanGameResponse);
   });
   
   it('should increment question number when a new question is fed.', () => {
@@ -132,7 +132,7 @@ describe('<GameBoard />', () => {
 
     wrapper.instance().answerWasSubmittedHandler();
     expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
-    mock.mockClear() && mock.mockRestore();
+    mockCR(mock);
   });
 
   it('should increment the mistake count if the answer is false.', () => {
@@ -144,7 +144,7 @@ describe('<GameBoard />', () => {
 
     wrapper.instance().answerWasSubmittedHandler();
     expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
-    mock.mockClear() && mock.mockRestore();
+    mockCR(mock);
   });
   
   it('should set flag to display game over if all lives are used up.', () => {
@@ -160,7 +160,7 @@ describe('<GameBoard />', () => {
     wrapper.instance().answerWasSubmittedHandler();
     expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
 
-    mock.mockClear() && mock.mockRestore();
+    mockCR(mock);
   });
     
 });

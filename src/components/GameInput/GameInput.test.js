@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { mockCR } from '../../helpers/testing';
 
 import GameInput from './GameInput';
 import GameAutoComplete from './GameAutoComplete/GameAutoComplete';
@@ -23,8 +24,7 @@ describe('<GameInput />', () => {
 
   afterEach(() => {
     spy !== undefined 
-      && spy.mockClear()
-      && spy.mockRestore();
+      && mockCR(spy);
   });
 
   it('should render without errors.', () => {

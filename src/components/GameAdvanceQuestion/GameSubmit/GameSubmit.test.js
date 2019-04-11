@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { mockCR } from '../../../helpers/testing';
 
 import GameSubmit from './GameSubmit';
 
@@ -19,8 +20,7 @@ describe('<GameSubmit />', () => {
 
   afterEach(() => {
     spy !== undefined 
-      && spy.mockClear()
-      && spy.mockRestore();
+      && mockCR(spy);
   });
 
   it('should render without errors.', () => {

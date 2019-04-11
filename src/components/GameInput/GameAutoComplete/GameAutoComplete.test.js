@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { mockCR } from '../../../helpers/testing';
 
 import GameAutoComplete from './GameAutoComplete';
 
@@ -28,8 +29,7 @@ describe('<GameAutoComplete />', () => {
 
   afterEach(() => {
     spy !== undefined 
-      && spy.mockClear()
-      && spy.mockRestore();
+      && mockCR(spy);
   });
 
   it('should render without errors.', () => {

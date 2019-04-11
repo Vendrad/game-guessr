@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { mockCR } from '../../../helpers/testing';
 
 import GameSkip from './GameSkip';
 
@@ -18,8 +19,7 @@ describe('<GameSkip />', () => {
 
   afterEach(() => {
     spy !== undefined 
-      && spy.mockClear()
-      && spy.mockRestore();
+      && mockCR(spy);
   });
 
   it('should render without errors.', () => {

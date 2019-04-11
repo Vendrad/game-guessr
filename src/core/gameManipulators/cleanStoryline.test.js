@@ -1,5 +1,6 @@
 import { cleanStoryline } from './cleanStoryline';
 import * as Helpers from '../../helpers';
+import { mockCR } from '../../helpers/testing';
 
 const response = {
   id: 1,
@@ -38,7 +39,7 @@ describe('gameManipulators : cleanStoryline()', () => {
 
     expect(cleanStoryline(response.game.storyline, cleaned.aliases)).toEqual(cleaned.storyline);
 
-    mock.mockClear() && mock.mockRestore();
+    mockCR(mock);
   });
 
 });

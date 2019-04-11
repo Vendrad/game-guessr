@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { mockCR } from '../../helpers/testing';
 
 import GameHeader from './GameHeader';
 import Flyaway from '../UI/Flyaway/Flyaway';
@@ -32,7 +33,7 @@ describe('<GameHeader />', () => {
       return img.props.alt === 'Heart Piece - full';
     })).toHaveLength(lives - defaultProps.mistakeCount);
 
-    mock.mockClear() && mock.mockRestore();
+    mockCR(mock);
   });
 
   it('should show the correct number of empty hearts.', () => {
@@ -44,7 +45,7 @@ describe('<GameHeader />', () => {
       return img.props.alt === 'Heart Piece - empty';
     })).toHaveLength(defaultProps.mistakeCount);
 
-    mock.mockClear() && mock.mockRestore();
+    mockCR(mock);
   });
 
   it('should show the correct number of correct answers.', () => {

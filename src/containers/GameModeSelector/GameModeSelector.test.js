@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { mockCR } from '../../helpers/testing';
 
 import GameModeSelector from './GameModeSelector';
 import GameMode from '../../components/GameMode/GameMode';
@@ -23,7 +24,7 @@ describe('<GameModeSelector />', () => {
   });
 
   afterEach(() => {
-    gameModes.default.mockClear() && gameModes.default.mockRestore();
+    mockCR(gameModes.default);
   });
 
   it('should render without errors.', () => {

@@ -1,6 +1,7 @@
 import { cleanGameResponse } from './cleanGameResponse';
 import * as cleanStoryline from './cleanStoryline';
 import * as getAliases from './getAliases';
+import { mockCR } from '../../helpers/testing';
 
 const response = {
   id: 1,
@@ -41,8 +42,8 @@ describe('gameManipulators : cleanGameResponse()', () => {
 
     expect(cleanGameResponse(response)).toEqual(cleaned);
 
-    aliasesMock.mockClear() && aliasesMock.mockRestore();
-    storylineMock.mockClear() && storylineMock.mockRestore();
+    mockCR(aliasesMock);
+    mockCR(storylineMock);
   });
 
 });

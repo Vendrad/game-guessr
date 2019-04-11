@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { mockCR } from '../../helpers/testing';
 
 import { App } from './App';
 import Header from '../../components/Header/Header';
@@ -20,8 +21,7 @@ describe('<App />', () => {
 
   afterEach(() => {
     spy !== undefined
-      && spy.mockClear()
-      && spy.mockRestore();
+      && mockCR(spy);
   })
 
   it('should render without errors.', () => {

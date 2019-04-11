@@ -35,13 +35,9 @@ export class GameInput extends Component {
 
   inputValueWasChangedHandler = event => {
 
-    if (this.state.inputValue === event.target.value) {
-      this.setState({inputHasFocus: true});
-      return;
-    }
+    if (this.state.inputValue === event.target.value) return;
     
     this.setState({
-      inputHasFocus: true,
       inputValue: event.target.value
     });
     
@@ -58,7 +54,6 @@ export class GameInput extends Component {
     this.props.answerWasSubmitted();
 
     this.setState({
-      inputHasFocus: false,
       inputValue: ""
     });
   }
@@ -66,7 +61,6 @@ export class GameInput extends Component {
   render () {
 
     const {inputValue, inputHasFocus} = this.state;
-    const {keyPressHandler} = this.props;
 
     return (
       <div
@@ -82,7 +76,7 @@ export class GameInput extends Component {
           value={inputValue}
           onChange={this.inputValueWasChangedHandler}
           onFocus={this.inputGainedFocusHandler}
-          onKeyPress={keyPressHandler} />
+          onKeyPress={this.keyPressHandler} />
       </div>
     )
   }

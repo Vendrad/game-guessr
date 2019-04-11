@@ -71,12 +71,10 @@ export class GameInput extends Component {
     return (
       <div
         className={styles.GameInput}>
-        {inputValue.length >= 3
-          &&
+        {inputHasFocus && inputValue.length >= 3 && 
           <GameAutoComplete
             input={inputValue}
-            autoCompleteItemWasClicked={this.autoCompleteItemWasClickedHandler}
-            inputHasFocus={inputHasFocus} />
+            autoCompleteItemWasClicked={this.autoCompleteItemWasClickedHandler} />
         }
         <input
           type="text"

@@ -76,16 +76,6 @@ describe('<GameAutoComplete />', () => {
     expect(spy).toHaveBeenCalledTimes(0);
   });
 
-  it('it should not search for games if the input does not have focus.', () => {
-    spy = jest.spyOn(wrapper.instance(), 'searchGames');
-    wrapper.setProps({
-      input: "Dumm",
-      autoCompleteItemWasClicked: jest.fn(),
-      inputHasFocus: false
-    });
-    expect(spy).toHaveBeenCalledTimes(0);
-  });
-
   it('should store the list of games it gets back from the API.', () => {
     spy = jest.spyOn(wrapper.instance(), 'setState');
     const games = defaultState.autoCompleteItems;

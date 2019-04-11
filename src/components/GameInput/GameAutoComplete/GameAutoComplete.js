@@ -21,9 +21,9 @@ export class GameAutoComplete extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {input, inputHasFocus} = this.props;
+    const {input} = this.props;
 
-    if (input === prevProps.input || !inputHasFocus) return;
+    if (input === prevProps.input) return;
 
     this.searchGames(input);
   }
@@ -91,8 +91,7 @@ export class GameAutoComplete extends Component {
 
 GameAutoComplete.propTypes = {
   input: PropTypes.string,
-  autoCompleteItemWasClicked: PropTypes.func.isRequired,
-  inputHasFocus: PropTypes.bool.isRequired
+  autoCompleteItemWasClicked: PropTypes.func.isRequired
 };
 
 export default GameAutoComplete;

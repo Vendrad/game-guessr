@@ -1,54 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { randBetweenInclusive } from '../../../helpers';
 
 import styles from './GameQuip.module.scss';
 
-const GameQuip = ({correctCount}) => {
+export class GameQuip extends Component {
 
-  const [quipState, quipStateSetter] = useState(null);
+  state = {
+    quip: null
+  }
 
-  useEffect(() => {
-    const quip = correctCount >= 5
-      ? goodResult[randBetweenInclusive(0, goodResult.length)]
-      : badResult[randBetweenInclusive(0, goodResult.length)];
-    
-    quipStateSetter(quip);
-  }, []);
+  componentDidMount() {
+    const quip = this.props.correctCount >= 5
+      ? this.goodResult()[randBetweenInclusive(0, this.goodResult().length)]
+      : this.badResult()[randBetweenInclusive(0, this.badResult().length)];
+
+    this.setState({quip: quip});
+  }
   
-  const badResult = [
-    "/ff",
-    "Game Over. Insert coin to continue.",
-    "bg",
-    "Must've been the lag, right?",
-    "Mama mia...",
-    "You were not prepared.",
-    "Do you always need to be carried this hard?",
-    "You call yourself a gamer?",
-    "l2p noob",
-    "There is no aggro reset...",
-    "That's a 50dkp minus!",
-    "Game over, man... Game over...",
-    "The lights are on but nobody is home.",
-  ];
+  badResult () {
+    return [
+      "/ff",
+      "Game Over. Insert coin to continue.",
+      "bg",
+      "Must've been the lag, right?",
+      "Mama mia...",
+      "You were not prepared.",
+      "Do you always need to be carried this hard?",
+      "You call yourself a gamer?",
+      "l2p noob",
+      "There is no aggro reset...",
+      "That's a 50dkp minus!",
+      "Game over, man... Game over...",
+      "The lights are on but nobody is home."
+    ];
+  }  
 
-  const goodResult = [
-    "omg wtf lag",
-    "Your opponent has disconnected...",
-    "You have received a friends request from GG.",
-    "I bet you've completed your steam collection.",
-    "M-M-M-Monster Kill!",
-    "C-C-C-Combo Breaker!",
-    "gg",
-    "grats",
-    "A WINNER IS YOU",
-    "Parzival wished he had your skills."
-  ];
+  goodResult () {
+    return [
+        "omg wtf lag",
+        "Your opponent has disconnected...",
+        "You have received a friends request from GG.",
+        "WOW... You've probably completed Steam too!",
+        "M-M-M-Monster Kill!",
+        "C-C-C-Combo Breaker!",
+        "gg",
+        "grats",
+        "A WINNER IS YOU",
+        "Have you been training with Parzival?"
+      ];
+  }
 
-  return (
-    <p className={styles.GameQuip}>"{quipState}"</p>
-  );
+  render () {
+    return (
+      <p className={styles.GameQuip}>"{this.state.quip}"</p>
+    );
+  }
 }
 
 GameQuip.propTypes = {

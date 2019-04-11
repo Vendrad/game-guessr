@@ -19,7 +19,6 @@ describe('<Flyaway />', () => {
 
   beforeEach(() => {
     wrapper = shallow(<Flyaway {...defaultProps} />);
-    wrapper.setState({inState: true});
   })
 
   afterEach(() => {
@@ -37,6 +36,11 @@ describe('<Flyaway />', () => {
 
   it('should have an in state of true after mounting.', () => {
     expect(wrapper.state('in')).toEqual(true);
+  });
+
+  it('should have an in state of false after chainExit is called.', () => {
+    wrapper.instance().chainExit();
+    expect(wrapper.state('in')).toEqual(false);
   });
   
 });

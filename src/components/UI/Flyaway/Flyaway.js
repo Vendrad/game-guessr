@@ -12,7 +12,7 @@ export class Flyaway extends Component {
     this.setState({in: true});
   }
 
-  chainExit ()  {
+  chainExit = () => {
     this.setState({in: false});
   }
 
@@ -33,7 +33,7 @@ export class Flyaway extends Component {
       </CSSTransition>
     )
   }
-};
+}
 
 Flyaway.defaultProps = {
   timeout: {appear: 500, enter: 500, exit: 500}

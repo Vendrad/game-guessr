@@ -1,47 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
 import styles from './Modal.module.scss';
 
-const Modal = ({automaticallyExit, displayCloseButton, modalExitedCallback, extraStyles, children}) => {
+export class Modal extends Component {
 
-  const [inState, inStateSetter] = useState(false);
+  state = {
+    in: false
+  }
 
-  useEffect(() => {
-    inStateSetter(true);
-  },[]);
+  componentDidMount () {
+    this.setState({in: true});
+  }
 
-  const closeModalHandler = () => {
-    inStateSetter(false);
-  };
+  closeModalHandler = () => {
+    this.setState({in: false});
+  }
 
-  return (
-    <CSSTransition
-      in={inState}
-      timeout={{
-        appear: 0,
-        enter: 2000,
-        exit: 500,
-       }}
-      unmountOnExit
-      onEntered={automaticallyExit ? closeModalHandler : null}
-      onExited={modalExitedCallback}
-      classNames={{
-        enter: styles.modalEnter,
-        enterActive: styles.modalEnterActive,
-        exit: styles.modalExit,
-        exitActive: styles.modalExitActive
-      }} >
-      <div className={styles.ModalWrapper}>
-        <div className={[extraStyles, styles.Modal].join(" ")} onClick={null}>
-          {children}
-          {displayCloseButton && <div className={styles.ModalCloseButton} onClick={closeModalHandler} aria-label="Close Modal">&times;</div>}
+  render () {
+    
+    const {automaticallyExit, displayCloseButton, modalExitedCallback,
+      extraStyles, children} = this.props;
+
+    return (
+      <CSSTransition
+        in={this.state.in}
+        timeout={{
+          appear: 0,
+          enter: 2000,
+          exit: 500,
+         }}
+        unmountOnExit
+        onEntered={automaticallyExit ? this.closeModalHandler : null}
+        onExited={modalExitedCallback}
+        classNames={{
+          enter: styles.modalEnter,
+          enterActive: styles.modalEnterActive,
+          exit: styles.modalExit,
+          exitActive: styles.modalExitActive
+        }} >
+        <div className={styles.ModalWrapper}>
+          <div className={[extraStyles, styles.Modal].join(" ")} onClick={null}>
+            {children}
+            {displayCloseButton && <div className={styles.ModalCloseButton} onClick={this.closeModalHandler} aria-label="Close Modal">&times;</div>}
+          </div>
         </div>
-      </div>
-    </CSSTransition>
-  )
-};
+      </CSSTransition>
+    )
+  }
+  
+}
 
 Modal.defaultProps = {
   automaticallyExit: true,

@@ -7,7 +7,7 @@ import Modal from '../UI/Modal/Modal';
 
 import GameQuip from './GameQuip/GameQuip';
 
-const GameOver = ({history, correctCount, answerWasDisplayed}) => {
+export const GameOver = ({history, correctCount}) => {
 
   const playAgainButtonWasClickedHandler = () => {
     history.push('/new-game');
@@ -15,7 +15,6 @@ const GameOver = ({history, correctCount, answerWasDisplayed}) => {
 
   return (
     <Modal
-      modalExitedCallback={answerWasDisplayed}
       automaticallyExit={false}
       extraStyles={styles.GameOverModal}>
       <p className={styles.FinalScore}>You scored: {correctCount}</p>
@@ -28,8 +27,7 @@ const GameOver = ({history, correctCount, answerWasDisplayed}) => {
 
 GameOver.propTypes = {
   history: PropTypes.instanceOf(Object),
-  correctCount: PropTypes.number,
-  answerWasDisplayed: PropTypes.func
+  correctCount: PropTypes.number
 }
 
 export default withRouter(GameOver);

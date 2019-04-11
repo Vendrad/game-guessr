@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { mockCR } from '../../../helpers/testing';
 
 import GameQuip from './GameQuip';
 import * as Helpers from '../../../helpers';
-import { mockCR } from '../../../helpers/testing';
 
 describe('<GameQuip />', () => {
 

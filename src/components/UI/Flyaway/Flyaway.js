@@ -1,31 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
-const Flyaway = ({styles, animationStyles, timeout, cleanup, children}) => {
+export class Flyaway extends Component {
 
-  const [inState, inStateSetter] = useState(false);
-
-  useEffect(() => {
-    inStateSetter(true);
-  }, []);
-
-  const chainExit = () => {
-    inStateSetter(false);
+  state = {
+    in: false
   }
 
-  return (
-    <CSSTransition
-      in={inState}
-      unmountOnExit
-      timeout={timeout}
-      className={styles}
-      classNames={animationStyles}
-      onEntered={chainExit}
-      onExited={cleanup}>
-      {children}
-    </CSSTransition>
-  )
+  componentDidMount () {
+    this.setState({in: true});
+  }
+
+  chainExit ()  {
+    this.setState({in: false});
+  }
+
+  render () {
+
+    const { styles, animationStyles, timeout, cleanup, children } = this.props;
+
+    return (
+      <CSSTransition
+        in={this.state.in}
+        unmountOnExit
+        timeout={timeout}
+        className={styles}
+        classNames={animationStyles}
+        onEntered={this.chainExit}
+        onExited={cleanup}>
+        {children}
+      </CSSTransition>
+    )
+  }
 };
 
 Flyaway.defaultProps = {

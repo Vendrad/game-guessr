@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
 import { encodeUrlString } from '../../../helpers'; 
@@ -7,75 +7,89 @@ import GameAutoCompleteItem from './GameAutoCompleteItem/GameAutoCompleteItem';
 
 import styles from './GameAutoComplete.module.scss';
 
-const GameAutoComplete = ({id, input, autoCompleteItemWasClicked, inputHasFocus}) => {
+export class GameAutoComplete extends Component {
 
-  const [autoCompleteItemsState, autoCompleteItemsStateSetter] = useState([]);
-  const [blockNextInputUpdateState, blockNextInputUpdateStateSetter] = useState(false);
+  axiosSource;
 
-  let _isMounted = true;
-  
-  useEffect(() => {
+  state = {
+    autoCompleteItems: []
+  };
 
-    if (input.length < 3) {
-      return undefined;
-    }
-
-    if (blockNextInputUpdateState) {
-      blockNextInputUpdateStateSetter(false);
-      return undefined;
-    }
-
-    const source = Axios.CancelToken.source();
-
-    Axios.get(`games/search/${encodeUrlString(input)}`)
-      .then(response => {
-
-        if (!_isMounted) return;
-
-        if (response.data.length === 0) autoCompleteItemsStateSetter([]);
-
-        autoCompleteItemsStateSetter(response.data);
-
-      });
-
-    return () => {
-      _isMounted = false;
-      source.cancel("GameAutoComplete - Cleanup: Request no longer needed.");
-    };
-    
-  }, [input, inputHasFocus]);
-
-  const autoCompleteItemWasClickedHandler = (game) => {
-    autoCompleteItemsStateSetter([]);
-    blockNextInputUpdateStateSetter(true);
-    autoCompleteItemWasClicked(game)
+  componentDidMount() {
+    const {input} = this.props;
+    this.searchGames(input);
   }
 
-  if (autoCompleteItemsState.length === 0) return null;
+  componentDidUpdate(prevProps, prevState) {
+    const {input, inputHasFocus} = this.props;
 
-  return (
-    <div className={styles.GameAutoComplete}>
-      <div>
-        <ul>
-          {autoCompleteItemsState.map(item => {
+    if (input === prevProps.input || !inputHasFocus) return;
 
-            const coverUrl = item.cover && item.cover.url && item.cover.url;
+    this.searchGames(input);
+  }
 
-            return <GameAutoCompleteItem
-              key={item.id}
-              gameId={item.id}
-              gameName={item.name}
-              gameCover={coverUrl}
-              gameAutoCompleteItemWasClicked={autoCompleteItemWasClickedHandler} />
-          })}
-        </ul>
+  componentWillUnmount() {
+    this.axiosSource && this.axiosSource.cancel("GameAutoComplete - Cleanup: Request no longer needed.");
+  }
+
+  searchGames(input) {
+
+    this.axiosSource && this.axiosSource.cancel("GameAutoComplete - New Request Started: Request no longer needed.");
+    this.axiosSource = Axios.CancelToken.source();
+
+    Axios.get(`games/search/${encodeUrlString(input)}`, {cancelToken: this.axiosSource.token})
+      .then(response => {
+        this.searchGamesResponseHandler(response.data);
+    }).catch(function (thrown) {
+      // if (Axios.isCancel(thrown)) {
+      //   console.log('Request canceled', thrown.message);
+      // }
+    });
+  }
+
+  searchGamesResponseHandler (games) {
+    let items = [];
+
+    if (games.length !== 0) items = games;
+
+    this.setState({autoCompleteItems: items});
+  }
+  
+  autoCompleteItemWasClickedHandler = game => {
+    this.setState({
+      autoCompleteItems: []
+    })
+    this.props.autoCompleteItemWasClicked(game)
+  }
+
+  render () {
+
+    const {autoCompleteItems} = this.state;
+    if (autoCompleteItems.length === 0) return null;
+
+    return (
+      <div className={styles.GameAutoComplete}>
+        <div>
+          <ul>
+            {autoCompleteItems.map(item => {
+
+              const coverUrl = item.cover && item.cover.url && item.cover.url;
+
+              return <GameAutoCompleteItem
+                key={item.id}
+                gameId={item.id}
+                gameName={item.name}
+                gameCover={coverUrl}
+                gameAutoCompleteItemWasClicked={this.autoCompleteItemWasClickedHandler} />
+            })}
+          </ul>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 GameAutoComplete.propTypes = {
-  id: PropTypes.number,
   input: PropTypes.string,
   autoCompleteItemWasClicked: PropTypes.func.isRequired,
   inputHasFocus: PropTypes.bool.isRequired

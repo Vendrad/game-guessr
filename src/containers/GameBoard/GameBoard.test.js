@@ -41,19 +41,19 @@ describe('<GameBoard />', () => {
 
   it('should load a question on mount.', () => {
     // Rewrap after spy setup
-    spy = jest.spyOn(GameBoard.prototype, 'getQuestion').mockImplementation(jest.fn());
+    spy = jest.spyOn(GameBoard.prototype, 'getQuestion');
     shallow(<GameBoard {...defaultProps} />);  
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('should load a new question if question number is incremented.', () => {
-    spy = jest.spyOn(wrapper.instance(), 'getQuestion').mockImplementation(jest.fn());
+    spy = jest.spyOn(wrapper.instance(), 'getQuestion');
     wrapper.setState({questionNumber: wrapper.state('questionNumber') + 1});
     expect(spy).toHaveBeenCalledTimes(1);
   });
   
   it('should not load a new question if question number is the same as previous.', () => {
-    spy = jest.spyOn(wrapper.instance(), 'getQuestion').mockImplementation(jest.fn());
+    spy = jest.spyOn(wrapper.instance(), 'getQuestion');
     wrapper.setState({questionNumber: wrapper.state('questionNumber')});
     expect(spy).toHaveBeenCalledTimes(0);
   });

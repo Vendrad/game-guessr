@@ -33,7 +33,7 @@ describe('<GameSubmit />', () => {
   });
 
   it('should not be disabled if the disabled prop is false.', () => {
-    expect(wrapper.find('button').render()[0].attribs.disabled).toBe(undefined);
+    expect(wrapper.find('button').getElement().props.disabled).toBe(null);
   });
 
   it('should have the active class if the disabled prop is false.', () => {
@@ -42,7 +42,7 @@ describe('<GameSubmit />', () => {
 
   it('should be disabled if the disabled prop is true.', () => {
     wrapper.setProps({disabled: true});
-    expect(wrapper.find('button').render()[0].attribs.disabled).toBe("");
+    expect(wrapper.find('button').getElement().props.disabled).toBe('disabled');
   });
 
   it('should have the inactive class if the disabled prop is true.', () => {

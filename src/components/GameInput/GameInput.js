@@ -51,7 +51,8 @@ const GameInput = ({inputWasChanged, gameWasSelected, inputShouldBeCleared, inpu
     <div
       className={styles.GameInput}>
       {inputValueState.length >= 3
-        && <GameAutoComplete
+        &&
+        <GameAutoComplete
           input={inputValueState}
           autoCompleteItemWasClicked={autoCompleteItemWasClickedHandler}
           inputHasFocus={inputHasFocusState} />

@@ -53,4 +53,13 @@ describe('<Modal />', () => {
     expect(wrapper.state('in')).toEqual(false);
   });
   
+  it('should set the onEntered prop to closeModalHandler if automaticallyExit is set.', () => {
+    wrapper.setProps({automaticallyExit: true});
+    expect(wrapper.find(CSSTransition).getElement().props.onEntered).toEqual(wrapper.instance().closeModalHandler);
+  });
+  
+  it('should set the onEntered prop to null if automaticallyExit is not set.', () => {
+    expect(wrapper.find(CSSTransition).getElement().props.onEntered).toEqual(null);
+  });
+  
 });

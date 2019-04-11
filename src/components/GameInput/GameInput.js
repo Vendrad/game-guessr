@@ -1,71 +1,93 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './GameInput.module.scss';
 import GameAutoComplete from './GameAutoComplete/GameAutoComplete';
 
-const GameInput = ({inputWasChanged, gameWasSelected, inputShouldBeCleared, inputWasCleared, answerWasSubmitted}) => {
+export class GameInput extends Component {
 
-  useEffect(() => {
-    inputValueStateSetter("");
-    inputWasCleared();
-  }, [inputShouldBeCleared])
+  state = {
+    inputValue: "",
+    inputHasFocus: false
+  }
 
-  const [inputValueState, inputValueStateSetter] = useState("");
-  const [inputHasFocusState, inputHasFocusStateSetter] = useState(false);
+  componentDidUpdate(prevProps, prevState) {
+    const {inputShouldBeCleared, inputWasCleared} = this.props;
 
-  const autoCompleteItemWasClickedHandler = game => {
-    inputValueStateSetter(game.name);
-    inputHasFocusStateSetter(false);
-    gameWasSelected(game);
-  };
+    if (inputShouldBeCleared && inputShouldBeCleared !== prevProps.inputShouldBeCleared) {
+      this.setState({inputValue: ""});
+      inputWasCleared();
+    }
+  }
 
-  const inputGainedFocusHandler = () => {
-    inputHasFocusStateSetter(true);
-  };
-
-  const inputValueWasChangedHandler = event => {
-
-    inputHasFocusStateSetter(true);
-
-    if (inputValueState === event.target.value) return;
+  autoCompleteItemWasClickedHandler = game => {
+    this.setState({
+      inputValue: game.name,
+      inputHasFocus: false
+    });
     
-    inputValueStateSetter(event.target.value)
-    
-    gameWasSelected(null);
-    inputWasChanged(event.target.value);
+    this.props.gameWasSelected(game);
   };
 
-  const keyPressHandler = event => {
+  inputGainedFocusHandler = () => {
+    this.setState({inputHasFocus: true});
+  };
+
+  inputValueWasChangedHandler = event => {
+
+    if (this.state.inputValue === event.target.value) {
+      this.setState({inputHasFocus: true});
+      return;
+    }
+    
+    this.setState({
+      inputHasFocus: true,
+      inputValue: event.target.value
+    });
+    
+    this.props.gameWasSelected(null);
+    this.props.inputWasChanged(event.target.value);
+  };
+
+  keyPressHandler = event => {
 
     if (event.key !== 'Enter') return;
 
-    if (inputValueState === '') return;
+    if (this.state.inputValue === '') return;
 
-    answerWasSubmitted();
-    inputValueStateSetter("");
-    inputHasFocusStateSetter(false);
+    this.props.answerWasSubmitted();
+
+    this.setState({
+      inputHasFocus: false,
+      inputValue: ""
+    });
   }
 
-  return (
-    <div
-      className={styles.GameInput}>
-      {inputValueState.length >= 3
-        &&
-        <GameAutoComplete
-          input={inputValueState}
-          autoCompleteItemWasClicked={autoCompleteItemWasClickedHandler}
-          inputHasFocus={inputHasFocusState} />
-      }
-      <input
-        type="text"
-        placeholder="Find the game..."
-        value={inputValueState}
-        onChange={inputValueWasChangedHandler}
-        onFocus={inputGainedFocusHandler}
-        onKeyPress={keyPressHandler} />
-    </div>
-  )
+  render () {
+
+    const {inputValue, inputHasFocus} = this.state;
+    const {keyPressHandler} = this.props;
+
+    return (
+      <div
+        className={styles.GameInput}>
+        {inputValue.length >= 3
+          &&
+          <GameAutoComplete
+            input={inputValue}
+            autoCompleteItemWasClicked={this.autoCompleteItemWasClickedHandler}
+            inputHasFocus={inputHasFocus} />
+        }
+        <input
+          type="text"
+          placeholder="Find the game..."
+          value={inputValue}
+          onChange={this.inputValueWasChangedHandler}
+          onFocus={this.inputGainedFocusHandler}
+          onKeyPress={keyPressHandler} />
+      </div>
+    )
+  }
 };
 
 GameInput.propTypes = {

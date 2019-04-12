@@ -48,7 +48,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx lint-staged && set CI=true && npx jest --colors"
+      "pre-commit": "npx lint-staged && set CI=true && react-scripts test --colors"
     }
   },
   "lint-staged": {

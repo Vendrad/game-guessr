@@ -12,16 +12,20 @@ export const GameOver = ({ history, correctCount }) => {
     history.push('/new-game');
   };
 
-  const getPlug = () => 'Head over to <a href="https://igdb.com">igdb.com</a> to discover more games!';
+  const plugLink = () => <a href="https://igdb.com">igdb.com</a>;
 
   return (
     <Modal automaticallyExit={false} extraStyles={styles.GameOverModal}>
       <p className={styles.FinalScore}>
         You scored:
-        {correctCount}
+        {` ${correctCount}`}
       </p>
       <GameQuip correctCount={correctCount} />
-      <p className={styles.Plug}>{getPlug()}</p>
+      <p className={styles.Plug}>
+        {'Head over to '}
+        {plugLink()}
+        {' to discover more games!'}
+      </p>
       <button
         type="button"
         className={styles.PlayAgainButton}

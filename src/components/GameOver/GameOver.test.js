@@ -33,13 +33,16 @@ describe('<GameOver />', () => {
     expect(defaultProps.history.push).toHaveBeenCalledWith('/new-game');
   });
 
-  it('should display your score.', () => {
-    expect(wrapper.find('.FinalScore').getElement().props.children[1]).toBe(
-      defaultProps.correctCount
-    );
+  it('should display the players score.', () => {
+    expect(
+      wrapper
+        .find('.FinalScore')
+        .getElement()
+        .props.children[1].trim()
+    ).toBe(defaultProps.correctCount + '');
   });
 
-  it('should pass your score to GameQuip.', () => {
+  it('should pass the players score to GameQuip.', () => {
     expect(wrapper.find(GameQuip).getElement().props.correctCount).toBe(
       defaultProps.correctCount
     );

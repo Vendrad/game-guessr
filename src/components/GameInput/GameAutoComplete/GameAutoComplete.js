@@ -78,7 +78,7 @@ class GameAutoComplete extends Component {
 
     return (
       <div className={styles.GameAutoComplete}>
-        <div>
+        <div className={styles.GameAutoCompleteInner}>
           <ul>
             {autoCompleteItems.map((item) => {
               const coverUrl = item.cover && item.cover.url && item.cover.url;

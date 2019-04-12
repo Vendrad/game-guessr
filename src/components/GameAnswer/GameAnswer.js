@@ -7,6 +7,10 @@ import IncorrectAnswer from './IncorrectAnswer/IncorrectAnswer';
 import styles from './GameAnswer.module.scss';
 import Modal from '../UI/Modal/Modal';
 
+/**
+ * General wrapper to select between showing Correct/Incorrect answer
+ * components when giving the user feedback. Feedback wrapped in a Modal.
+ */
 const GameAnswer = ({answer, answerWasDisplayed}) => {
 
   return (

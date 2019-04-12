@@ -10,7 +10,7 @@ const defaultProps = {
   correctCount: 2,
   correctCountFlyaway: false,
   mistakeCount: 3
-}
+};
 
 describe('<GameHeader />', () => {
 
@@ -48,7 +48,7 @@ describe('<GameHeader />', () => {
     mockCR(mock);
   });
 
-  it('should show the correct number of correct answers.', () => {
+  it('should correctly display the number of answers the player has got right.', () => {
     expect(wrapper.find('.CorrectCount').getElement().props.children).toEqual(defaultProps.correctCount);
   });
 

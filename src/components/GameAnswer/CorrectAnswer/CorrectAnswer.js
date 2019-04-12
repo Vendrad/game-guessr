@@ -3,6 +3,9 @@ import React from 'react';
 import styles from './CorrectAnswer.module.scss';
 import icon from '../../../assets/images/icons8-rating-128.png';
 
+/**
+ * Displays information for a correctly submitted answer
+ */
 const CorrectAnswer = () => {
 
   return (

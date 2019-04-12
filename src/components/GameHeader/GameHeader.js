@@ -8,16 +8,37 @@ import styles from './GameHeader.module.scss';
 import heartFull from '../../assets/images/icons8-heart-full-64.png';
 import heartEmpty from '../../assets/images/icons8-heart-empty-64.png';
 
+/**
+ * Displays status information about the current game
+ */
 const GameHeader = ({correctCount, correctCountFlyaway, mistakeCount}) => {
 
-  let lives = Array.apply(null, Array(AppConfig().lives));
-  lives = lives.fill('full').fill('empty', 0, mistakeCount);
-  lives = lives.map((life, index) => {
-    return <img key={index} src={life === 'full' ? heartFull : heartEmpty} alt={`Heart Piece - ${life}`} />;
-  });
+  /**
+   * Returns jsx with full/empty hearts given the maxLives and mistakeCount
+   * 
+   * @param {int} maxLives 
+   * @param {int} mistakeCount 
+   */
+  const getLives = (maxLives, mistakeCount) => {
+    // Creates empty array of length maxLives
+    let lives = Array.apply(null, [maxLives]);
+    // Fills the array with full lives and overrides with empties equal to the mistakes
+    lives = lives.fill('full').fill('empty', 0, mistakeCount);
+    // Maps the array to jsx img tag
+    const output = lives.map((life, index) => {
+      return <img key={index} src={life === 'full' ? heartFull : heartEmpty} alt={`Heart Piece - ${life}`} />;
+    });
 
-  const GetFlyaway = () => {
-    return correctCountFlyaway &&
+    return output;
+  };
+
+  /**
+   * 
+   * @param {bool} show 
+   * @param {object} styles 
+   */
+  const getFlyaway = (show, styles) => {
+    return show &&
       (
         <Flyaway
           timeout={{
@@ -37,18 +58,20 @@ const GameHeader = ({correctCount, correctCountFlyaway, mistakeCount}) => {
       );
   };
 
+  const maxLives = AppConfig().lives;
+
   return (
     <div className={styles.GameHeader}>
       <div className={styles.CorrectCount}>{correctCount}</div>
-      {GetFlyaway()}
-      <div className={styles.MistakeCount}>{lives}</div>
+      {getFlyaway(correctCountFlyaway, styles)}
+      <div className={styles.MistakeCount}>{getLives(maxLives, mistakeCount)}</div>
     </div>
-  )
+  );
 };
 
 GameHeader.propTypes = {
   correctCount: PropTypes.number.isRequired,
   correctCountFlyaway: PropTypes.bool,
   mistakeCount: PropTypes.number.isRequired,
-}
+};
 export default GameHeader;

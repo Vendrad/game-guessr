@@ -6,11 +6,10 @@ import GameSubmit from './GameSubmit';
 
 const defaultProps = {
   disabled: false,
-  answerWasSubmitted: jest.fn()
+  answerWasSubmitted: jest.fn(),
 };
 
 describe('<GameSubmit />', () => {
-
   let wrapper;
   let spy;
 
@@ -19,16 +18,16 @@ describe('<GameSubmit />', () => {
   });
 
   afterEach(() => {
-    spy !== undefined 
+    spy !== undefined
       && mockCR(spy);
   });
 
   it('should render without errors.', () => {
-    expect(wrapper.find("button")).toHaveLength(1);
+    expect(wrapper.find('button')).toHaveLength(1);
   });
 
   it('should fire callback when the submit button is clicked.', () => {
-    wrapper.find("button").simulate('click');
+    wrapper.find('button').simulate('click');
     expect(defaultProps.answerWasSubmitted).toHaveBeenCalledWith(false);
   });
 
@@ -41,13 +40,12 @@ describe('<GameSubmit />', () => {
   });
 
   it('should be disabled if the disabled prop is true.', () => {
-    wrapper.setProps({disabled: true});
+    wrapper.setProps({ disabled: true });
     expect(wrapper.find('button').getElement().props.disabled).toBe('disabled');
   });
 
   it('should have the inactive class if the disabled prop is true.', () => {
-    wrapper.setProps({disabled: true});
+    wrapper.setProps({ disabled: true });
     expect(wrapper.find('button').hasClass('inactive')).toEqual(true);
   });
-
 });

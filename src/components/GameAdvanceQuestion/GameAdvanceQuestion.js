@@ -9,21 +9,21 @@ import styles from './GameAdvanceQuestion.module.scss';
 /**
  * General wrapper for the components to advance to the next question
  */
-const GameAdvanceQuestion = ({ disabled, answerWasSubmitted }) => {
-  return (
-    <div className={styles.GameAdvanceQuestion}>
-      <GameSkip
-        answerWasSubmitted={answerWasSubmitted} />
-      <GameSubmit
-        disabled={disabled}
-        answerWasSubmitted={answerWasSubmitted} />
-    </div>
-  )
-};
+const GameAdvanceQuestion = ({ disabled, answerWasSubmitted }) => (
+  <div className={styles.GameAdvanceQuestion}>
+    <GameSkip
+      answerWasSubmitted={answerWasSubmitted}
+    />
+    <GameSubmit
+      disabled={disabled}
+      answerWasSubmitted={answerWasSubmitted}
+    />
+  </div>
+);
 
 GameAdvanceQuestion.propTypes = {
   disabled: PropTypes.bool.isRequired,
-  answerWasSubmitted: PropTypes.func.isRequired
-}
+  answerWasSubmitted: PropTypes.func.isRequired,
+};
 
 export default GameAdvanceQuestion;

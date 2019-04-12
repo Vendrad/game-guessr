@@ -9,11 +9,10 @@ import * as AppConfig from '../../config/App.config';
 const defaultProps = {
   correctCount: 2,
   correctCountFlyaway: false,
-  mistakeCount: 3
+  mistakeCount: 3,
 };
 
 describe('<GameHeader />', () => {
-
   let wrapper;
 
   beforeEach(() => {
@@ -26,35 +25,42 @@ describe('<GameHeader />', () => {
 
   it('should show the correct number of full hearts.', () => {
     const lives = 5;
-    const mock = jest.fn().mockReturnValue({lives: lives});
+    const mock = jest.fn().mockReturnValue({ lives });
     AppConfig.AppConfig = mock;
 
-    expect(wrapper.find('img').getElements().filter(img => {
-      return img.props.alt === 'Heart Piece - full';
-    })).toHaveLength(lives - defaultProps.mistakeCount);
+    expect(
+      wrapper
+        .find('img')
+        .getElements()
+        .filter(img => img.props.alt === 'Heart Piece - full')
+    ).toHaveLength(lives - defaultProps.mistakeCount);
 
     mockCR(mock);
   });
 
   it('should show the correct number of empty hearts.', () => {
     const lives = 5;
-    const mock = jest.fn().mockReturnValue({lives: lives});
+    const mock = jest.fn().mockReturnValue({ lives });
     AppConfig.AppConfig = mock;
 
-    expect(wrapper.find('img').getElements().filter(img => {
-      return img.props.alt === 'Heart Piece - empty';
-    })).toHaveLength(defaultProps.mistakeCount);
+    expect(
+      wrapper
+        .find('img')
+        .getElements()
+        .filter(img => img.props.alt === 'Heart Piece - empty')
+    ).toHaveLength(defaultProps.mistakeCount);
 
     mockCR(mock);
   });
 
   it('should correctly display the number of answers the player has got right.', () => {
-    expect(wrapper.find('.CorrectCount').getElement().props.children).toEqual(defaultProps.correctCount);
+    expect(wrapper.find('.CorrectCount').getElement().props.children).toEqual(
+      defaultProps.correctCount
+    );
   });
 
   it('should render Flyaway if that is triggered by the prop.', () => {
-    wrapper.setProps({correctCountFlyaway: true});
+    wrapper.setProps({ correctCountFlyaway: true });
     expect(wrapper.find(Flyaway)).toHaveLength(1);
   });
-  
 });

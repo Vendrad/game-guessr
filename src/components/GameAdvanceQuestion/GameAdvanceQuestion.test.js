@@ -8,11 +8,10 @@ import GameSubmit from './GameSubmit/GameSubmit';
 
 const defaultProps = {
   disabled: false,
-  answerWasSubmitted: jest.fn()
+  answerWasSubmitted: jest.fn(),
 };
 
 describe('<GameAdvanceQuestion />', () => {
-
   let wrapper;
   let spy;
 
@@ -21,13 +20,11 @@ describe('<GameAdvanceQuestion />', () => {
   });
 
   afterEach(() => {
-    spy !== undefined 
-      && mockCR(spy);
+    spy !== undefined && mockCR(spy);
   });
 
   it('should render without errors.', () => {
     expect(wrapper.find(GameSkip)).toHaveLength(1);
     expect(wrapper.find(GameSubmit)).toHaveLength(1);
   });
-
 });

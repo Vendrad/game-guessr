@@ -1,12 +1,14 @@
 {
-    "env": {
-        "jest": true
-    },
-    "extends": [
-        "airbnb",
-        "react-app"
-    ],
-    "rules": {
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
-    }
+  "env": {
+    "jest": true,
+    "serviceworker": true
+  },
+  "extends": [
+    "airbnb",
+    "react-app"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/no-array-index-key": "off"
+  }
 }

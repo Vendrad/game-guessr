@@ -7,23 +7,22 @@ import Modal from '../UI/Modal/Modal';
 import GameQuip from './GameQuip/GameQuip';
 
 const defaultProps = {
-  history: { push: jest.fn()},
-  location: { pathname: '/'},
-  correctCount: 2
+  history: { push: jest.fn() },
+  location: { pathname: '/' },
+  correctCount: 2,
 };
 
 describe('<GameOver />', () => {
-
-  let wrapper, spy;
+  let wrapper;
+  let spy;
 
   beforeEach(() => {
     wrapper = shallow(<GameOver {...defaultProps} />);
-  })
+  });
 
   afterEach(() => {
-    spy !== undefined
-      && mockCR(spy);
-  })
+    spy !== undefined && mockCR(spy);
+  });
 
   it('should render without errors.', () => {
     expect(wrapper.find(Modal)).toHaveLength(1);
@@ -35,11 +34,14 @@ describe('<GameOver />', () => {
   });
 
   it('should display your score.', () => {
-    expect(wrapper.find('.FinalScore').getElement().props.children[1]).toBe(defaultProps.correctCount);
+    expect(wrapper.find('.FinalScore').getElement().props.children[1]).toBe(
+      defaultProps.correctCount
+    );
   });
 
   it('should pass your score to GameQuip.', () => {
-    expect(wrapper.find(GameQuip).getElement().props.correctCount).toBe(defaultProps.correctCount);
+    expect(wrapper.find(GameQuip).getElement().props.correctCount).toBe(
+      defaultProps.correctCount
+    );
   });
-
 });

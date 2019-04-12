@@ -6,29 +6,28 @@ import gameModes from '../../core/gameModes/gameModes';
 
 import styles from './GameModeSelector.module.scss';
 
-const GameModeSelector = ({gameModeWasSelected}) => {
-
+const GameModeSelector = ({ gameModeWasSelected }) => {
   const gameModeWasSelectedHandler = (gameModeId) => {
-    const [gameMode] = gameModes().filter((gameMode) => { return gameMode.id === gameModeId } );
+    const [gameMode] = gameModes().filter(mode => mode.id === gameModeId);
     gameModeWasSelected(gameMode);
-  }
- 
+  };
+
   return (
     <div className={styles.GameModeSelector}>
       <p className={styles.GameModeSelectorHeader}>Choose your decade!</p>
-      {gameModes().map((gameMode) => {
-        return <GameMode
+      {gameModes().map(gameMode => (
+        <GameMode
           key={gameMode.id}
           gameMode={gameMode}
-          gameModeWasSelected={gameModeWasSelectedHandler.bind(this)} />;
-      })}
+          gameModeWasSelected={gameModeWasSelectedHandler}
+        />
+      ))}
     </div>
   );
-
 };
 
 GameModeSelector.propTypes = {
-  gameModeWasSelected: PropTypes.func.isRequired
-}
+  gameModeWasSelected: PropTypes.func.isRequired,
+};
 
 export default GameModeSelector;

@@ -11,13 +11,8 @@ import styles from './GameAdvanceQuestion.module.scss';
  */
 const GameAdvanceQuestion = ({ disabled, answerWasSubmitted }) => (
   <div className={styles.GameAdvanceQuestion}>
-    <GameSkip
-      answerWasSubmitted={answerWasSubmitted}
-    />
-    <GameSubmit
-      disabled={disabled}
-      answerWasSubmitted={answerWasSubmitted}
-    />
+    <GameSkip answerWasSubmitted={answerWasSubmitted} />
+    <GameSubmit disabled={disabled} answerWasSubmitted={answerWasSubmitted} />
   </div>
 );
 

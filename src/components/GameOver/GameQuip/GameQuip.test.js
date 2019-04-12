@@ -6,13 +6,15 @@ import GameQuip from './GameQuip';
 import * as Helpers from '../../../helpers';
 
 describe('<GameQuip />', () => {
+  let defaultProps;
+  let wrapper;
+  let quipNumber;
+  let mock;
 
-  let defaultProps, wrapper, quipNumber, mock;
-
-  const setup = (correctCount) => {
+  const setup = correctCount => {
     defaultProps = {
-      correctCount: correctCount
-    }
+      correctCount,
+    };
 
     quipNumber = 1;
     mock = jest.fn().mockReturnValue(quipNumber);
@@ -25,18 +27,21 @@ describe('<GameQuip />', () => {
   });
 
   it('should render without errors.', () => {
-    setup(1)
+    setup(1);
     expect(wrapper.find('.GameQuip')).toHaveLength(1);
   });
 
   it('should render with a good quip if the score is atleast 5.', () => {
     setup(5);
-    expect(wrapper.find('p').getElement().props.children[1]).toBe(wrapper.instance().goodResult()[quipNumber]);
+    expect(wrapper.find('p').getElement().props.children).toBe(
+      wrapper.instance().goodResult()[quipNumber]
+    );
   });
 
   it('should render with a bad quip if the score is not atleast 5.', () => {
     setup(3);
-    expect(wrapper.find('p').getElement().props.children[1]).toBe(wrapper.instance().badResult()[quipNumber]);
+    expect(wrapper.find('p').getElement().props.children).toBe(
+      wrapper.instance().badResult()[quipNumber]
+    );
   });
-
 });

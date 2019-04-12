@@ -1,5 +1,5 @@
 const AppConfig = () => ({
-  lives: 5
+  lives: 5,
 });
 
 export default AppConfig;

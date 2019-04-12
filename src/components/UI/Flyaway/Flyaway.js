@@ -2,49 +2,53 @@ import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
-export class Flyaway extends Component {
-
+class Flyaway extends Component {
   state = {
-    in: false
-  }
+    inState: false,
+  };
 
-  componentDidMount () {
-    this.setState({in: true});
+  componentDidMount() {
+    this.setState({ inState: true });
   }
 
   chainExit = () => {
-    this.setState({in: false});
-  }
+    this.setState({ inState: false });
+  };
 
-  render () {
+  render() {
+    const {
+      styles, animationStyles, timeout, cleanup, children,
+    } = this.props;
 
-    const { styles, animationStyles, timeout, cleanup, children } = this.props;
+    const { inState } = this.state;
 
     return (
       <CSSTransition
-        in={this.state.in}
+        in={inState}
         unmountOnExit
         timeout={timeout}
         className={styles}
         classNames={animationStyles}
         onEntered={this.chainExit}
-        onExited={cleanup}>
+        onExited={cleanup}
+      >
         {children}
       </CSSTransition>
-    )
+    );
   }
 }
 
 Flyaway.defaultProps = {
-  timeout: {appear: 500, enter: 500, exit: 500}
+  timeout: { appear: 500, enter: 500, exit: 500 },
+  cleanup: () => {},
 };
 
 Flyaway.propTypes = {
   styles: PropTypes.string.isRequired,
-  animationStyles: PropTypes.instanceOf(Object),
+  animationStyles: PropTypes.instanceOf(Object).isRequired,
   timeout: PropTypes.instanceOf(Object),
-  cleanup: PropTypes.func, 
-  children: PropTypes.instanceOf(Object)
-}
+  cleanup: PropTypes.func,
+  children: PropTypes.instanceOf(Object).isRequired,
+};
 
 export default Flyaway;

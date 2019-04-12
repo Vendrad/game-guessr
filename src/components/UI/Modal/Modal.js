@@ -4,33 +4,38 @@ import { CSSTransition } from 'react-transition-group';
 
 import styles from './Modal.module.scss';
 
-export class Modal extends Component {
-
+class Modal extends Component {
   state = {
-    in: false
-  }
+    inState: false,
+  };
 
-  componentDidMount () {
-    this.setState({in: true});
+  componentDidMount() {
+    this.setState({ inState: true });
   }
 
   closeModalHandler = () => {
-    this.setState({in: false});
-  }
+    this.setState({ inState: false });
+  };
 
-  render () {
-    
-    const {automaticallyExit, displayCloseButton, modalExitedCallback,
-      extraStyles, children} = this.props;
+  render() {
+    const {
+      automaticallyExit,
+      displayCloseButton,
+      modalExitedCallback,
+      extraStyles,
+      children,
+    } = this.props;
+
+    const { inState } = this.state;
 
     return (
       <CSSTransition
-        in={this.state.in}
+        in={inState}
         timeout={{
           appear: 0,
           enter: 2000,
           exit: 500,
-         }}
+        }}
         unmountOnExit
         onEntered={automaticallyExit ? this.closeModalHandler : null}
         onExited={modalExitedCallback}
@@ -38,30 +43,44 @@ export class Modal extends Component {
           enter: styles.modalEnter,
           enterActive: styles.modalEnterActive,
           exit: styles.modalExit,
-          exitActive: styles.modalExitActive
-        }} >
+          exitActive: styles.modalExitActive,
+        }}
+      >
         <div className={styles.ModalWrapper}>
-          <div className={[extraStyles, styles.Modal].join(" ")} onClick={null}>
+          <div className={[extraStyles, styles.Modal].join(' ')}>
             {children}
-            {displayCloseButton && <div className={styles.ModalCloseButton} onClick={this.closeModalHandler} aria-label="Close Modal">&times;</div>}
+            {displayCloseButton && (
+              <button
+                type="button"
+                className={styles.ModalCloseButton}
+                onClick={this.closeModalHandler}
+                onKeyPress={this.closeModalHandler}
+                aria-label="Close Modal"
+              >
+                &times;
+              </button>
+            )}
           </div>
         </div>
       </CSSTransition>
-    )
+    );
   }
-  
 }
 
 Modal.defaultProps = {
   automaticallyExit: true,
-  displayCloseButton: false
+  displayCloseButton: false,
+  children: null,
+  modalExitedCallback: () => {},
+  extraStyles: '',
 };
 
 Modal.propTypes = {
   automaticallyExit: PropTypes.bool,
   displayCloseButton: PropTypes.bool,
   modalExitedCallback: PropTypes.func,
-  extraStyles: PropTypes.string
+  extraStyles: PropTypes.string,
+  children: PropTypes.instanceOf(Object),
 };
 
 export default Modal;

@@ -8,21 +8,20 @@ import Logo from '../../Logo/Logo';
 const defaultProps = {
   started: true,
   startButtonWasClicked: jest.fn(),
-  restartButtonWasClicked: jest.fn()
+  restartButtonWasClicked: jest.fn(),
 };
 
 describe('<HeaderInner />', () => {
-
-  let wrapper, spy;
+  let wrapper;
+  let spy;
 
   beforeEach(() => {
     wrapper = shallow(<HeaderInner {...defaultProps} />);
-  })
+  });
 
   afterEach(() => {
-    spy !== undefined
-      && mockCR(spy);
-  })
+    spy !== undefined && mockCR(spy);
+  });
 
   it('should render without errors.', () => {
     expect(wrapper.find('.HeaderInner')).toHaveLength(1);
@@ -37,19 +36,20 @@ describe('<HeaderInner />', () => {
   });
 
   it('should render the button if it started is false.', () => {
-    wrapper.setProps({started: false});
+    wrapper.setProps({ started: false });
     expect(wrapper.find('.StartButton')).toHaveLength(1);
   });
 
   it('should call the start handler if the start button is clicked.', () => {
-    wrapper.setProps({started: false});
+    wrapper.setProps({ started: false });
     wrapper.find('.StartButton').simulate('click');
     expect(defaultProps.startButtonWasClicked).toHaveBeenCalledTimes(1);
   });
 
   it('should pass the restart handler to Logo', () => {
-    wrapper.setProps({started: false});
-    expect(wrapper.find(Logo).getElement().props.restartButtonWasClicked).toBe(defaultProps.restartButtonWasClicked);
+    wrapper.setProps({ started: false });
+    expect(wrapper.find(Logo).getElement().props.restartButtonWasClicked).toBe(
+      defaultProps.restartButtonWasClicked
+    );
   });
-
 });

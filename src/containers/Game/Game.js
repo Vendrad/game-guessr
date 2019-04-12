@@ -3,25 +3,24 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
 import GameModeSelector from '../GameModeSelector/GameModeSelector';
-import GameBoard from '../GameBoard/GameBoard';
+import GameBoardDefault from '../GameBoard/GameBoard';
 
-export const Game = ({gameModeWasSelected}) => {
+const Game = ({ gameModeWasSelected }) => (
+  <>
+    <Route
+      path="/new-game"
+      exact
+      component={() => (
+        <GameModeSelector gameModeWasSelected={gameModeWasSelected} />
+      )}
+    />
 
-  return (
-    <>
-      <Route path="/new-game" exact component={() => (
-        <GameModeSelector
-          gameModeWasSelected={gameModeWasSelected.bind(this)} />
-      )} />
-      
-      <Route path="/game/:slug" exact component={() => <GameBoard />} />
-      
-    </>
-  );
-};
+    <Route path="/game/:slug" exact component={() => <GameBoardDefault />} />
+  </>
+);
 
 Game.propTypes = {
-  gameModeWasSelected: PropTypes.func.isRequired
-}
+  gameModeWasSelected: PropTypes.func.isRequired,
+};
 
 export default Game;

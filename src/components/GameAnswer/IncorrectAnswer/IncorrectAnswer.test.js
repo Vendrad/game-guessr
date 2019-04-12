@@ -4,11 +4,10 @@ import { shallow } from 'enzyme';
 import IncorrectAnswer from './IncorrectAnswer';
 
 const defaultProps = {
-  game: {id: 1, name: "DummyGame", cover: "http://example.org/image.png"}
-}
+  game: { id: 1, name: 'DummyGame', cover: 'http://example.org/image.png' },
+};
 
 describe('<IncorrectAnswer />', () => {
-
   let wrapper;
 
   beforeEach(() => {
@@ -20,16 +19,21 @@ describe('<IncorrectAnswer />', () => {
   });
 
   it('should display the game cover if it exists.', () => {
-    const imgProps = wrapper.find('img').at(1).getElement().props;
+    const imgProps = wrapper
+      .find('img')
+      .at(1)
+      .getElement().props;
     expect(imgProps.src).toEqual(defaultProps.game.cover);
     expect(imgProps.alt).toEqual(`${defaultProps.game.name} cover art.`);
   });
 
   it('should not display the game cover if it does not exist.', () => {
-    wrapper.setProps({game: {id: 1, name: "DummyGame"}});
-    const imgProps = wrapper.find('img').first().getElement().props;
-    expect(imgProps.alt).toEqual("Incorrect Answer");
+    wrapper.setProps({ game: { id: 1, name: 'DummyGame' } });
+    const imgProps = wrapper
+      .find('img')
+      .first()
+      .getElement().props;
+    expect(imgProps.alt).toEqual('Incorrect Answer');
     expect(wrapper.find('img')).toHaveLength(1);
   });
-
 });

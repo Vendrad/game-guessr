@@ -12,7 +12,9 @@ import styles from './GameSkip.module.scss';
  */
 const GameSkip = ({ answerWasSubmitted }) => (
   <div className={styles.GameSkip}>
-    <button type="button" onClick={answerWasSubmitted.bind(this, true)}>Skip</button>
+    <button type="button" onClick={answerWasSubmitted.bind(this, true)}>
+      Skip
+    </button>
   </div>
 );
 

@@ -18,8 +18,7 @@ describe('<GameSubmit />', () => {
   });
 
   afterEach(() => {
-    spy !== undefined
-      && mockCR(spy);
+    spy !== undefined && mockCR(spy);
   });
 
   it('should render without errors.', () => {

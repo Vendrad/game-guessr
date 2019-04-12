@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 
 import styles from './Logo.module.scss';
 
-const Logo = ({playing, restartButtonWasClicked}) => {
-
-  let logoClasses = [/*styles.Logo,*/ styles.open];
-  if (playing) logoClasses = [/*styles.Logo, */styles.closed];
+const Logo = ({ playing, restartButtonWasClicked }) => {
+  let logoClasses = [styles.open];
+  if (playing) logoClasses = [styles.closed];
 
   return (
     <>
       <div
+        role="menuitem"
+        tabIndex={0}
         className={logoClasses.join(' ')}
-        onClick={restartButtonWasClicked}>
+        onClick={restartButtonWasClicked}
+        onKeyPress={() => {}}
+      >
         <span className={styles.LogoLargeText}>G</span>
         <span className={styles.LogoSmallText}>ame</span>
         <span className={styles.LogoLargeText}>G</span>
@@ -24,7 +27,7 @@ const Logo = ({playing, restartButtonWasClicked}) => {
 
 Logo.propTypes = {
   playing: PropTypes.bool.isRequired,
-  restartButtonWasClicked: PropTypes.func.isRequired
+  restartButtonWasClicked: PropTypes.func.isRequired,
 };
 
 export default Logo;

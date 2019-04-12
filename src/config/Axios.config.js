@@ -6,4 +6,4 @@ switch (process.env.NODE_ENV) {
     break;
   default:
     Axios.defaults.baseURL = 'https://api2.raredevil.co.uk/api/v1/';
-};
+}

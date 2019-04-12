@@ -6,21 +6,20 @@ import Logo from './Logo';
 
 const defaultProps = {
   playing: true,
-  restartButtonWasClicked: jest.fn()
+  restartButtonWasClicked: jest.fn(),
 };
 
 describe('<Logo />', () => {
-
-  let wrapper, spy;
+  let wrapper;
+  let spy;
 
   beforeEach(() => {
     wrapper = shallow(<Logo {...defaultProps} />);
-  })
+  });
 
   afterEach(() => {
-    spy !== undefined
-      && mockCR(spy);
-  })
+    spy !== undefined && mockCR(spy);
+  });
 
   it('should render without errors.', () => {
     expect(wrapper.find('div')).toHaveLength(1);
@@ -31,13 +30,12 @@ describe('<Logo />', () => {
   });
 
   it('should have a class of open if not playing.', () => {
-    wrapper.setProps({playing: false});
+    wrapper.setProps({ playing: false });
     expect(wrapper.find('div').find('.open')).toHaveLength(1);
   });
-  
+
   it('should trigger the callback if clicked.', () => {
     wrapper.find('div').simulate('click');
     expect(defaultProps.restartButtonWasClicked).toHaveBeenCalledTimes(1);
   });
-  
 });

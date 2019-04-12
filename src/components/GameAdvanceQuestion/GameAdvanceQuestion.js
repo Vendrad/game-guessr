@@ -9,7 +9,7 @@ import styles from './GameAdvanceQuestion.module.scss';
 /**
  * General wrapper for the components to advance to the next question
  */
-const GameAdvanceQuestion = ({disabled, answerWasSubmitted}) => {
+const GameAdvanceQuestion = ({ disabled, answerWasSubmitted }) => {
   return (
     <div className={styles.GameAdvanceQuestion}>
       <GameSkip

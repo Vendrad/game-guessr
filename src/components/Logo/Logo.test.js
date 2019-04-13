@@ -5,7 +5,7 @@ import { mockCR } from '../../helpers/testing';
 import Logo from './Logo';
 
 const defaultProps = {
-  playing: true,
+  started: true,
   restartButtonWasClicked: jest.fn(),
 };
 
@@ -25,12 +25,12 @@ describe('<Logo />', () => {
     expect(wrapper.find('div')).toHaveLength(1);
   });
 
-  it('should have a class of closed if playing.', () => {
+  it('should have a class of closed if started.', () => {
     expect(wrapper.find('div').find('.closed')).toHaveLength(1);
   });
 
-  it('should have a class of open if not playing.', () => {
-    wrapper.setProps({ playing: false });
+  it('should have a class of open if not started.', () => {
+    wrapper.setProps({ started: false });
     expect(wrapper.find('div').find('.open')).toHaveLength(1);
   });
 

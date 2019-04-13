@@ -2,15 +2,31 @@ import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
+/**
+ * Renders a flyaway
+ *
+ * A simple component to wrap content in a transition that
+ * automatically chains to exiting after it has finished
+ * entering. Useful for UI flare and quick user feedback.
+ */
 class Flyaway extends Component {
   state = {
     inState: false,
   };
 
+  /**
+   * Immediately set inState to true so that CSSTransition
+   * will control the entering and rendering of the children
+   */
   componentDidMount() {
     this.setState({ inState: true });
   }
 
+  /**
+   * Called once CSSTransition has finished entering
+   * (onEntered) and sets the inState back to false so
+   * that CSSTransition immediately starts exiting
+   */
   chainExit = () => {
     this.setState({ inState: false });
   };

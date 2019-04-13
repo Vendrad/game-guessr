@@ -5,6 +5,9 @@ import { Route } from 'react-router-dom';
 import GameModeSelector from '../GameModeSelector/GameModeSelector';
 import GameBoardDefault from '../GameBoard/GameBoard';
 
+/**
+ * Wrapper for routing between the main App pages
+ */
 const Game = ({ gameModeWasSelected }) => (
   <>
     <Route

@@ -34,12 +34,9 @@ describe('<GameOver />', () => {
   });
 
   it('should display the players score.', () => {
-    expect(
-      wrapper
-        .find('.FinalScore')
-        .getElement()
-        .props.children[1].trim()
-    ).toBe(defaultProps.correctCount + '');
+    expect(wrapper.find('.FinalScore').getElement().props.children[1]).toBe(
+      defaultProps.correctCount
+    );
   });
 
   it('should pass the players score to GameQuip.', () => {

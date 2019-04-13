@@ -7,23 +7,28 @@ import Modal from '../UI/Modal/Modal';
 
 import GameQuip from './GameQuip/GameQuip';
 
+/**
+ * Renders a modal that displays the result of a players game
+ */
 export const GameOver = ({ history, correctCount }) => {
+  /**
+   * Handles pushing a player to the new game page if they
+   * choose to restart
+   */
   const playAgainButtonWasClickedHandler = () => {
     history.push('/new-game');
   };
 
-  const plugLink = () => <a href="https://igdb.com">igdb.com</a>;
-
   return (
     <Modal automaticallyExit={false} extraStyles={styles.GameOverModal}>
       <p className={styles.FinalScore}>
-        You scored:
-        {` ${correctCount}`}
+        {'You scored: '}
+        {correctCount}
       </p>
       <GameQuip correctCount={correctCount} />
       <p className={styles.Plug}>
         {'Head over to '}
-        {plugLink()}
+        <a href="https://igdb.com">igdb.com</a>
         {' to discover more games!'}
       </p>
       <button

@@ -5,21 +5,36 @@ import { randBetweenInclusive } from '../../../helpers';
 
 import styles from './GameQuip.module.scss';
 
+/**
+ * Renders a random quip depending on the number of correct questions
+ */
 class GameQuip extends Component {
-  state = {
-    quip: null,
-  };
+  /** State set in constructor so it is only called once */
+  constructor(props) {
+    super(props);
 
-  componentDidMount() {
-    const { correctCount } = this.props;
-
-    const quip = correctCount >= 5
-      ? this.goodResult()[randBetweenInclusive(0, this.goodResult().length)]
-      : this.badResult()[randBetweenInclusive(0, this.badResult().length)];
-
-    this.setState({ quip });
+    const { correctCount } = props;
+    this.state = {
+      quip: this.getQuip(correctCount),
+    };
   }
 
+  /**
+   * Gets a quip given the given number of correct answers
+   *
+   * @param {int} correctCount
+   * @return {string}
+   */
+  getQuip(correctCount) {
+    return correctCount >= 5
+      ? this.goodResult()[randBetweenInclusive(0, this.goodResult().length)]
+      : this.badResult()[randBetweenInclusive(0, this.badResult().length)];
+  }
+
+  /**
+   * Array of quips for when the player has performed poorly
+   * @return {Array}
+   */
   badResult = () => [
     '/ff',
     'Game Over. Insert coin to continue.',
@@ -36,6 +51,10 @@ class GameQuip extends Component {
     'The lights are on but nobody is home.',
   ];
 
+  /**
+   * Array of quips for when the player has performed well
+   * @return {Array}
+   */
   goodResult = () => [
     'omg wtf lag',
     'Your opponent has disconnected...',

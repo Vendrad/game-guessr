@@ -3,14 +3,19 @@ import PropTypes from 'prop-types';
 
 import styles from './Logo.module.scss';
 
-const Logo = ({ playing, restartButtonWasClicked }) => {
-  let logoClasses = [styles.open];
-  if (playing) logoClasses = [styles.closed];
+/**
+ * Renders the GG text logo
+ *
+ * Has two states, open and closed. On clicking files restart
+ * App callback.
+ */
+const Logo = ({ started, restartButtonWasClicked }) => {
+  const logoClasses = started ? [styles.closed] : [styles.open];
 
   return (
     <>
       <div
-        role="menuitem"
+        role="link"
         tabIndex={0}
         className={logoClasses.join(' ')}
         onClick={restartButtonWasClicked}
@@ -26,7 +31,7 @@ const Logo = ({ playing, restartButtonWasClicked }) => {
 };
 
 Logo.propTypes = {
-  playing: PropTypes.bool.isRequired,
+  started: PropTypes.bool.isRequired,
   restartButtonWasClicked: PropTypes.func.isRequired,
 };
 

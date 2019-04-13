@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import styles from './GameMode.module.scss';
 
+/**
+ * Renders the Game Mode button
+ */
 const GameMode = ({ gameMode, gameModeWasSelected }) => (
   <button
     type="button"

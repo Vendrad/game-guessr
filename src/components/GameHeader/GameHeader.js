@@ -36,9 +36,12 @@ const GameHeader = ({ correctCount, correctCountFlyaway, mistakeCount }) => {
   };
 
   /**
+   * Creates a Flyaway with given styling
+   * Used when the score updates
    *
    * @param {bool} show
-   * @param {object} styles
+   * @param {object} styling
+   * @return {false|JSX} false if show is false, otherwise JSX
    */
   const getFlyaway = (show, styling) => show && (
   <Flyaway

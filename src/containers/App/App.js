@@ -8,7 +8,17 @@ import Game from '../Game/Game';
 
 import styles from './App.module.scss';
 
+/**
+ * Top level component to render the app
+ *
+ * Stores general state of the app and
+ * handles starting and restarting new games
+ */
 export class App extends Component {
+  /**
+   * If the user is not entering the App at the root
+   * this ensures we make sure the App is set as started
+   */
   constructor(props) {
     super(props);
 
@@ -19,6 +29,10 @@ export class App extends Component {
     };
   }
 
+  /**
+   * Ensures that the App is set as not started if the user ever
+   * lands at the root when the App was previously set as started
+   */
   componentDidUpdate() {
     const { location } = this.props;
     const { started } = this.state;
@@ -30,18 +44,27 @@ export class App extends Component {
       && this.setState({ started: false });
   }
 
+  /**
+   * Handler for starting the App and opening up the new-game page
+   */
   startButtonWasClickedHandler = () => {
     const { history } = this.props;
     this.setState({ started: true });
     history.push('/new-game');
   };
 
+  /**
+   * Pushes the user back to the root page
+   */
   restartButtonWasClickedHandler = () => {
     const { history } = this.props;
     this.setState({ started: false });
     history.push('/');
   };
 
+  /**
+   * Pushes the user to start playing a specific gameMode
+   */
   gameModeWasSelectedHandler = (gameMode) => {
     const { history } = this.props;
     history.push(`/game/${gameMode.slug}`);

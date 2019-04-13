@@ -5,13 +5,18 @@ import Logo from '../../Logo/Logo';
 
 import styles from './HeaderInner.module.scss';
 
+/**
+ * Header content wrapper
+ *
+ * Renders Logo and if not started, the start button
+ */
 const HeaderInner = ({
   started,
   startButtonWasClicked,
   restartButtonWasClicked,
 }) => (
   <div className={styles.HeaderInner}>
-    <Logo playing={started} restartButtonWasClicked={restartButtonWasClicked} />
+    <Logo started={started} restartButtonWasClicked={restartButtonWasClicked} />
     {!started && (
       <button
         type="button"

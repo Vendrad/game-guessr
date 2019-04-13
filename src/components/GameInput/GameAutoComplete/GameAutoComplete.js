@@ -7,16 +7,33 @@ import GameAutoCompleteItem from './GameAutoCompleteItem/GameAutoCompleteItem';
 
 import styles from './GameAutoComplete.module.scss';
 
+/**
+ * Component to display the game search autocomplete list
+ *
+ * Uses Axios to make API calls for games matching the input prop
+ *
+ * @return {null} if no items are found
+ * @return {JSX} if items are found
+ */
 class GameAutoComplete extends Component {
   state = {
     autoCompleteItems: [],
   };
 
+  /**
+   * Immediately search for games given the input prop when this component mounts
+   */
   componentDidMount() {
     const { input } = this.props;
     this.searchGames(input);
   }
 
+  /**
+   * Search for new games if the component
+   * is updated, unless the input has not changed.
+   * @param {*} prevProps
+   * @param {*} prevState
+   */
   componentDidUpdate(prevProps, prevState) {
     const { input } = this.props;
 
@@ -25,6 +42,9 @@ class GameAutoComplete extends Component {
     this.searchGames(input);
   }
 
+  /**
+   * Clean up any Axios connections when the component unmounts
+   */
   componentWillUnmount() {
     this.axiosSource
       && this.axiosSource.cancel(
@@ -32,6 +52,10 @@ class GameAutoComplete extends Component {
       );
   }
 
+  /**
+   * Ensure the correct callbacks occur when a
+   * specific game has been selected from the list
+   */
   autoCompleteItemWasClickedHandler = (game) => {
     this.setState({
       autoCompleteItems: [],
@@ -42,6 +66,11 @@ class GameAutoComplete extends Component {
     autoCompleteItemWasClicked(game);
   };
 
+  /**
+   * Adds the API data response to the list
+   * of games appropriate to the search input
+   * @param {*} games
+   */
   searchGamesResponseHandler(games) {
     let items = [];
 
@@ -50,6 +79,11 @@ class GameAutoComplete extends Component {
     this.setState({ autoCompleteItems: items });
   }
 
+  /**
+   * Search for games given the input string
+   *
+   * This will immediately cancel any previous searches that might be open
+   */
   searchGames(input) {
     this.axiosSource
       && this.axiosSource.cancel(
@@ -70,6 +104,11 @@ class GameAutoComplete extends Component {
       });
   }
 
+  /**
+   * Axios source
+   *
+   * Used for cancelling open connections via CancelToken
+   */
   axiosSource;
 
   render() {

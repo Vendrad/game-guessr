@@ -6,13 +6,20 @@ import HeaderInner from './HeaderInner/HeaderInner';
 import styles from './Header.module.scss';
 import backgroundImage from '../../assets/images/bg2.jpg';
 
+/**
+ * Opening page and Header
+ *
+ * This wraps the header content so that it can animate between
+ * two modes, open and closed. When open a footer is rendered too.
+ */
 const Header = ({
   started,
   startButtonWasClicked,
   restartButtonWasClicked,
 }) => {
-  let headerClasses = [styles.Header, styles.open];
-  if (started) headerClasses = [styles.Header, styles.closed];
+  const headerClasses = started
+    ? [styles.Header, styles.closed]
+    : [styles.Header, styles.open];
 
   return (
     <header

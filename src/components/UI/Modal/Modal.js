@@ -4,15 +4,29 @@ import { CSSTransition } from 'react-transition-group';
 
 import styles from './Modal.module.scss';
 
+/**
+ * Wrap content in a modal
+ *
+ * Accepts toggles for automatic closing and/or close button.
+ * Uses CSSTransition to handle animation and events at each state.
+ */
 class Modal extends Component {
   state = {
     inState: false,
   };
 
+  /**
+   * Immediately set inState to true so that CSSTransition
+   * will control the entering and rendering of the children
+   */
   componentDidMount() {
     this.setState({ inState: true });
   }
 
+  /**
+   * When triggered puts the inState to false so that
+   * CSSTransition will start exiting the components children
+   */
   closeModalHandler = () => {
     this.setState({ inState: false });
   };

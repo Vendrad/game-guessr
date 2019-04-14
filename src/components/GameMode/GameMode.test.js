@@ -41,7 +41,7 @@ describe('<GameMode />', () => {
   it('should fire the callback when it is clicked.', () => {
     wrapper.find('.GameMode').simulate('click');
     expect(defaultProps.gameModeWasSelected).toHaveBeenCalledWith(
-      defaultProps.gameMode.id
+      defaultProps.gameMode
     );
   });
 });

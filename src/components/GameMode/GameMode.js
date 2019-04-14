@@ -10,7 +10,7 @@ const GameMode = ({ gameMode, gameModeWasSelected }) => (
   <button
     type="button"
     className={[styles.GameMode, styles[gameMode.type]].join(' ')}
-    onClick={gameModeWasSelected.bind(this, gameMode.id)}
+    onClick={gameModeWasSelected.bind(this, gameMode)}
   >
     <p>{gameMode.title}</p>
   </button>

@@ -24,10 +24,11 @@ class GameInput extends Component {
    */
   componentDidUpdate(prevProps, prevState) {
     const { inputShouldBeCleared, inputWasCleared } = this.props;
+    const { inputShouldBeCleared: prevInputShouldBeCleared } = prevProps;
 
     if (
       inputShouldBeCleared
-      && inputShouldBeCleared !== prevProps.inputShouldBeCleared
+      && inputShouldBeCleared !== prevInputShouldBeCleared
     ) {
       // Safe usage given prevProps required to determine if input
       // should be cleared.

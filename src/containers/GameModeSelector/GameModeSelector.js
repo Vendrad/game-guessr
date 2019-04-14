@@ -6,25 +6,24 @@ import gameModes from '../../core/gameModes/gameModes';
 
 import styles from './GameModeSelector.module.scss';
 
-const GameModeSelector = ({ gameModeWasSelected }) => {
-  const gameModeWasSelectedHandler = (gameModeId) => {
-    const [gameMode] = gameModes().filter(mode => mode.id === gameModeId);
-    gameModeWasSelected(gameMode);
-  };
-
-  return (
-    <div className={styles.GameModeSelector}>
-      <p className={styles.GameModeSelectorHeader}>Choose your decade!</p>
-      {gameModes().map(gameMode => (
-        <GameMode
-          key={gameMode.id}
-          gameMode={gameMode}
-          gameModeWasSelected={gameModeWasSelectedHandler}
-        />
-      ))}
-    </div>
-  );
-};
+/**
+ * Game mode selection page
+ *
+ * Renders each game mode on a single page so
+ * the player can choose how they wish to proceed.
+ */
+const GameModeSelector = ({ gameModeWasSelected }) => (
+  <div className={styles.GameModeSelector}>
+    <p className={styles.GameModeSelectorHeader}>Choose your decade!</p>
+    {gameModes().map(gameMode => (
+      <GameMode
+        key={gameMode.id}
+        gameMode={gameMode}
+        gameModeWasSelected={gameModeWasSelected}
+      />
+    ))}
+  </div>
+);
 
 GameModeSelector.propTypes = {
   gameModeWasSelected: PropTypes.func.isRequired,

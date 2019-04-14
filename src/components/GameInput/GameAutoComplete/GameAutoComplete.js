@@ -36,8 +36,9 @@ class GameAutoComplete extends Component {
    */
   componentDidUpdate(prevProps, prevState) {
     const { input } = this.props;
+    const { input: prevInput } = prevProps;
 
-    if (input === prevProps.input) return;
+    if (input === prevInput) return;
 
     this.searchGames(input);
   }

@@ -1,6 +1,11 @@
 import { cleanStoryline } from './cleanStoryline';
 import { getAliases } from './getAliases';
 
+/**
+ * Readies the API response for display
+ *
+ * @param {Object} response
+ */
 export const cleanGameResponse = (response) => {
   const game = {
     id: response.game.id,

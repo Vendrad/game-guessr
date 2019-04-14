@@ -1,3 +1,6 @@
+/**
+ * List of game modes / decades for qhich questions will drawn from
+ */
 const gameModes = () => [
   {
     id: 0,
@@ -36,6 +39,12 @@ const gameModes = () => [
   },
 ];
 
+/**
+ * Converts the gameMode URL slug to the slug
+ * used to search the given game mode on the API
+ *
+ * @param {string} slug
+ */
 export const slugToApiSlug = (slug) => {
   const match = gameModes().find(mode => mode.slug === `${slug}`);
 

@@ -1,5 +1,11 @@
 import { escapeRegExp } from '../../helpers';
 
+/**
+ * Removes mention of any of the game's aliases from the storyline
+ *
+ * @param {string} storyline
+ * @param {Array} aliases
+ */
 export const cleanStoryline = (storyline, aliases) => {
   let story = storyline;
 
